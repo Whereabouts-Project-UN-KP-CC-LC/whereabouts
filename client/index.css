@@ -2,5 +2,146 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: #ef8e48;
 }
+
+/****** Start of Login styling ******/
+
+.login-container {
+  width: 300px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  background-color: whitesmoke;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.input-container {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: flex-start;
+  border-color: #59656F;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  background-color: whitesmoke;
+}
+
+/****** End of Login styling ******/
+
+/****** Start of Contacts styling ******/
+
+.contacts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-style: solid;
+  border-color: black;
+}
+
+.add-contact-container {
+  
+  border-style: solid; 
+  border-color: #59656F;
+  border-radius: 10px;
+  width: 400px;
+  height: 100px;
+  background-color: whitesmoke;
+}
+
+.valid-contacts-container {
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  width: 800px;
+  height: 100vh;
+  border-color: #59656F;
+  display: grid;
+  background-color: #00A676;
+}
+
+.titles-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  column-gap: 10px;
+}
+
+.contact-title {
+  width: 250px;
+  height: 145px;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+  border-color: #59656F;
+}
+
+.contacts-display {
+  border-style: solid;
+  border-color: #59656F;
+  height: 300px;
+}
+
+/****** End of Contacts styling ******/
+
+/****** Start of OneContact styling ******/
+
+.oneContact-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/****** End of OneContact styling ******/
+
+/****** Start of MyTripStart styling ******/
+
+.myTripStart-container {
+  border-style: solid;
+  border-color: #59656F;
+}
+
+.select-contact-list {
+  border-style: solid;
+  border-color: #59656F;
+}
+
+.select-contact-list-display {
+  border-style: solid;
+  border-color: #59656F;
+}
+
+
+/****** End of MyTripStart styling ******/
+
+
+
+
+
+
+
+
+
+/****** Start of ADD COMPONENT HERE styling ******/
+
+/****** End of ADD COMPONENT HERE styling ******/
