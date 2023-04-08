@@ -110,6 +110,7 @@ whereaboutsController.insertNewUser = async (req, res, next) => {
       // message: { error: error.stack } // for more detailed debugging info
     });
   }
+}
 //get contacts of current user
 whereaboutsController.getContacts = async (req, res, next) => {
     try {
