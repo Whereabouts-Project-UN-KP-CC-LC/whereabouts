@@ -5,13 +5,13 @@ const whereaboutsController = require('../controllers/whereaboutsController');
 // LOGIN component routes
 
 router.post('/login', whereaboutsController.checkUserExists, (req, res) =>
-  res.status(200).json(res.locals.verifiedUser)
+  res.sendStatus(200)
 );
 
 // REGISTER component routes
 
 router.post('/register', whereaboutsController.insertNewUser, (req, res) =>
-  res.status(200).json(res.locals.newUser)
+  res.sendStatus(200)
 );
 
 module.exports = router;

@@ -77,7 +77,7 @@ whereaboutsController.insertNewUser = async (req, res, next) => {
     const { name, phoneNum: phone_number, password } = req.body;
 
     // check user does NOT already exist in users table
-    const queryStrCheck = 'SELECT u.id FROM users u WHERE u.phone_number=$1';
+    const queryStrCheck = 'SELECT * FROM users u WHERE u.phone_number=$1';
     const existingUser = await db.query(queryStrCheck, [phone_number]);
     if (existingUser.rows[0]) {
       return next({
