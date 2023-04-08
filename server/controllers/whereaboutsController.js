@@ -9,7 +9,7 @@ const whereaboutsController = {};
 whereaboutsController.checkUserExists = async (req, res, next) => {
   try {
     // check all reqd fields are provided on req body (already checked on FE, so this may not be needed)
-    const props = ['phoneNum', 'password'];
+    const props = ['phone_number', 'password'];
 
     if (!props.every((prop) => Object.hasOwn(req.body, prop))) {
       return next({
@@ -20,7 +20,7 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
     }
 
     // destructure / sanitize req body
-    const { phoneNum: phone_number, password } = req.body;
+    const { phone_number, password } = req.body;
 
     // check that a record for passed phone_number exists in users table
     const queryStrCheck = 'SELECT * FROM users u WHERE u.phone_number=$1';
@@ -63,7 +63,7 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
 whereaboutsController.insertNewUser = async (req, res, next) => {
   try {
     // check all reqd fields are provided on req body (already checked on FE, so this may not be needed)
-    const props = ['name', 'phoneNum', 'password'];
+    const props = ['name', 'phone_number', 'password'];
 
     if (!props.every((prop) => Object.hasOwn(req.body, prop))) {
       return next({
@@ -74,7 +74,7 @@ whereaboutsController.insertNewUser = async (req, res, next) => {
     }
 
     // destructure / sanitize req body
-    const { name, phoneNum: phone_number, password } = req.body;
+    const { name, phone_number, password } = req.body;
 
     // check user does NOT already exist in users table
     const queryStrCheck = 'SELECT * FROM users u WHERE u.phone_number=$1';
