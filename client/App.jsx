@@ -4,6 +4,7 @@ import './index.css';
 import Login from './components/Login';
 import Contacts from './components/Contacts';
 import MyTripStart from './components/MyTripStart';
+import Registration from './components/Registration';
 
 
 export default function App() {
@@ -28,6 +29,8 @@ export default function App() {
         {userInfo.password}
       </div>
       <div className='main-container'>
+
+        <Registration userInfo={userInfo} setUserInfo={setUserInfo} />
         
         <Login 
           userInfo={userInfo} setUserInfo={setUserInfo}
