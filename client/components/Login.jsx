@@ -16,13 +16,13 @@ function Login(props) {
     event.preventDefault();
 
     const userLogin = {
-      phoneNum: props.userInfo.phone_number,
+      phone_number: props.userInfo.phone_number,
       password: props.userInfo.password
     }
 
     console.log(`userLogin: ${JSON.stringify(userLogin)}`);
 
-    axios.get('/api/login/', userLogin).then((response) => { 
+    axios.post('/api/login/', userLogin).then((response) => { 
       // Need a redirect here to dashbord
       console.log(`Inside login request from FE: ${JSON.stringify(response.data)}`)
     })
