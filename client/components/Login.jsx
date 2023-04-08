@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 
 
-function Login() {
+function Login(props) {
 
   const onChange = (event) => {
     props.setUserInfo((prevState) => ({
@@ -16,16 +16,16 @@ function Login() {
     event.preventDefault();
 
     const userLogin = {
-      phone: props.userInfo.phone,
+      phoneNum: props.userInfo.phoneNum,
       password: props.userInfo.password
     }
 
     console.log(`userLogin: ${JSON.stringify(userLogin)}`);
 
-    // axios.get('/api/users/', userLogin).then((response) =>{
-
-    //   console.log(response.data)
-    // })
+    axios.get('/api/login/', userLogin).then((response) => { 
+      // Need a redirect here to dashbord
+      console.log(`Inside login request from FE: ${JSON.stringify(response.data)}`)
+    })
 
   };
 
@@ -34,16 +34,18 @@ function Login() {
       <h3>Already a member? Please login</h3>
       <br></br>
       {/* <form className='form-container'> */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='form-container'>
+        <p>Top of form container</p>
+        <br></br>
         <div className='input-container'>
           <p>Login Phone Number:</p>
           <br></br>
           <input 
             type='text'
             className='input-box'
-            id='phone'
-            name='phone'
-            value={props.userInfo.phone}
+            id='phoneNum'
+            name='phoneNum'
+            value={props.userInfo.phoneNum}
             onChange={onChange}
           />
         </div>
@@ -61,8 +63,10 @@ function Login() {
             onChange={onChange}
           />
         </div>
-        <button type='submit' className='styleMe' >Submit Login</button>
+        <br></br>
+        <button type='submit' className='submit-btn' >Submit Login</button>
       </form>
+      
     </div>
   )
 };

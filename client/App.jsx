@@ -1,12 +1,14 @@
 import React, { Component, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './index.css';
+import Login from './components/Login';
+import Contacts from './components/Contacts';
 
 export default function App() {
   
   const [userInfo, setUserInfo] = useState({
     name: '',
-    phone: '',
+    phoneNum: '',
     password: '',
   })
 
@@ -16,7 +18,7 @@ export default function App() {
       <br></br>
       <div>
         Testing input from Phone input:
-        {userInfo.phone}
+        {userInfo.phoneNum}
       </div>
       <br></br>
       <div>
@@ -28,6 +30,9 @@ export default function App() {
         <Login 
           userInfo={userInfo} setUserInfo={setUserInfo}
         />
+
+        <Contacts />
+
       </div>
     </>
   )
