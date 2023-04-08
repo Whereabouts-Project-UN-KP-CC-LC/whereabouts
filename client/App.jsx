@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './index.css';
 import Login from './components/Login';
 import Contacts from './components/Contacts';
+import MyTripStart from './components/MyTripStart';
+
 
 export default function App() {
   
   const [userInfo, setUserInfo] = useState({
     name: '',
-    phoneNum: '',
+    phone_number: '',
     password: '',
   })
 
@@ -18,7 +20,7 @@ export default function App() {
       <br></br>
       <div>
         Testing input from Phone input:
-        {userInfo.phoneNum}
+        {userInfo.phone_number}
       </div>
       <br></br>
       <div>
@@ -32,6 +34,11 @@ export default function App() {
         />
 
         <Contacts />
+
+        <br></br>
+        <br></br>
+
+        <MyTripStart />
 
       </div>
     </>

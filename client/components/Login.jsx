@@ -16,7 +16,7 @@ function Login(props) {
     event.preventDefault();
 
     const userLogin = {
-      phoneNum: props.userInfo.phoneNum,
+      phoneNum: props.userInfo.phone_number,
       password: props.userInfo.password
     }
 
@@ -43,9 +43,9 @@ function Login(props) {
           <input 
             type='text'
             className='input-box'
-            id='phoneNum'
-            name='phoneNum'
-            value={props.userInfo.phoneNum}
+            id='phone_number'
+            name='phone_number'
+            value={props.userInfo.phone_number}
             onChange={onChange}
           />
         </div>
