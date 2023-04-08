@@ -5,8 +5,6 @@ const PORT = process.env.PORT || 3500;
 const app = express();
 const apiRouter = require('./routes/api');
 
-console.log(`Hello from inside server.js.`);
-
 /**
  * handle parsing request body
  */
@@ -24,7 +22,9 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 app.use('/api', apiRouter);
 
 // catch-all route handler for any requests to an unknown route
-app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
+app.use((req, res) =>
+  res.status(404).send("This is not the page you're looking for...")
+);
 
 // global error handler
 app.use((err, req, res, next) => {
@@ -38,6 +38,6 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, ()=> console.log(`Currently using port: ${PORT}`));
+app.listen(PORT, () => console.log(`Currently listening on port: ${PORT}`));
 
-// module.exports = app;
+module.exports = app;
