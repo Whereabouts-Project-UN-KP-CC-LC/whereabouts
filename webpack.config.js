@@ -3,7 +3,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-
   entry: './client/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -13,8 +12,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, './client/index.html')
-    })
+      template: path.join(__dirname, './client/index.html'),
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
@@ -27,14 +26,14 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
         },
       },
       {
-        test: /\.css?/, 
+        test: /\.css?/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
@@ -53,18 +52,17 @@ module.exports = {
     port: '8080',
     static: {
       publicPath: '/',
-      directory: path.resolve(__dirname, 'dist')
+      directory: path.resolve(__dirname, 'dist'),
     },
-    proxy: { 
+    proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'http://localhost:3000',
         secure: false,
       },
     },
     open: true,
     hot: true,
     liveReload: true,
-    headers: { 'Access-Control-Allow-Origin': '*' }
+    headers: { 'Access-Control-Allow-Origin': '*' },
   },
-
 };
