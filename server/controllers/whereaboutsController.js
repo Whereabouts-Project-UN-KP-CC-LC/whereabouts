@@ -2,41 +2,58 @@ const db = require('../models/whereaboutsModel');
 
 const whereaboutsController = {};
 
-whereaboutsController.getUser = async (req, res, next) => {
-    const id = req.params.id;
-    res.locals.user = await db.query('SELECT * FROM users WHERE id=$1', [id]);
-    return next();
-};
-
 //get contacts of current user
 whereaboutsController.getContacts = async (req, res, next) => {
-    res.locals.contacts = await db.query(
-        `SELECT c.traveler_id, u.id as contact_id, u.name, u.phone_number
-        FROM users u
-        INNER JOIN contacts_join c
-        ON u.id = c.contact_id
-        WHERE c.traveler_id = $1`,
-        [req.params.id]
-    );
-    return next();
+    try {
+        res.locals.contacts = await db.query(
+            `select u.phone_number, u.name from users u
+            inner join contacts_join cj on u.phone_number = cj.contact_phone_number
+            where cj.traveler_phone_number = $1`,
+            [req.params['phone_number']]
+        );
+        return next();
+    } catch (error) {
+        return next({
+            log: 'Express error handler caught whereaboutsController.getContacts error',
+            status: 500,
+            message: { error: 'Retrieving contacts of current user failed' },
+        });
+    }
 };
 
 //get single user by phone number
 whereaboutsController.getUserByPhoneNumber = async (req, res, next) => {
-    res.locals.user = await db.query(
-        `SELECT * FROM users WHERE phone_number=$1`,
-        [req.params['phone_number']]
-    );
-    return next();
+    try {
+        res.locals.user = await db.query(
+            `SELECT * FROM users WHERE phone_number=$1`,
+            [req.params['phone_number']]
+        );
+        return next();
+    } catch (error) {
+        return next({
+            log: 'Express error handler caught whereaboutsController.getUserByPhoneNumber error',
+            status: 500,
+            message: { error: 'Retrieving single user failed' },
+        });
+    }
 };
 
 //delete contact
 whereaboutsController.deleteContact = async (req, res, next) => {
-    await db.query(
-        `DELETE FROM contacts_join
-        WHERE traveler_id = $1 AND contact_id = $2`,
-        [req.params.travelerId, req.params.contactId]
-    );
-    return next();
+    try {
+        await db.query(
+            `DELETE FROM contacts_join
+            WHERE traveler_phone_number = $1 AND contact_phone_number = $2`,
+            [req.params.travelerPhone, req.params.contactPhone]
+        );
+        return next();
+    } catch (error) {
+        return next({
+            log: 'Express error handler caught whereaboutsController.deleteContact error',
+            status: 500,
+            message: { error: 'Failed to delete contact' },
+        });
+    }
 };
+
 module.exports = whereaboutsController;
