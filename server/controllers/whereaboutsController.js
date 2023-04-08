@@ -21,4 +21,22 @@ whereaboutsController.getContacts = async (req, res, next) => {
     return next();
 };
 
+//get single user by phone number
+whereaboutsController.getUserByPhoneNumber = async (req, res, next) => {
+    res.locals.user = await db.query(
+        `SELECT * FROM users WHERE phone_number=$1`,
+        [req.params['phone_number']]
+    );
+    return next();
+};
+
+//delete contact
+whereaboutsController.deleteContact = async (req, res, next) => {
+    await db.query(
+        `DELETE FROM contacts_join
+        WHERE traveler_id = $1 AND contact_id = $2`,
+        [req.params.travelerId, req.params.contactId]
+    );
+    return next();
+};
 module.exports = whereaboutsController;
