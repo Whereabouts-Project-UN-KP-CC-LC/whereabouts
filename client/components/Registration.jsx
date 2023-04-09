@@ -44,8 +44,9 @@ function Registration({ userInfo, setUserInfo }) {
 
         try {
         // need to confirm use of redirect & url
-            let response = await axios.post('/api/register', userInfo); 
-            response = JSON.parse(response);
+            console.log('userInfo being sent to BE =>', userInfo);
+            const response = await axios.post('/api/register', userInfo); 
+            console.log('response from POST req =>', response);
             
             if(response.status === 200) {
                 setSubStatus(true);
@@ -56,8 +57,8 @@ function Registration({ userInfo, setUserInfo }) {
             }
         } catch(err) {
         // render user alert that submission failed
-            console.log(err.message)
-            setSubStatus(false)
+            console.log(err.message);
+            setSubStatus(false);
        }
 
     }
