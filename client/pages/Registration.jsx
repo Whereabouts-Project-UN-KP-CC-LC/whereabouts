@@ -59,9 +59,14 @@ function Registration({ userInfo, setUserInfo }) {
         try {
         // need to confirm use of redirect & url
             console.log('userInfo being sent to BE =>', userInfo);
+<<<<<<< HEAD:client/pages/Registration.jsx
             
             let response = await axios.post('/api/register', userInfo); 
             response = JSON.parse(response);
+=======
+            const response = await axios.post('/api/register', userInfo); 
+            console.log('response from POST req =>', response);
+>>>>>>> 369c2ad (Registration POST request bug fixed. New users with unique phone numbers can now be added to DB.):client/components/Registration.jsx
             
             if(response.status === 200) {
                 setSubStatus(true);
@@ -72,8 +77,8 @@ function Registration({ userInfo, setUserInfo }) {
             }
         } catch(err) {
         // render user alert that submission failed
-            console.log(err.message)
-            setSubStatus(false)
+            console.log(err.message);
+            setSubStatus(false);
        }
 
     }
