@@ -46,6 +46,31 @@
 
 /****** End of Login styling ******/
 
+/****** Start of Registration styling ******/
+
+.registration-container {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: whitesmoke;
+  margin: 20px;
+  border-radius: 2%;
+}
+
+.registration-container h3 {
+  padding: 10px;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/****** End of Registration styling ******/
+
+
 /****** Start of Contacts styling ******/
 
 .contacts-container {

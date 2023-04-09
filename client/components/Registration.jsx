@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { redirect } from 'react-router-dom';
+import { Button } from '@mui/material';
+
 
 
 function Registration({ userInfo, setUserInfo }) {
@@ -10,9 +12,9 @@ function Registration({ userInfo, setUserInfo }) {
         message: ''
     });
 
-    // conditional alerts
+    // conditional alert
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
-    const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
+    // const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
 
  
 
@@ -44,6 +46,18 @@ function Registration({ userInfo, setUserInfo }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('submitting user data');
+
+        if (!passMatch) {
+            setSubStatus( (prevState) => {
+                return ({
+                    ...prevState,
+                    status: false,
+                    message: 'Passwords do not match. Please correct before submitting'
+                })
+            })
+
+            return;
+        }
 
         try {
         // need to confirm use of redirect & url
@@ -137,10 +151,10 @@ function Registration({ userInfo, setUserInfo }) {
                     <p>{mismatchAlert}</p>
                 </div>
                 <br></br>
-                <button type='submit' className='styleMe'>Create Your Account</button>
+                <Button type='submit' className='styleMe' variant='contained'>Create Your Account</Button>
             </form>
             <br></br>
-            <p>{subFailedAlert}</p>
+            <p>{subStatus.message}</p>
         </div>
         
     )
