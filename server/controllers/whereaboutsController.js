@@ -83,7 +83,7 @@ whereaboutsController.insertNewUser = async (req, res, next) => {
     if (existingUser.rows[0]) {
       return next({
         log: 'Express error handler caught whereaboutsController.insertNewUser error: A user with this phone number already exists',
-        status: 500,
+        status: 409,
         message: { error: 'A user with this phone number already exists' },
       });
     }

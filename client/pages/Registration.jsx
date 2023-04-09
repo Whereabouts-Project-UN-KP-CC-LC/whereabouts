@@ -6,11 +6,18 @@ import { Button } from '@mui/material';
 
 function Registration({ userInfo, setUserInfo }) {
     const [passMatch, setPassMatch ] = useState(true);
-    const [subStatus, setSubStatus] = useState(true);
+    const [subStatus, setSubStatus] = useState({
+        sent: false,
+        message: ''
+    });
 
     // conditional alert
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
+<<<<<<< HEAD:client/pages/Registration.jsx
     //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
+=======
+    const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
+>>>>>>> 193c6c4 (Updated Registration component to dynamically render error/success messages upon user submission. Updated whereabouts controller to respond with '409' status (conflict error code) when user attempts to make a submission with a phone number that already exists in the database.):client/components/Registration.jsx
 
  
 
@@ -69,7 +76,13 @@ function Registration({ userInfo, setUserInfo }) {
 >>>>>>> 369c2ad (Registration POST request bug fixed. New users with unique phone numbers can now be added to DB.):client/components/Registration.jsx
             
             if(response.status === 200) {
-                setSubStatus(true);
+                setSubStatus( (prevState) => {
+                    return {
+                        ...prevState,
+                        sent: true,
+                        message: 'Your account has been created'
+                }
+                });
                 console.log('User added to DB');
                 return redirect('/dashboard') 
             } else {
@@ -77,8 +90,15 @@ function Registration({ userInfo, setUserInfo }) {
             }
         } catch(err) {
         // render user alert that submission failed
-            console.log(err.message);
-            setSubStatus(false);
+            // console.log('this is the response', response);
+            console.log('this is the error =>', err.response.data.error);
+            setSubStatus((prevState) => {
+                return {
+                    ...prevState,
+                    sent: true,
+                    message: err.response.data.error,
+                };
+            });
        }
 
     }
