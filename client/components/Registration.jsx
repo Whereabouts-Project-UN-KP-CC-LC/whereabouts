@@ -5,11 +5,14 @@ import { redirect } from 'react-router-dom';
 
 function Registration({ userInfo, setUserInfo }) {
     const [passMatch, setPassMatch ] = useState(true);
-    const [subStatus, setSubStatus] = useState(true);
+    const [subStatus, setSubStatus] = useState({
+        sent: false,
+        message: ''
+    });
 
     // conditional alerts
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
-    const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
+    const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
 
  
 
@@ -49,7 +52,13 @@ function Registration({ userInfo, setUserInfo }) {
             console.log('response from POST req =>', response);
             
             if(response.status === 200) {
-                setSubStatus(true);
+                setSubStatus( (prevState) => {
+                    return {
+                        ...prevState,
+                        sent: true,
+                        message: 'Your account has been created'
+                }
+                });
                 console.log('User added to DB');
                 redirect('/dashboard') 
             } else {
@@ -57,8 +66,15 @@ function Registration({ userInfo, setUserInfo }) {
             }
         } catch(err) {
         // render user alert that submission failed
-            console.log(err.message);
-            setSubStatus(false);
+            // console.log('this is the response', response);
+            console.log('this is the error =>', err.response.data.error);
+            setSubStatus((prevState) => {
+                return {
+                    ...prevState,
+                    sent: true,
+                    message: err.response.data.error,
+                };
+            });
        }
 
     }
