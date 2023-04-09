@@ -58,7 +58,6 @@ hr {
 
 /****** End of Login styling ******/
 
-
 /****** Start of Registration styling ******/
 
 .registration-container {
@@ -82,53 +81,6 @@ hr {
 }
 
 /****** End of Registration styling ******/
-
-
-/****** Start of Dashboard styling ******/
-
-.dashboard-container {
-  display: grid;
-  margin-left: 10px;
-  margin-right: 10px;
-  border-style: solid;
-  border-radius: 5px;
-  grid-template-columns: 1fr 8fr;
-  border-color: #59656F;
-}
-
-/****** End of Dashboard styling ******/
-
-
-/****** Start of Sidebar styling ******/
-
-.sidebar-container {
-  display: flex;
-  border-style: solid;
-  grid-column: 1;
-  height: 100%;
-  border-radius: 5px;
-  padding: 10px;
-  justify-content: center;
-  border-color: #3D405B;
-  background-color: #DB2955;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #FFFFFC;
-  font-weight: bold;
-  font-size: 25px;
-}
-
-.sidebar-item {
-  color: #FFFFFC;
-  margin: 15px;
-  cursor: pointer;
-}
-
-/****** End of Side styling ******/
 
 
 /****** Start of Contacts styling ******/
