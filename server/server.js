@@ -5,6 +5,34 @@ const PORT = process.env.PORT || 3500;
 const app = express();
 const apiRouter = require('./routes/api');
 
+const httpServer = require('http').Server(app); // app is a handler function supplied to HTTP server
+
+const cors = require('cors');
+app.use(cors()); // allows communication between different domains
+
+// initialize new Server instance of socket.io by passing it HTTP server obj on which to mount the socket server
+const io = require('socket.io')(httpServer, {
+  pingTimeout: 30000, // https://socket.io/docs/v4/troubleshooting-connection-issues/#the-browser-tab-was-minimized-and-heartbeat-has-failed
+  cors: {
+    origin: `http://localhost:8080/`,
+  },
+  path: '/chat',
+});
+
+// on connection event (i.e. on connecting to socket server instance), listening for incoming sockets + connects with React app
+io.on('connection', (socket) => {
+  console.log(`${socket.id} user connected`);
+  socket.on('new msg', (msg) => {
+    // server emits client's msg to everyone, inc sender (all users / sockets); recall, io is the socket server instance we created
+    io.emit('disperse msg', msg);
+    // go to ChatPage.jsx, socket.on('disperse msg')
+  });
+  socket.on('disconnect', () => {
+    console.log(`${socket.id} user disconnected`); // refreshing chat page disconnects and reconnects socket
+    //https://socket.io/docs/v4/troubleshooting-connection-issues/#problem-the-socket-gets-disconnected
+  });
+});
+
 /**
  * handle parsing request body
  */
@@ -38,6 +66,9 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => console.log(`Currently listening on port: ${PORT}`));
+// listening on HTTP server!
+httpServer.listen(PORT, () =>
+  console.log(`Currently listening on port: ${PORT}`)
+);
 
-// module.exports = app;
+module.exports = app;

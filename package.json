@@ -7,9 +7,7 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open --hot",
     "server": "nodemon server/server.js",
-    "dev": "concurrently \"npm run server\" \"npm run start\"",
-    "chatServer": "nodemon server/chatServer.js",
-    "chatDev": "concurrently \"npm run server\" \"npm run chatServer\" \"npm run start\""
+    "dev": "concurrently \"npm run server\" \"npm run start\""
   },
   "author": "Wonderpuss-Photogenicus",
   "license": "ISC",
