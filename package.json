@@ -7,7 +7,9 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open --hot",
     "server": "nodemon server/server.js",
-    "dev": "concurrently \"npm run server\" \"npm run start\""
+    "dev": "concurrently \"npm run server\" \"npm run start\"",
+    "chatServer": "nodemon server/chatServer.js",
+    "chatDev": "concurrently \"npm run server\" \"npm run chatServer\" \"npm run start\""
   },
   "author": "Wonderpuss-Photogenicus",
   "license": "ISC",
@@ -23,7 +25,9 @@
     "pg": "^8.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.10.0"
+    "react-router-dom": "^6.10.0",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.0",

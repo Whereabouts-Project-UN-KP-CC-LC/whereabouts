@@ -29,7 +29,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 .input-container {
@@ -38,9 +37,9 @@
   flex-direction: column;
   padding: 20px;
   justify-content: flex-start;
-  border-color: #59656F;
+  border-color: #59656f;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   background-color: whitesmoke;
 }
 
@@ -57,9 +56,8 @@
 }
 
 .add-contact-container {
-  
-  border-style: solid; 
-  border-color: #59656F;
+  border-style: solid;
+  border-color: #59656f;
   border-radius: 10px;
   width: 400px;
   height: 100px;
@@ -72,9 +70,9 @@
   border-style: solid;
   width: 800px;
   height: 100vh;
-  border-color: #59656F;
+  border-color: #59656f;
   display: grid;
-  background-color: #00A676;
+  background-color: #00a676;
 }
 
 .titles-row {
@@ -94,12 +92,12 @@
   justify-content: center;
   align-items: center;
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
 }
 
 .contacts-display {
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
   height: 300px;
 }
 
@@ -118,30 +116,69 @@
 
 .myTripStart-container {
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
 }
 
 .select-contact-list {
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
 }
 
 .select-contact-list-display {
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
 }
 
-
 /****** End of MyTripStart styling ******/
-
-
-
-
-
-
-
-
 
 /****** Start of ADD COMPONENT HERE styling ******/
 
 /****** End of ADD COMPONENT HERE styling ******/
+
+/****** Start of ChatNamespace styling ******/
+
+.chat #form {
+  background: #59656f;
+  padding: 0.25rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  height: 3rem;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+}
+.chat #input {
+  border: none;
+  padding: 0 1rem;
+  flex-grow: 1;
+  border-radius: 2rem;
+  margin: 0.25rem;
+}
+.chat #input:focus {
+  outline: none;
+}
+.chat #form > button {
+  background: #00a676;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+  font-weight: bold;
+}
+.chat #messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.chat #messages > li {
+  padding: 0.5rem 1rem;
+}
+.chat #messages > li:nth-child(odd) {
+  background: #efefef;
+}
+
+/****** End of ChatNamespace styling ******/

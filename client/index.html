@@ -1,13 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Whereabouts Project</title>
-</head>
-<body>
-  <div id="root"></div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Whereabouts</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Below are necessary scripts for socket.io-client, the client library that loads on the browser side -->
+    <script type="module">
+      import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
+      // by default, the client sends — and the server expects — HTTP requests with the "/socket.io/" req path
+      var socket = io();
+      // store DOM nodes to access all parts of chat
+      var messages = document.getElementById('messages');
+      var form = document.getElementById('form');
+      var input = document.getElementById('input');
+      // add event listener on chat Send button
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (input.value) {
+          console.log(input.value);
+          // emit sends event (message) to every socket
+          socket.emit('new chat', input.value);
+          input.value = ' ';
+        }
+      });
+      // create DOM nodes for sent messages
+      socket.on('new chat', (msg) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = msg;
+        messages.append(listItem);
+        window.scrollTo(0, document.body.scrollHeight); // sets scroll to bottom of page so most recent chats are visible
+      });
+    </script>
+  </body>
 </html>
