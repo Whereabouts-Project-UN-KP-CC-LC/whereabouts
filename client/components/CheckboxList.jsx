@@ -21,6 +21,10 @@ export default function CheckboxList() {
 
     setChecked(newChecked);
   };
+  // useEffect() to fetch GET request for current user's contacts
+  // Look into using useContext react
+
+
 
   return (
     <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>

@@ -1,15 +1,16 @@
 import React, { useState, useEffect} from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { redirect } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 
 function Registration({ userInfo, setUserInfo }) {
     const [passMatch, setPassMatch ] = useState(true);
     const [subStatus, setSubStatus] = useState(true);
 
-    // conditional alerts
+    // conditional alert
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
-    const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
+    //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
 
  
 
@@ -42,8 +43,23 @@ function Registration({ userInfo, setUserInfo }) {
         event.preventDefault();
         console.log('submitting user data');
 
+        // new before charlie's PR
+        if (!passMatch) {
+            setSubStatus( (prevState) => {
+                return ({
+                    ...prevState,
+                    status: false,
+                    message: 'Passwords do not match. Please correct before submitting'
+                })
+            })
+
+            return;
+        }
+
         try {
         // need to confirm use of redirect & url
+            console.log('userInfo being sent to BE =>', userInfo);
+            
             let response = await axios.post('/api/register', userInfo); 
             response = JSON.parse(response);
             
@@ -120,10 +136,10 @@ function Registration({ userInfo, setUserInfo }) {
                     <p>{mismatchAlert}</p>
                 </div>
                 <br></br>
-                <button type='submit' className='styleMe'>Create Your Account</button>
+                <Button type='submit' className='styleMe' variant='contained'>Create Your Account</Button>
             </form>
             <br></br>
-            <p>{subFailedAlert}</p>
+            <p>{subStatus.message}</p>
         </div>
         
     )

@@ -38,14 +38,18 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
       password,
       existingUser.rows[0].password
     );
+    console.log(`input pw: ${password}`)
+    console.log(`db user pw: ${existingUser.rows[0].password}`);  
+
     if (!passwordIsMatch) {
+      
       return next({
         log: 'Express error handler caught whereaboutsController.checkUserExists error: Input password is incorrect',
-        status: 500,
+        status: 400, // original 500
         message: { error: 'Input password is incorrect' },
       });
     }
-
+    console.log(`Passwords should match log!!!!!`);
     // no need to persist data, only success message needed on FE
     return next();
   } catch (error) {
