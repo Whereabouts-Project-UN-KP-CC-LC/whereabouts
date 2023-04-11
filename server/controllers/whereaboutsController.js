@@ -38,8 +38,6 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
       password,
       existingUser.rows[0].password
     );
-    console.log(`input pw: ${password}`)
-    console.log(`db user pw: ${existingUser.rows[0].password}`);  
 
     if (!passwordIsMatch) {
       
@@ -49,7 +47,6 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
         message: { error: 'Input password is incorrect' },
       });
     }
-    console.log(`Passwords should match log!!!!!`);
     // no need to persist data, only success message needed on FE
     return next();
   } catch (error) {
@@ -136,19 +133,24 @@ whereaboutsController.getContacts = async (req, res, next) => {
 
 //get single user by phone number
 whereaboutsController.getUserByPhoneNumber = async (req, res, next) => {
-    try {
-        res.locals.user = await db.query(
-            `SELECT * FROM users WHERE phone_number=$1`,
-            [req.params['phone_number']]
-        );
-        return next();
-    } catch (error) {
-        return next({
-            log: 'Express error handler caught whereaboutsController.getUserByPhoneNumber error',
-            status: 500,
-            message: { error: 'Retrieving single user failed' },
-        });
-    }
+  const { phone_number } = req.body;
+  console.log(`this is req.body: ${JSON.stringify(req.body)}`);
+  console.log(`this is number to query: ${phone_number}`);
+
+  try {
+      //console.log(`inside of get user by phone request: ${req.params['phone_number']}`);
+      res.locals.user = await db.query(
+          `SELECT * FROM users WHERE phone_number=$1`,
+          [req.params['phone_number']]
+      );
+      return next();
+  } catch (error) {
+      return next({
+          log: 'Express error handler caught whereaboutsController.getUserByPhoneNumber error',
+          status: 500,
+          message: { error: 'Retrieving single user failed' },
+      });
+  }
 };
 
 //delete contact

@@ -17,7 +17,8 @@ export default function App() {
     password: '',
   })
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  // created this hook to access contacts in mytrip start component
+  const [contacts, setContacts] = useState([]);
 
   return (
     <>
@@ -29,10 +30,10 @@ export default function App() {
 
           <div className='body-container'>
             <Routes>
-              <Route exact path='/' element={<StartPage userInfo={userInfo} setUserInfo={setUserInfo}/>} />
-              <Route path='/login' element={<Login userInfo={userInfo} setUserInfo={setUserInfo}/>} />
-              <Route path='/register' element={<Registration userInfo={userInfo} setUserInfo={setUserInfo}/>} />
-              <Route path='/dashboard' element={<Dashboard userInfo={userInfo} setUserInfo={setUserInfo}/>} />
+              <Route exact path='/' element={<StartPage userInfo={userInfo} setUserInfo={setUserInfo} setContacts={setContacts}/>} />
+              <Route path='/login' element={<Login userInfo={userInfo} setUserInfo={setUserInfo} setContacts={setContacts}/>} />
+              <Route path='/register' element={<Registration userInfo={userInfo} setUserInfo={setUserInfo} setContacts={setContacts}/>} />
+              <Route path='/dashboard' element={<Dashboard userInfo={userInfo} setUserInfo={setUserInfo} setContacts={setContacts}/>} />
             </Routes>
             
             

@@ -20,6 +20,12 @@ function Sidebar(props) {
                 >
                 Trips
             </div>
+            <div 
+                onClick={props.setRenderTripsImWatching} 
+                className='sidebar-item'
+                >
+                Trips I'm Watching
+            </div>
             
             <Link to='/' className='sidebar-item'>Logout</Link>
         </div>

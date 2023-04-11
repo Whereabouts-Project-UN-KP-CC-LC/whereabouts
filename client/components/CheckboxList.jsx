@@ -28,7 +28,7 @@ export default function CheckboxList() {
 
   return (
     <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {[0, 1, 2, 3, 4, 5, 6].map((value) => {
+      {[0, 1, 2].map((value) => {
         const labelId = `checkbox-list-label-${value}`;
         return (
           <ListItem

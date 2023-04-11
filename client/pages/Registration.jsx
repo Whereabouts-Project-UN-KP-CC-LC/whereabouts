@@ -66,7 +66,7 @@ function Registration({ userInfo, setUserInfo }) {
             if(response.status === 200) {
                 setSubStatus(true);
                 console.log('User added to DB');
-                redirect('/dashboard') 
+                return redirect('/dashboard') 
             } else {
                 throw new Error();
             }

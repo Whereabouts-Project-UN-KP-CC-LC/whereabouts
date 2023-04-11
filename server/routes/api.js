@@ -5,11 +5,10 @@ const whereaboutsController = require('../controllers/whereaboutsController');
 // LOGIN component routes
 
 router.post('/login', whereaboutsController.checkUserExists, (req, res) => {
-  console.log(`Test!!! End of Login path. Status should be 200`);
-  res.status(200);
+  res.sendStatus(200);
 });
 //get all contacts of current user
-router.get('/users/contacts/:phone_number', whereaboutsController.getContacts, (req, res) => {
+router.get('/users/contacts/', whereaboutsController.getContacts, (req, res) => {
   const { rows } = res.locals.contacts;
   res.status(200).json(rows);
 });

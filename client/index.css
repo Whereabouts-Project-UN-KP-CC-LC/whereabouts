@@ -4,6 +4,18 @@
   box-sizing: border-box;
 }
 
+
+/* Tried to get this to work within contacts component. Do we even need?
+
+hr {
+  width:'100%';
+  height:'5px'; 
+  border-style: 'solid';
+  background-color:'black';
+  color:  black;
+  position: fixed;
+} */
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -80,7 +92,7 @@
   margin-right: 10px;
   border-style: solid;
   border-radius: 5px;
-  grid-template-columns: 1fr 4fr 4fr;
+  grid-template-columns: 1fr 8fr;
   border-color: #59656F;
 }
 
@@ -130,7 +142,6 @@
 }
 
 .add-contact-container {
-  
   border-style: solid; 
   border-color: #59656F;
   border-radius: 10px;
@@ -140,11 +151,9 @@
 }
 
 .valid-contacts-container {
-  display: flex;
-  flex-direction: column;
   border-style: solid;
   width: 800px;
-  height: 100vh;
+  height: 500px;
   border-color: #59656F;
   display: grid;
   background-color: #00A676;
@@ -153,6 +162,7 @@
 .titles-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  height: 100px;
   align-items: center;
   justify-content: center;
   padding: 10px;
@@ -161,19 +171,24 @@
 
 .contact-title {
   width: 250px;
-  height: 145px;
+  height: 75px;
   background-color: whitesmoke;
   display: flex;
   justify-content: center;
   align-items: center;
   border-style: solid;
   border-color: #59656F;
+  border-radius: 5px;
 }
 
 .contacts-display {
+  margin: 10px;
+  padding: 10px;
   border-style: solid;
   border-color: #59656F;
+  border-radius: 5px;
   height: 300px;
+  overflow: auto;
 }
 
 /****** End of Contacts styling ******/
@@ -183,6 +198,7 @@
 .oneContact-container {
   display: flex;
   justify-content: space-evenly;
+  height: 30px;
 }
 
 /****** End of OneContact styling ******/
@@ -211,7 +227,17 @@
 
 
 
+/****** Start of  HERE styling ******/
 
+.trip-watching-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+/****** End of ADD COMPONENT HERE styling ******/
 
 
 
