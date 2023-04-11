@@ -5,18 +5,22 @@ const PORT = process.env.PORT || 3500;
 const app = express();
 const apiRouter = require('./routes/api');
 
-const httpServer = require('http').Server(app); // app is a handler function supplied to HTTP server
+// const httpServer = require('http').Server(app); // app is a handler function supplied to HTTP server
+const http = require('http');
+const httpServer = http.createServer(app);
 
 const cors = require('cors');
 app.use(cors()); // allows communication between different domains
 
 // initialize new Server instance of socket.io by passing it HTTP server obj on which to mount the socket server
-const io = require('socket.io')(httpServer, {
+const { Server } = require('socket.io');
+const io = new Server(httpServer, {
   pingTimeout: 30000, // https://socket.io/docs/v4/troubleshooting-connection-issues/#the-browser-tab-was-minimized-and-heartbeat-has-failed
   cors: {
-    origin: `http://localhost:8080/`,
+    origin: `http://localhost:8080`,
+    methods: ['GET', 'POST'],
   },
-  path: '/chat',
+  // path: '/chat',
 });
 
 // on connection event (i.e. on connecting to socket server instance), listening for incoming sockets + connects with React app

@@ -14,7 +14,7 @@ export default function ChatBody({ messages }) {
     <>
       <header className="chat__mainHeader">
         <button className="leaveChat__btn" onClick={handleExitChat}>
-          Exit Chat
+          End Chat / Trip
         </button>
       </header>
 

@@ -59,6 +59,10 @@ module.exports = {
         target: 'http://localhost:3000',
         secure: false,
       },
+      '/socket.io': {
+        target: 'http://localhost:3000',
+        secure: false,
+      },
     },
     open: true,
     hot: true,

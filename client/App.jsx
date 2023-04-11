@@ -8,13 +8,10 @@ import Registration from './components/Registration';
 import ChatPage from './components/ChatPage';
 
 // creates a new Manager for the given host URL (https://socket.io/docs/v4/client-api/#manager)
-import { io } from 'socket.io-client';
-const socket = io('http://localhost:8080', {
-  path: '/chat',
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:8080/', {
+  // path: '/chat',
 });
-
-// import socketIO from 'socket.io-client';
-// const socket = socketIO.connect('http://localhost:8080');
 
 export default function App() {
   const [userInfo, setUserInfo] = useState({
