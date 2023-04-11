@@ -29,14 +29,17 @@ function Contacts(props) {
     console.log(`checking to see what addContact is without key: ${JSON.stringify(addContact)}`);
     console.log(`checking to see what addContact is: ${JSON.stringify(addContact["phone_number"])}`);
 
-    axios.get(`/api/users/${addContact["phone_number"]}`, addContact)
-      .then((response) => {
-        console.log(`response.data: ${response.data}`);
-        console.log(`response.status: ${response.status}`);
-
-      })
-    
+    let response = await axios.get(`/api/users/${addContact["phone_number"]}`, addContact);
+     
     response = JSON.stringify(response);
+    console.log(`response.data: ${response.data}`);
+    console.log(`response.status: ${response.status}`);
+
+      
+      // .catch(err => {
+      //   console.log(`Error inside GET request for user by phone.`), err;
+      // })
+    
 
     
     // if (response.status === 200) {
