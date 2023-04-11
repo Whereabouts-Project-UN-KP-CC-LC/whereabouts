@@ -8,7 +8,10 @@ function Contacts(props) {
   // hook to manage input to verify if contact exists in db
   const [addContact, setAddContact] = useState('');
   // hook to add additional contact cards to display
-  const [renderContactCount, setRenderContactCount] = useState(0);
+  const [renderContactCount, setRenderContactCount] = useState([]);
+  //hook to capture data to add a contact
+  const [dataForContact, setDataForContact] = useState(null);
+
 
   const onChange = (event) => {
     setAddContact((prevState) => ({
@@ -19,24 +22,32 @@ function Contacts(props) {
 
   
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // fetch request to db to verify user
+    console.log(`checking to see what addContact is without key: ${JSON.stringify(addContact)}`);
     console.log(`checking to see what addContact is: ${JSON.stringify(addContact["phone_number"])}`);
-    axios.get(`/api/users/${JSON.stringify(addContact["phone_number"])}`, addContact)
+
+    axios.get(`/api/users/${addContact["phone_number"]}`, addContact)
       .then((response) => {
-        console.log(`post request from add contacts page`)
-        console.log(`This is response: ${JSON.stringify(response.data)}`);
+        console.log(`response.data: ${response.data}`);
+        console.log(`response.status: ${response.status}`);
+
       })
-      .catch((error) => {
-        if (error) {
-          alert(`There is an issue adding your contact. Please try again.`);
-        }
-      })
-    // add contact to into OneContact component:
-    // if user exists in db, then set rendercontact to true
-    setRenderContactCount(renderContactCount + 1)
+    
+    response = JSON.stringify(response);
+
+    
+    // if (response.status === 200) {
+    //   console.log(`Get user with phone_number successful`)
+    //   setDataForContact(response.data);
+    // } else {
+    //   throw new Error('Problem getting contact with phone_number');
+    // }
+  
+    // successful GET request will add user to state, accessible from OneContact component
+    
 
   }
 
@@ -54,7 +65,6 @@ function Contacts(props) {
             className='input-box'
             id='add-contact'
             name='phone_number'
-            value={addContact.phone_number}
             onChange={onChange}
           />
           <button type='submit'className='submit-btn'>Add Contact</button>

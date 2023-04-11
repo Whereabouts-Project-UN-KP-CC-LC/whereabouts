@@ -15,6 +15,7 @@ router.get('/users/contacts/', whereaboutsController.getContacts, (req, res) => 
 
 // REGISTER component routes
 //get single user by phone number (for adding contacts). If nothing is found, the 'rows' property is an empty array.
+// testing without :phone_number in route
 router.get('/users/:phone_number', whereaboutsController.getUserByPhoneNumber, (req, res) => {
   const { rows } = res.locals.user;
   res.status(200).json(rows);
