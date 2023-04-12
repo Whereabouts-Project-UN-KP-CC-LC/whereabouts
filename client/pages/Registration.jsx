@@ -1,20 +1,17 @@
 import React, { useState, useEffect} from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { redirect } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 
-
 function Registration({ userInfo, setUserInfo }) {
     const [passMatch, setPassMatch ] = useState(true);
-    const [subStatus, setSubStatus] = useState({
-        sent: false,
-        message: ''
-    });
+    const [subStatus, setSubStatus] = useState(true);
 
-    // conditional alert
+    // conditional alerts
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
-    // const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
+    //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
+    const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
 
  
 
@@ -47,6 +44,7 @@ function Registration({ userInfo, setUserInfo }) {
         event.preventDefault();
         console.log('submitting user data');
 
+        // new before charlie's PR
         if (!passMatch) {
             setSubStatus( (prevState) => {
                 return ({
@@ -62,33 +60,21 @@ function Registration({ userInfo, setUserInfo }) {
         try {
         // need to confirm use of redirect & url
             console.log('userInfo being sent to BE =>', userInfo);
-            const response = await axios.post('/api/register', userInfo); 
-            console.log('response from POST req =>', response);
+            
+            let response = await axios.post('/api/register', userInfo); 
+            response = JSON.parse(response);
             
             if(response.status === 200) {
-                setSubStatus( (prevState) => {
-                    return {
-                        ...prevState,
-                        sent: true,
-                        message: 'Your account has been created'
-                }
-                });
+                setSubStatus(true);
                 console.log('User added to DB');
-                redirect('/dashboard') 
+                return redirect('/dashboard') 
             } else {
                 throw new Error();
             }
         } catch(err) {
         // render user alert that submission failed
-            // console.log('this is the response', response);
-            console.log('this is the error =>', err.response.data.error);
-            setSubStatus((prevState) => {
-                return {
-                    ...prevState,
-                    sent: true,
-                    message: err.response.data.error,
-                };
-            });
+            console.log(err.message)
+            setSubStatus(false)
        }
 
     }
@@ -151,10 +137,10 @@ function Registration({ userInfo, setUserInfo }) {
                     <p>{mismatchAlert}</p>
                 </div>
                 <br></br>
-                <Button type='submit' className='styleMe' variant='contained'>Create Your Account</Button>
+                <button type='submit' className='styleMe'>Create Your Account</button>
             </form>
             <br></br>
-            <p>{subStatus.message}</p>
+            <p>{subFailedAlert}</p>
         </div>
         
     )

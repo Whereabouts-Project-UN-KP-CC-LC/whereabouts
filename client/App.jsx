@@ -1,10 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './index.css';
-import Login from './components/Login';
-import Contacts from './components/Contacts';
-import MyTripStart from './components/MyTripStart';
-import Registration from './components/Registration';
+import Header from './components/Header';
+import StartPage from './pages/StartPage';
+import Login from './pages/Login';
+import Registration from './pages/Registration';
+import Dashboard from './pages/Dashboard';
+
 
 
 export default function App() {
@@ -14,36 +16,30 @@ export default function App() {
     phone_number: '',
     password: '',
   })
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // created this hook to access contacts in mytrip start component
+  const [contacts, setContacts] = useState([]);
 
   return (
     <>
-      <h1>Testing APP landing</h1>
-      <br></br>
-      <div>
-        Testing input from Phone input:
-        {userInfo.phone_number}
-      </div>
-      <br></br>
-      <div>
-        Testing input from Password input:
-        {userInfo.password}
-      </div>
-      <div className='main-container'>
+      <Router>
+        <div className='main-container'>
+          <div className='header-container'>
+            <Header />
+          </div>
 
-        <Registration userInfo={userInfo} setUserInfo={setUserInfo} />
-        
-        <Login 
-          userInfo={userInfo} setUserInfo={setUserInfo}
-        />
-
-        <Contacts />
-
-        <br></br>
-        <br></br>
-
-        <MyTripStart />
-
-      </div>
+          <div className='body-container'>
+            <Routes>
+              <Route exact path='/' element={<StartPage userInfo={userInfo} setUserInfo={setUserInfo} setContacts={setContacts}/>} />
+              <Route path='/login' element={<Login userInfo={userInfo} setUserInfo={setUserInfo} setContacts={setContacts}/>} />
+              <Route path='/register' element={<Registration userInfo={userInfo} setUserInfo={setUserInfo} setContacts={setContacts}/>} />
+              <Route path='/dashboard' element={<Dashboard userInfo={userInfo} setUserInfo={setUserInfo} setContacts={setContacts}/>} />
+            </Routes>
+            
+            
+          </div>
+        </div>
+      </Router>
     </>
   )
 };

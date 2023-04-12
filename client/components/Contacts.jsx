@@ -6,9 +6,12 @@ import { Navigate } from 'react-router-dom';
 function Contacts(props) {
 
   // hook to manage input to verify if contact exists in db
-  const [addContact, setAddContact] = useState({ phoneNum: '' });
+  const [addContact, setAddContact] = useState('');
   // hook to add additional contact cards to display
-  const [renderContactCount, setRenderContactCount] = useState(0);
+  const [renderContactCount, setRenderContactCount] = useState([]);
+  //hook to capture data to add a contact
+  const [dataForContact, setDataForContact] = useState(null);
+
 
   const onChange = (event) => {
     setAddContact((prevState) => ({
@@ -19,18 +22,35 @@ function Contacts(props) {
 
   
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // fetch request to db to verify user
-    // axios.post('/api/users/phone', addContact).then((response) => {
-    //   console.log(`post request from add contacts page`)
-    //   console.log(response.data)
-    // })
+    console.log(`checking to see what addContact is without key: ${JSON.stringify(addContact)}`);
+    console.log(`checking to see what addContact is: ${JSON.stringify(addContact["phone_number"])}`);
 
-    // add contact to into OneContact component:
-    // if user exists in db, then set rendercontact to true
-    setRenderContactCount(renderContactCount + 1)
+    let response = await axios.get(`/api/users/${addContact["phone_number"]}`, addContact);
+     
+    response = JSON.stringify(response);
+    console.log(`response.data: ${response.data}`);
+    console.log(`response.status: ${response.status}`);
+
+      
+      // .catch(err => {
+      //   console.log(`Error inside GET request for user by phone.`), err;
+      // })
+    
+
+    
+    // if (response.status === 200) {
+    //   console.log(`Get user with phone_number successful`)
+    //   setDataForContact(response.data);
+    // } else {
+    //   throw new Error('Problem getting contact with phone_number');
+    // }
+  
+    // successful GET request will add user to state, accessible from OneContact component
+    
 
   }
 
@@ -47,8 +67,7 @@ function Contacts(props) {
             type='text'
             className='input-box'
             id='add-contact'
-            name='phoneNum'
-            value={addContact.phoneNum}
+            name='phone_number'
             onChange={onChange}
           />
           <button type='submit'className='submit-btn'>Add Contact</button>
@@ -61,10 +80,9 @@ function Contacts(props) {
           <p className='contact-title'>Name of Contact</p>
           <p className='contact-title'>Phone Number of Contact</p>
           <p className='contact-title'>Delete Contact?</p>
+          
         </div>
-        <br></br>
-        <p>Dead Space</p>
-        <br></br>
+      
         <div className='contacts-display'>
           <h3>Inside of contacts display</h3>
           {/* <OneContact /> */}

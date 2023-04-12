@@ -4,6 +4,18 @@
   box-sizing: border-box;
 }
 
+
+/* Tried to get this to work within contacts component. Do we even need?
+
+hr {
+  width:'100%';
+  height:'5px'; 
+  border-style: 'solid';
+  background-color:'black';
+  color:  black;
+  position: fixed;
+} */
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -46,6 +58,79 @@
 
 /****** End of Login styling ******/
 
+
+/****** Start of Registration styling ******/
+
+.registration-container {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: whitesmoke;
+  margin: 20px;
+  border-radius: 2%;
+}
+
+.registration-container h3 {
+  padding: 10px;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/****** End of Registration styling ******/
+
+
+/****** Start of Dashboard styling ******/
+
+.dashboard-container {
+  display: grid;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-style: solid;
+  border-radius: 5px;
+  grid-template-columns: 1fr 4fr 4fr;
+  border-color: #59656F;
+}
+
+/****** End of Dashboard styling ******/
+
+
+/****** Start of Sidebar styling ******/
+
+.sidebar-container {
+  display: flex;
+  border-style: solid;
+  grid-column: 1;
+  height: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  justify-content: center;
+  border-color: #3D405B;
+  background-color: #DB2955;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #FFFFFC;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.sidebar-item {
+  color: #FFFFFC;
+  margin: 15px;
+  cursor: pointer;
+}
+
+/****** End of Side styling ******/
+
+
 /****** Start of Registration styling ******/
 
 .registration-container {
@@ -82,7 +167,6 @@
 }
 
 .add-contact-container {
-  
   border-style: solid; 
   border-color: #59656F;
   border-radius: 10px;
@@ -92,11 +176,9 @@
 }
 
 .valid-contacts-container {
-  display: flex;
-  flex-direction: column;
   border-style: solid;
   width: 800px;
-  height: 100vh;
+  height: 500px;
   border-color: #59656F;
   display: grid;
   background-color: #00A676;
@@ -105,6 +187,7 @@
 .titles-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  height: 100px;
   align-items: center;
   justify-content: center;
   padding: 10px;
@@ -113,19 +196,24 @@
 
 .contact-title {
   width: 250px;
-  height: 145px;
+  height: 75px;
   background-color: whitesmoke;
   display: flex;
   justify-content: center;
   align-items: center;
   border-style: solid;
   border-color: #59656F;
+  border-radius: 5px;
 }
 
 .contacts-display {
+  margin: 10px;
+  padding: 10px;
   border-style: solid;
   border-color: #59656F;
+  border-radius: 5px;
   height: 300px;
+  overflow: auto;
 }
 
 /****** End of Contacts styling ******/
@@ -135,6 +223,7 @@
 .oneContact-container {
   display: flex;
   justify-content: space-evenly;
+  height: 30px;
 }
 
 /****** End of OneContact styling ******/
@@ -163,7 +252,17 @@
 
 
 
+/****** Start of  HERE styling ******/
 
+.trip-watching-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+/****** End of ADD COMPONENT HERE styling ******/
 
 
 
