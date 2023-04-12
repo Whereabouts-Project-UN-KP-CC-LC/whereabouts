@@ -1,17 +1,14 @@
 import React, { useState, useEffect} from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { redirect } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 
 function Registration({ userInfo, setUserInfo }) {
     const [passMatch, setPassMatch ] = useState(true);
-    const [subStatus, setSubStatus] = useState({
-        sent: false,
-        message: ''
-    });
+    const [subStatus, setSubStatus] = useState(true);
 
-    // conditional alert
+    // conditional alerts
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
 <<<<<<< HEAD:client/pages/Registration.jsx
     //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
@@ -76,13 +73,7 @@ function Registration({ userInfo, setUserInfo }) {
 >>>>>>> 369c2ad (Registration POST request bug fixed. New users with unique phone numbers can now be added to DB.):client/components/Registration.jsx
             
             if(response.status === 200) {
-                setSubStatus( (prevState) => {
-                    return {
-                        ...prevState,
-                        sent: true,
-                        message: 'Your account has been created'
-                }
-                });
+                setSubStatus(true);
                 console.log('User added to DB');
                 return redirect('/dashboard') 
             } else {
@@ -90,15 +81,8 @@ function Registration({ userInfo, setUserInfo }) {
             }
         } catch(err) {
         // render user alert that submission failed
-            // console.log('this is the response', response);
-            console.log('this is the error =>', err.response.data.error);
-            setSubStatus((prevState) => {
-                return {
-                    ...prevState,
-                    sent: true,
-                    message: err.response.data.error,
-                };
-            });
+            console.log(err.message)
+            setSubStatus(false)
        }
 
     }
@@ -161,10 +145,10 @@ function Registration({ userInfo, setUserInfo }) {
                     <p>{mismatchAlert}</p>
                 </div>
                 <br></br>
-                <Button type='submit' className='styleMe' variant='contained'>Create Your Account</Button>
+                <button type='submit' className='styleMe'>Create Your Account</button>
             </form>
             <br></br>
-            <p>{subStatus.message}</p>
+            <p>{subFailedAlert}</p>
         </div>
         
     )
