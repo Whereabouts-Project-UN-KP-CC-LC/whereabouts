@@ -4,18 +4,6 @@
   box-sizing: border-box;
 }
 
-
-/* Tried to get this to work within contacts component. Do we even need?
-
-hr {
-  width:'100%';
-  height:'5px'; 
-  border-style: 'solid';
-  background-color:'black';
-  color:  black;
-  position: fixed;
-} */
-
 .main-container {
   display: flex;
   flex-direction: column;
@@ -41,7 +29,6 @@ hr {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 .input-container {
@@ -50,14 +37,13 @@ hr {
   flex-direction: column;
   padding: 20px;
   justify-content: flex-start;
-  border-color: #59656F;
+  border-color: #59656f;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   background-color: whitesmoke;
 }
 
 /****** End of Login styling ******/
-
 
 /****** Start of Registration styling ******/
 
@@ -83,7 +69,6 @@ hr {
 
 /****** End of Registration styling ******/
 
-
 /****** Start of Dashboard styling ******/
 
 .dashboard-container {
@@ -93,11 +78,10 @@ hr {
   border-style: solid;
   border-radius: 5px;
   grid-template-columns: 1fr 4fr 4fr;
-  border-color: #59656F;
+  border-color: #59656f;
 }
 
 /****** End of Dashboard styling ******/
-
 
 /****** Start of Sidebar styling ******/
 
@@ -109,27 +93,26 @@ hr {
   border-radius: 5px;
   padding: 10px;
   justify-content: center;
-  border-color: #3D405B;
-  background-color: #DB2955;
+  border-color: #3d405b;
+  background-color: #db2955;
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #FFFFFC;
+  color: #fffffc;
   font-weight: bold;
   font-size: 25px;
 }
 
 .sidebar-item {
-  color: #FFFFFC;
+  color: #fffffc;
   margin: 15px;
   cursor: pointer;
 }
 
 /****** End of Side styling ******/
-
 
 /****** Start of Registration styling ******/
 
@@ -154,7 +137,6 @@ hr {
 }
 
 /****** End of Registration styling ******/
-
 
 /****** Start of Contacts styling ******/
 
@@ -167,8 +149,8 @@ hr {
 }
 
 .add-contact-container {
-  border-style: solid; 
-  border-color: #59656F;
+  border-style: solid;
+  border-color: #59656f;
   border-radius: 10px;
   width: 400px;
   height: 100px;
@@ -179,9 +161,9 @@ hr {
   border-style: solid;
   width: 800px;
   height: 500px;
-  border-color: #59656F;
+  border-color: #59656f;
   display: grid;
-  background-color: #00A676;
+  background-color: #00a676;
 }
 
 .titles-row {
@@ -202,7 +184,7 @@ hr {
   justify-content: center;
   align-items: center;
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
   border-radius: 5px;
 }
 
@@ -210,7 +192,7 @@ hr {
   margin: 10px;
   padding: 10px;
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
   border-radius: 5px;
   height: 300px;
   overflow: auto;
@@ -232,25 +214,20 @@ hr {
 
 .myTripStart-container {
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
 }
 
 .select-contact-list {
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
 }
 
 .select-contact-list-display {
   border-style: solid;
-  border-color: #59656F;
+  border-color: #59656f;
 }
 
-
 /****** End of MyTripStart styling ******/
-
-
-
-
 
 /****** Start of  HERE styling ******/
 
@@ -260,12 +237,164 @@ hr {
   align-items: center;
 }
 
-
-
 /****** End of ADD COMPONENT HERE styling ******/
-
-
 
 /****** Start of ADD COMPONENT HERE styling ******/
 
 /****** End of ADD COMPONENT HERE styling ******/
+
+/****** Start of ChatPage + subcomponent styling ******/
+
+.home__container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home__container > * {
+  margin-bottom: 10px;
+}
+.home__header {
+  margin-bottom: 30px;
+}
+.username__input {
+  padding: 10px;
+  width: 50%;
+}
+.home__cta {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #607eaa;
+  color: #f9f5eb;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+.chat {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.chat__sidebar {
+  height: 100%;
+  background-color: #59656f;
+  color: #fffffc;
+  flex: 0.2;
+  padding: 20px;
+  border-right: 1px solid #fdfdfd;
+}
+.chat__main {
+  height: 100%;
+  flex: 0.8;
+}
+.chat__header {
+  margin: 30px 0 20px 0;
+}
+.chat__users > * {
+  margin-bottom: 10px;
+  color: #fffffc;
+  font-size: 14px;
+}
+.online__users > * {
+  margin-bottom: 10px;
+  color: rgb(238, 102, 102);
+  font-style: italic;
+}
+.chat__mainHeader {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #59656f;
+}
+.leaveChat__btn {
+  padding: 10px;
+  width: 150px;
+  border: none;
+  outline: none;
+  background-color: #db2955;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+}
+.message__container {
+  width: 100%;
+  height: 80vh;
+  background-color: #fff;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.message__container > * {
+  margin-bottom: 10px;
+}
+.chat__footer {
+  padding: 10px;
+  background-color: #59656f;
+  height: 10vh;
+}
+.form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.message {
+  width: 80%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  padding: 15px;
+}
+.sendBtn {
+  width: 150px;
+  background-color: #00a676;
+  padding: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+}
+.leaveChat__btn:hover,
+.sendBtn:hover {
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1);
+}
+.message__recipient {
+  background-color: #f5ccc2;
+  width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+.message__sender {
+  background-color: rgb(194, 243, 194);
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: auto;
+  font-size: 15px;
+}
+.message__chats > p {
+  font-size: 13px;
+}
+.sender__name {
+  text-align: right;
+}
+.message__status {
+  position: fixed;
+  bottom: 50px;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/****** End of ChatPage + subcomponent styling ******/
