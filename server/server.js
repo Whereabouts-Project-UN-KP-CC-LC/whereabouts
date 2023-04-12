@@ -4,6 +4,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3500;
 const app = express();
 const apiRouter = require('./routes/api');
+const db = require('./models/whereaboutsModel');
 
 // const httpServer = require('http').Server(app); // app is a handler function supplied to HTTP server
 const http = require('http');
@@ -53,6 +54,31 @@ app.use(express.static(path.resolve(__dirname, '../client')));
  */
 app.use('/api', apiRouter);
 
+// Implement SSE to regularly stream trips data back to FE
+const dbQuery = async () => {
+  const { rows } = await db.query('SELECT * FROM trips');
+  console.log(rows);
+  return rows;
+};
+
+app.get('/stream', (req, res) => {
+  if (req.headers.accept === 'text/event-stream') {
+    console.log('accept/content type is event-stream');
+    res.writeHead(200, {
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+      'Content-Type': 'text/event-stream',
+      'Access-Control-Allow-Origin': '*',
+    });
+    setInterval(async () => {
+      const rows = await dbQuery();
+      res.write(`data: ${JSON.stringify(rows)}\n\n`);
+    }, 1000);
+  } else {
+    res.json({ message: 'Ok' });
+  }
+});
+
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) =>
   res.status(404).send("This is not the page you're looking for...")
@@ -63,7 +89,9 @@ app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error.',
     status: 500,
-    message: { err: 'An error occurred. We inside global error handler. BUT WHY?' },
+    message: {
+      err: 'An error occurred. We inside global error handler. BUT WHY?',
+    },
   };
   const errorObj = { ...defaultErr, ...err };
   console.log(errorObj.log);
