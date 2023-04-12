@@ -10,7 +10,7 @@ function Contacts(props) {
   // hook to add additional contact cards to display
   const [renderContactCount, setRenderContactCount] = useState([]);
   //hook to capture data to add a contact
-  const [dataForContact, setDataForContact] = useState(null);
+  // const [dataForContact, setDataForContact] = useState(null);
 
 
   const onChange = (event) => {
@@ -26,14 +26,14 @@ function Contacts(props) {
     event.preventDefault();
 
     // fetch request to db to verify user
-    console.log(`checking to see what addContact is without key: ${JSON.stringify(addContact)}`);
-    console.log(`checking to see what addContact is: ${JSON.stringify(addContact["phone_number"])}`);
+    // console.log(`checking to see what addContact is without key: ${JSON.stringify(addContact)}`);
+    // console.log(`checking to see what addContact is: ${JSON.stringify(addContact["phone_number"])}`);
 
-    let response = await axios.get(`/api/users/${addContact["phone_number"]}`, addContact);
+    // let response = await axios.get(`/api/users/${addContact["phone_number"]}`, addContact);
      
-    response = JSON.stringify(response);
-    console.log(`response.data: ${response.data}`);
-    console.log(`response.status: ${response.status}`);
+    // response = JSON.stringify(response);
+    // console.log(`response.data: ${response.data}`);
+    // console.log(`response.status: ${response.status}`);
 
       
       // .catch(err => {

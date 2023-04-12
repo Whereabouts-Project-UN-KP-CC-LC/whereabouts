@@ -26,6 +26,12 @@ function Sidebar(props) {
                 >
                 Trips I'm Watching
             </div>
+            <div 
+                onClick={props.setChatPage} 
+                className='chatpage'
+                >
+                Chat Page
+            </div>
             
             <Link to='/' className='sidebar-item'>Logout</Link>
         </div>
