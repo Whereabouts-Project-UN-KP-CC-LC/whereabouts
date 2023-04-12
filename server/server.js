@@ -25,14 +25,14 @@ const io = new Server(httpServer, {
 
 // on connection event (i.e. on connecting to socket server instance), listening for incoming sockets + connects with React app
 io.on('connection', (socket) => {
-  console.log(`${socket.id} user connected`);
+  //console.log(`${socket.id} user connected`);
   socket.on('new msg', (msg) => {
     // server emits client's msg to everyone, inc sender (all users / sockets); recall, io is the socket server instance we created
     io.emit('disperse msg', msg);
     // go to ChatPage.jsx, socket.on('disperse msg')
   });
   socket.on('disconnect', () => {
-    console.log(`${socket.id} user disconnected`); // refreshing chat page disconnects and reconnects socket
+    //console.log(`${socket.id} user disconnected`); // refreshing chat page disconnects and reconnects socket
     //https://socket.io/docs/v4/troubleshooting-connection-issues/#problem-the-socket-gets-disconnected
   });
 });
