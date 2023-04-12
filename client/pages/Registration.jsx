@@ -10,11 +10,8 @@ function Registration({ userInfo, setUserInfo }) {
 
     // conditional alerts
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
-<<<<<<< HEAD:client/pages/Registration.jsx
     //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
-=======
     const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
->>>>>>> 193c6c4 (Updated Registration component to dynamically render error/success messages upon user submission. Updated whereabouts controller to respond with '409' status (conflict error code) when user attempts to make a submission with a phone number that already exists in the database.):client/components/Registration.jsx
 
  
 
@@ -63,14 +60,9 @@ function Registration({ userInfo, setUserInfo }) {
         try {
         // need to confirm use of redirect & url
             console.log('userInfo being sent to BE =>', userInfo);
-<<<<<<< HEAD:client/pages/Registration.jsx
             
             let response = await axios.post('/api/register', userInfo); 
             response = JSON.parse(response);
-=======
-            const response = await axios.post('/api/register', userInfo); 
-            console.log('response from POST req =>', response);
->>>>>>> 369c2ad (Registration POST request bug fixed. New users with unique phone numbers can now be added to DB.):client/components/Registration.jsx
             
             if(response.status === 200) {
                 setSubStatus(true);
