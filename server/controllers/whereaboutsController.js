@@ -38,14 +38,15 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
       password,
       existingUser.rows[0].password
     );
+
     if (!passwordIsMatch) {
+      
       return next({
         log: 'Express error handler caught whereaboutsController.checkUserExists error: Input password is incorrect',
-        status: 500,
+        status: 400, // original 500
         message: { error: 'Input password is incorrect' },
       });
     }
-
     // no need to persist data, only success message needed on FE
     return next();
   } catch (error) {
@@ -82,7 +83,7 @@ whereaboutsController.insertNewUser = async (req, res, next) => {
     if (existingUser.rows[0]) {
       return next({
         log: 'Express error handler caught whereaboutsController.insertNewUser error: A user with this phone number already exists',
-        status: 500,
+        status: 409,
         message: { error: 'A user with this phone number already exists' },
       });
     }
@@ -132,19 +133,20 @@ whereaboutsController.getContacts = async (req, res, next) => {
 
 //get single user by phone number
 whereaboutsController.getUserByPhoneNumber = async (req, res, next) => {
-    try {
-        res.locals.user = await db.query(
-            `SELECT * FROM users WHERE phone_number=$1`,
-            [req.params['phone_number']]
-        );
-        return next();
-    } catch (error) {
-        return next({
-            log: 'Express error handler caught whereaboutsController.getUserByPhoneNumber error',
-            status: 500,
-            message: { error: 'Retrieving single user failed' },
-        });
-    }
+
+  try {
+      res.locals.user = await db.query(
+          `SELECT * FROM users WHERE phone_number=$1`,
+          [req.params['phone_number']]
+      );
+      return next();
+  } catch (error) {
+      return next({
+          log: 'Express error handler caught whereaboutsController.getUserByPhoneNumber error',
+          status: 500,
+          message: { error: 'Retrieving single user failed' },
+      });
+  }
 };
 
 //delete contact

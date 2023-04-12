@@ -21,10 +21,14 @@ export default function CheckboxList() {
 
     setChecked(newChecked);
   };
+  // useEffect() to fetch GET request for current user's contacts
+  // Look into using useContext react
+
+
 
   return (
     <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {[0, 1, 2, 3, 4, 5, 6].map((value) => {
+      {[0, 1, 2].map((value) => {
         const labelId = `checkbox-list-label-${value}`;
         return (
           <ListItem

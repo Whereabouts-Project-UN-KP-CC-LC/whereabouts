@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import axios, { AxiosError } from 'axios';
 import { redirect } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 
 function Registration({ userInfo, setUserInfo }) {
@@ -9,7 +10,8 @@ function Registration({ userInfo, setUserInfo }) {
 
     // conditional alerts
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
-    const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
+    //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
+    const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
 
  
 
@@ -42,15 +44,30 @@ function Registration({ userInfo, setUserInfo }) {
         event.preventDefault();
         console.log('submitting user data');
 
+        // new before charlie's PR
+        if (!passMatch) {
+            setSubStatus( (prevState) => {
+                return ({
+                    ...prevState,
+                    status: false,
+                    message: 'Passwords do not match. Please correct before submitting'
+                })
+            })
+
+            return;
+        }
+
         try {
         // need to confirm use of redirect & url
+            console.log('userInfo being sent to BE =>', userInfo);
+            
             let response = await axios.post('/api/register', userInfo); 
             response = JSON.parse(response);
             
             if(response.status === 200) {
                 setSubStatus(true);
                 console.log('User added to DB');
-                redirect('/dashboard') 
+                return redirect('/dashboard') 
             } else {
                 throw new Error();
             }
