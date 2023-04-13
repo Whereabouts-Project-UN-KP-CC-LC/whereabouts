@@ -63,11 +63,11 @@ function Contacts({ userInfo, contacts, setContacts }) {
 
 
   // // checking state of contacts data:
-  // useEffect(() => {
-  //   console.log('Currnt checkedContacts:', checkedContacts);
-  //   console.log('Current User phone: ', userInfo.phone_number);
-  //   console.log('Current trip data: ', tripData);
-  // }, [checkedContacts, userInfo.phone_number, tripData]);
+  useEffect(() => {
+    console.log('Currnt checkedContacts:', checkedContacts);
+    console.log('Current User phone: ', userInfo.phone_number);
+    console.log('Current trip data: ', tripData);
+  }, [checkedContacts, userInfo.phone_number, tripData]);
 
   return (
     <div className='contacts-container'>

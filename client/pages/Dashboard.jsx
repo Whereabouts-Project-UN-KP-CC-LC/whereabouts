@@ -36,7 +36,7 @@ function Dashboard({ userInfo }) {
     });
 
     source.addEventListener('message', (e) => {
-      console.log(e.data);
+      // console.log(e.data);
       const data = JSON.parse(e.data);
       setTrips(data);
     });
@@ -58,13 +58,9 @@ function Dashboard({ userInfo }) {
           <div>Trip Id: {trip.id} | Trip Start Time: {trip.start_timestamp} ||</div>
         ))}
       </div> */}
-
-      <div className="sidebar-container">
-        <Sidebar
-          setRenderContacts={handleClick1}
-          setRenderTrips={handleClick2}
-          setRenderTripsImWatching={handleClick3}
-          setChatPage={handleClick4}
+      <div className='sidebar-container'>
+        <Sidebar 
+          handleClick={handleClick}
         />
       </div>
       <div className='functions-container'>
