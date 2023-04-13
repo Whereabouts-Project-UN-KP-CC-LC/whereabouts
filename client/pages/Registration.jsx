@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios, { AxiosError } from 'axios';
-import { redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 
@@ -12,6 +12,9 @@ function Registration({ userInfo, setUserInfo }) {
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
     //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
     const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
+
+    // hook to redirect after successful login
+    const [redirect, setRedirect] = useState(false);
 
  
 
@@ -62,12 +65,12 @@ function Registration({ userInfo, setUserInfo }) {
             console.log('userInfo being sent to BE =>', userInfo);
             
             let response = await axios.post('/api/register', userInfo); 
-            response = JSON.parse(response);
+            // response = JSON.parse(response);
             
             if(response.status === 200) {
                 setSubStatus(true);
                 console.log('User added to DB');
-                return redirect('/dashboard') 
+                setRedirect(true);
             } else {
                 throw new Error();
             }
@@ -83,6 +86,8 @@ function Registration({ userInfo, setUserInfo }) {
         <div className='registration-container'>
             <h3>Registration</h3>
             <br></br>
+            {/* Invoking redirect hook in event of successful login */}
+            {redirect && <Navigate to="/dashboard" replace={true} />}
             <form className='registration-form' onSubmit={handleSubmit}>
                 <div className='input-container'>
                     <p>Full Name</p>
