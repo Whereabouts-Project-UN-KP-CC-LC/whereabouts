@@ -11,7 +11,7 @@ const socket = io.connect('http://localhost:8080/', {
   // path: '/chat',
 });
 
-function Dashboard(props) {
+function Dashboard({ userInfo }) {
 
   // hook for contacts per user
   const [contacts, setContacts] = useState([]);
@@ -32,7 +32,8 @@ function Dashboard(props) {
         />
       </div>
       <div className='functions-container'>
-        {activeComponent === 'contacts' && <Contacts 
+        {activeComponent === 'contacts' && <Contacts
+          userInfo={userInfo} 
           contacts={contacts} 
           setContacts={setContacts} 
         /> }

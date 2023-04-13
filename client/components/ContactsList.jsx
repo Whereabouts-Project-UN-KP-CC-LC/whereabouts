@@ -9,21 +9,25 @@ import IconButton from '@mui/material/IconButton';
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
 
-export default function ContactsList({ contacts, deleteContact}) {
+export default function ContactsList({ contacts, deleteContact, checkedContacts, setCheckedContacts }) {
 
   const [checked, setChecked] = React.useState([0]);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
+  const handleToggle = (contact, index) => () => {
+    const currentIndex = checked.indexOf(contact);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(contact);
     } else {
       newChecked.splice(currentIndex, 1);
     }
-
     setChecked(newChecked);
+
+    // set new checked items in array from Contacts
+    const newCheckedContacts = [...checkedContacts];
+    newCheckedContacts[index] = contact;
+    setCheckedContacts(newCheckedContacts);
   };
 
   return (
@@ -41,7 +45,7 @@ export default function ContactsList({ contacts, deleteContact}) {
             }
             disablePadding
           >
-            <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+            <ListItemButton role={undefined} onClick={handleToggle(value, index)} dense>
               <ListItemIcon>
                 <Checkbox
                   edge="start"

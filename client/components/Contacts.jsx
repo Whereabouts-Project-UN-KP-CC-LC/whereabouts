@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ContactsList from './ContactsList';
 
-function Contacts({ contacts, setContacts }) {
+function Contacts({ userInfo, contacts, setContacts }) {
 
-  // hook to manage input to verify if contact exists in db
-  // const [contacts, setContacts] = useState([]);
+  // hook to manage contacts checked from list
+  const [checkedContacts, setCheckedContacts] = useState([]);
 
   // Fetch GET request for contact and add to list:
   const handleSubmit = async (event) => {
@@ -18,7 +18,7 @@ function Contacts({ contacts, setContacts }) {
       const response = await axios.get('/api/users/' + event.target[0].value, event.target[0].value);
       
       const contactData = response.data[0];
-      console.log('contactData ', contactData);
+      // console.log('contactData: ', contactData);
 
       // add user to array of contacts
       setContacts([...contacts, contactData]);
@@ -26,7 +26,6 @@ function Contacts({ contacts, setContacts }) {
     } catch(err) {
       console.log(`Fetch request for user with phone_number failed.`, err);
     }
-    
   };
 
   // function to delete contact from list, pass to contacts list
@@ -35,7 +34,40 @@ function Contacts({ contacts, setContacts }) {
     newContacts.splice(index, 1);
     setContacts(newContacts);
   }
-  
+
+  // function to extract phone numbers from checkedContacts array
+  const extractPhoneNumbers = (array) => {
+    return array.map((obj) => obj.phone_number);
+  }; 
+
+  // declare variable to contain proper info to send backend
+  const tripData = {
+    'traveler': userInfo.phone_number,
+    'watchers': extractPhoneNumbers(checkedContacts)
+  };
+
+
+  // function to send post request to back end with user information to start trip
+  const handleStartTrip = () => {
+    // create a post request to the route: /api/trips/start
+    axios.post('/api/trips/start', tripData)
+      .then((response) => {
+        console.log('Successful response from back end ', response);
+      })
+      .catch((error) => {
+        if (error) {
+          alert(`Please check contacts information and try again`);
+        }
+      })
+  };
+
+
+  // // checking state of contacts data:
+  // useEffect(() => {
+  //   console.log('Currnt checkedContacts:', checkedContacts);
+  //   console.log('Current User phone: ', userInfo.phone_number);
+  //   console.log('Current trip data: ', tripData);
+  // }, [checkedContacts, userInfo.phone_number, tripData]);
 
   return (
     <div className='contacts-container'>
@@ -46,18 +78,22 @@ function Contacts({ contacts, setContacts }) {
           <p>Add contacts to your list:</p>
           <input
             type='text'
-            className='input-box'
+            className='add-contact-input'
             id='contact-phone-number'
           />
-          <button type='submit'className='submit-btn'>Add Contact</button>
+          <button type='submit'className='add-contact-btn'>Add Contact</button>
         </form>
       </div>
       <br></br>
       <div className='valid-contacts-container'>
         <div className='titles-row'>
-          <p className='contact-title'>Name of Contact</p>
-          <p className='contact-title'>Phone Number of Contact</p>
-          
+          <button 
+            className="start-trip-button" 
+            role="button"
+            onClick={handleStartTrip}
+            >
+            Start Your Trip!
+          </button>
         </div>
       
         <div className='contacts-display'>
@@ -65,6 +101,8 @@ function Contacts({ contacts, setContacts }) {
           <ContactsList 
             contacts={contacts}
             deleteContact={deleteContact}
+            checkedContacts={checkedContacts}
+            setCheckedContacts={setCheckedContacts}
           />
         </div>
 
