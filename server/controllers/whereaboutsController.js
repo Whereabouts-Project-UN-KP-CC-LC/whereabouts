@@ -1,6 +1,7 @@
 const db = require('../models/whereaboutsModel');
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
+const axios = require('axios');
 
 const whereaboutsController = {};
 
@@ -170,9 +171,7 @@ whereaboutsController.deleteContact = async (req, res, next) => {
 //get Location
 whereaboutsController.getLocation = async (req, res, next) => {
   try {
-    { data.location.lat } res.locals.location = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.GOOGLE_MAPS_API_KEY}`);
-    console.log('lat: ' + res.locals.location.data.location.lat);
-    console.log('lng: ' + res.locals.location.data.location.lng);
+    res.locals.location = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`);
     return next();
   } catch (error) {
     return next({
