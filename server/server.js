@@ -62,7 +62,7 @@ const dbQuery = async (phoneNumber) => {
     FROM trips t
     INNER JOIN trips_users_join j ON t.id = j.trips_id
     WHERE j.user_phone_number = '${phoneNumber}'
-    ORDER BY t.start_timestamp DESC
+    ORDER BY j.trips_id DESC
   `);
   // console.log(rows);
   return rows;

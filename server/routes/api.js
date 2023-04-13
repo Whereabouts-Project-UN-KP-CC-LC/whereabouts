@@ -32,9 +32,8 @@ router.post('/register', whereaboutsController.insertNewUser, (req, res) =>
 );
 
 //start new trip
-router.post('/trips/start', whereaboutsController.getLocation, (req, res) => {
-  const { data } = res.locals.location;
-  res.status(200).json(data);
+router.post('/trips/start', whereaboutsController.startNewTrip, (req, res) => {
+  res.status(204).json([]);
 });
 
 module.exports = router;
