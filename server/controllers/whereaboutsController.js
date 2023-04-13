@@ -167,4 +167,20 @@ whereaboutsController.deleteContact = async (req, res, next) => {
     }
 };
 
+//get Location
+whereaboutsController.getLocation = async (req, res, next) => {
+  try {
+    { data.location.lat } res.locals.location = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.GOOGLE_MAPS_API_KEY}`);
+    console.log('lat: ' + res.locals.location.data.location.lat);
+    console.log('lng: ' + res.locals.location.data.location.lng);
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Error getting location data',
+      status: 500,
+      message: { error: 'Error getting location data' },
+    });
+  }
+}
+
 module.exports = whereaboutsController;
