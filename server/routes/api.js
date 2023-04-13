@@ -36,4 +36,14 @@ router.post('/trips/start', whereaboutsController.startNewTrip, (req, res) => {
   res.status(204).json([]);
 });
 
+//send SOS alert
+router.post('/trips/sos', whereaboutsController.sendSos, (req, res) => {
+  res.status(204).json([]);
+});
+
+//end trip
+router.post('/trips/reached', whereaboutsController.endTrip, (req, res) => {
+  res.status(204).json([]);
+});
+
 module.exports = router;

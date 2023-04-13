@@ -212,4 +212,46 @@ whereaboutsController.startNewTrip = async (req, res, next) => {
   }
 };
 
+//updates trip with sos timestamp, sos lat and sos lng
+whereaboutsController.sendSos = async (req, res, next) => {
+  try {
+    //get user's current location
+    const {data} = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`); //FIXME --> use .env to store the key
+    const lat = data.location.lat;
+    const lng = data.location.lng;
+    //update trip sos details
+    await db.query(
+      `UPDATE trips
+      SET sos_timestamp = NOW(), sos_lat = ${lat}, sos_lng = ${lng}
+      WHERE id = ${req.body.tripId}`
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.sendSos error',
+      status: 500,
+      message: { error: 'Error storing sos details' },
+    });
+  }
+};
+
+//updates trip with end timestamp
+whereaboutsController.endTrip = async (req, res, next) => {
+  try {
+    //update trip end details
+    await db.query(
+      `UPDATE trips
+      SET end_timestamp = NOW()
+      WHERE id = ${req.body.tripId}`
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.sendSos error',
+      status: 500,
+      message: { error: 'Error storing sos details' },
+    });
+  }
+};
+
 module.exports = whereaboutsController;
