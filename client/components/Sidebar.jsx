@@ -1,35 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Sidebar(props) {
+function Sidebar({ handleClick }) {
 
     return (
         <div className='sidebar'>
-            {/* <a href=''>Contacts</a>
-            <a href=''>Trips</a>
-            <a href=''>Logout</a> */}
+
             <div 
-                onClick={props.setRenderContacts} 
+                onClick={() => handleClick('contacts')} 
                 className='sidebar-item'
-                >
-                Contacts
+            >
+                Contacts & My Trip
             </div>
             <div 
-                onClick={props.setRenderTrips} 
+                onClick={() => handleClick('tripsImWatching')} 
                 className='sidebar-item'
-                >
-                Trips
-            </div>
-            <div 
-                onClick={props.setRenderTripsImWatching} 
-                className='sidebar-item'
-                >
+            >
                 Trips I'm Watching
             </div>
             <div 
-                onClick={props.setChatPage} 
+                onClick={() => handleClick('chatPage')} 
                 className='chatpage'
-                >
+            >
                 Chat Page
             </div>
             

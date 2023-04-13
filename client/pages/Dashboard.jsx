@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
-import MyTripStart from '../components/MyTripStart';
 import TripImWatching from '../components/TripImWatching';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ChatPage from '../components/ChatPage';
@@ -14,35 +13,37 @@ const socket = io.connect('http://localhost:8080/', {
 
 function Dashboard(props) {
 
-  // hooks for conditionally rendering these components on click
-  const [renderContacts, setRenderContacts] = useState(false);
-  const [renderTrips, setRenderTrips] = useState(false);
-  const [renderTripsImWatching, setRenderTripsImWatching] = useState(false);
-  const [renderChatPage, setChatPage] = useState(false);
+  // hook for contacts per user
+  const [contacts, setContacts] = useState([]);
 
-  const handleClick1 = () => setRenderContacts(true);
-  const handleClick2 = () => setRenderTrips(true);
-  const handleClick3 = () => setRenderTripsImWatching(true);
-  const handleClick4 = () => setChatPage(true);
+  // hook for conditionally rendering components
+  const [activeComponent, setActiveComponent] = useState(null);
+
+  // toggle components in sidebar
+  const handleClick = (componentName) => {
+    setActiveComponent(componentName);
+  };
 
   return(
     <div className='dashboard-container'>
       <div className='sidebar-container'>
         <Sidebar 
-          setRenderContacts={handleClick1}
-          setRenderTrips={handleClick2}
-          setRenderTripsImWatching={handleClick3}
-          setChatPage={handleClick4}
+          handleClick={handleClick}
         />
       </div>
       <div className='functions-container'>
-        {renderContacts && <Contacts /> }
-        {renderTrips && <MyTripStart />}
-        {renderTripsImWatching && <TripImWatching />}
-        {renderChatPage &&  <ChatPage path= '/chat' socket={socket} />}
+        {activeComponent === 'contacts' && <Contacts 
+          contacts={contacts} 
+          setContacts={setContacts} 
+        /> }
+        {activeComponent === 'tripsImWatching' && <TripImWatching />}
+        {activeComponent === 'chatPage' &&  <ChatPage 
+          path= '/chat' 
+          socket={socket} 
+        />}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Dashboard;

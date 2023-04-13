@@ -1,92 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import OneContact from './OneContact';
-import { Navigate } from 'react-router-dom';
+import ContactsList from './ContactsList';
 
-function Contacts(props) {
+function Contacts({ contacts, setContacts }) {
 
   // hook to manage input to verify if contact exists in db
-  const [addContact, setAddContact] = useState('');
-  // hook to add additional contact cards to display
-  const [renderContactCount, setRenderContactCount] = useState([]);
-  //hook to capture data to add a contact
-  // const [dataForContact, setDataForContact] = useState(null);
+  // const [contacts, setContacts] = useState([]);
 
+  // Fetch GET request for contact and add to list:
+  const handleSubmit = async (event) => {
 
-  const onChange = (event) => {
-    setAddContact((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }))
+    event.preventDefault();
+    //console.log('submit: ', event.target[0].value )
+
+    //fetch request to get contact info
+    try {
+      const response = await axios.get('/api/users/' + event.target[0].value, event.target[0].value);
+      
+      const contactData = response.data[0];
+      console.log('contactData ', contactData);
+
+      // add user to array of contacts
+      setContacts([...contacts, contactData]);
+      
+    } catch(err) {
+      console.log(`Fetch request for user with phone_number failed.`, err);
+    }
+    
   };
 
-  
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // fetch request to db to verify user
-    // console.log(`checking to see what addContact is without key: ${JSON.stringify(addContact)}`);
-    // console.log(`checking to see what addContact is: ${JSON.stringify(addContact["phone_number"])}`);
-
-    // let response = await axios.get(`/api/users/${addContact["phone_number"]}`, addContact);
-     
-    // response = JSON.stringify(response);
-    // console.log(`response.data: ${response.data}`);
-    // console.log(`response.status: ${response.status}`);
-
-      
-      // .catch(err => {
-      //   console.log(`Error inside GET request for user by phone.`), err;
-      // })
-    
-
-    
-    // if (response.status === 200) {
-    //   console.log(`Get user with phone_number successful`)
-    //   setDataForContact(response.data);
-    // } else {
-    //   throw new Error('Problem getting contact with phone_number');
-    // }
-  
-    // successful GET request will add user to state, accessible from OneContact component
-    
-
+  // function to delete contact from list, pass to contacts list
+  const deleteContact = (index) => {
+    const newContacts = [...contacts];
+    newContacts.splice(index, 1);
+    setContacts(newContacts);
   }
-
   
 
   return (
     <div className='contacts-container'>
-      <p>Hello from start of Contacts page</p>
+      
       <br></br>
       <div className='add-contact-container'>
         <form onSubmit={handleSubmit} className='add-contact-form'>
-          <p>Add a contact to your trip:</p>
+          <p>Add contacts to your list:</p>
           <input
             type='text'
             className='input-box'
-            id='add-contact'
-            name='phone_number'
-            onChange={onChange}
+            id='contact-phone-number'
           />
           <button type='submit'className='submit-btn'>Add Contact</button>
         </form>
       </div>
       <br></br>
-      <br></br>
       <div className='valid-contacts-container'>
         <div className='titles-row'>
           <p className='contact-title'>Name of Contact</p>
           <p className='contact-title'>Phone Number of Contact</p>
-          <p className='contact-title'>Delete Contact?</p>
           
         </div>
       
         <div className='contacts-display'>
-          <h3>Inside of contacts display</h3>
-          {/* <OneContact /> */}
-          { [...Array(renderContactCount)].map((_, i) => <OneContact key={i} />) }
+          <h3>Select a few contacts to share your trip with:</h3>
+          <ContactsList 
+            contacts={contacts}
+            deleteContact={deleteContact}
+          />
         </div>
 
       </div>

@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .main-container {
@@ -77,7 +79,7 @@
   margin-right: 10px;
   border-style: solid;
   border-radius: 5px;
-  grid-template-columns: 1fr 4fr 4fr;
+  grid-template-columns: 1fr 8fr;
   border-color: #59656f;
 }
 
