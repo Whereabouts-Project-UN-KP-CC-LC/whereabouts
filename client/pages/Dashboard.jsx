@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
-import MyTripStart from '../components/MyTripStart';
 import TripImWatching from '../components/TripImWatching';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ChatPage from '../components/ChatPage';
@@ -13,16 +12,18 @@ function Dashboard(props) {
     // path: '/chat',
   });
 
-  // hooks for conditionally rendering these components on click
-  const [renderContacts, setRenderContacts] = useState(false);
-  const [renderTrips, setRenderTrips] = useState(false);
-  const [renderTripsImWatching, setRenderTripsImWatching] = useState(false);
-  const [renderChatPage, setChatPage] = useState(false);
+function Dashboard({ userInfo }) {
 
-  const handleClick1 = () => setRenderContacts(true);
-  const handleClick2 = () => setRenderTrips(true);
-  const handleClick3 = () => setRenderTripsImWatching(true);
-  const handleClick4 = () => setChatPage(true);
+  // hook for contacts per user
+  const [contacts, setContacts] = useState([]);
+
+  // hook for conditionally rendering components
+  const [activeComponent, setActiveComponent] = useState(null);
+
+  // toggle components in sidebar
+  const handleClick = (componentName) => {
+    setActiveComponent(componentName);
+  };
 
   // SSE - render trips
   const [trips, setTrips] = useState([]);
@@ -59,25 +60,25 @@ function Dashboard(props) {
           <div>Trip Id: {trip.id} | Trip Start Time: {trip.start_timestamp} ||</div>
         ))}
       </div> */}
-
-      <div className="sidebar-container">
-        <Sidebar
-          setRenderContacts={handleClick1}
-          setRenderTrips={handleClick2}
-          setRenderTripsImWatching={handleClick3}
-          setChatPage={handleClick4}
+      <div className='sidebar-container'>
+        <Sidebar 
+          handleClick={handleClick}
         />
       </div>
-      <div className="functions-container">
-        {renderContacts && <Contacts />}
-        {renderTrips && <MyTripStart />}
-        {renderTripsImWatching && <TripImWatching />}
-        {renderChatPage && (
-          <ChatPage path="/chat" socket={socket} userInfo={props.userInfo} />
-        )}
+      <div className='functions-container'>
+        {activeComponent === 'contacts' && <Contacts
+          userInfo={userInfo} 
+          contacts={contacts} 
+          setContacts={setContacts} 
+        /> }
+        {activeComponent === 'tripsImWatching' && <TripImWatching />}
+        {activeComponent === 'chatPage' &&  <ChatPage 
+          path= '/chat' 
+          socket={socket} 
+        />}
       </div>
     </div>
-  );
+  )
 }
 
 export default Dashboard;
