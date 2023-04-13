@@ -56,8 +56,8 @@ app.use('/api', apiRouter);
 
 // Implement SSE to regularly stream trips data back to FE
 const dbQuery = async () => {
-  const { rows } = await db.query('SELECT * FROM trips');
-  console.log(rows);
+  const { rows } = await db.query('SELECT * FROM trips ORDER BY id');
+  // console.log(rows);
   return rows;
 };
 
@@ -65,10 +65,10 @@ app.get('/stream', (req, res) => {
   if (req.headers.accept === 'text/event-stream') {
     console.log('accept/content type is event-stream');
     res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
       Connection: 'keep-alive',
-      'Content-Type': 'text/event-stream',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*',
     });
     setInterval(async () => {
       const rows = await dbQuery();

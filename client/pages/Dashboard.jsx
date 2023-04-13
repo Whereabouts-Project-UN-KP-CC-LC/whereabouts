@@ -24,10 +24,11 @@ function Dashboard(props) {
   const handleClick3 = () => setRenderTripsImWatching(true);
   const handleClick4 = () => setChatPage(true);
 
+  //SSE - render trips
   const [trips, setTrips] = useState([]);
   useEffect(() => {
-    const source = new EventSource(`http://localhost:8080/stream`, {
-      withCredentials: true,
+    const source = new EventSource(`http://localhost:3000/stream`, {
+      withCredentials: false,
     }); //maybe need to add to webpack?
 
     source.addEventListener('open', () => {
@@ -51,7 +52,13 @@ function Dashboard(props) {
 
   return (
     <div className="dashboard-container">
-      <div>{trips}</div>
+      {/* SSE - Render trips */}
+      <div>
+        {trips.map((trip) => (
+          <div>Trip Id: {trip.id} | Trip Start Time: {trip.start_timestamp} ||</div>
+        ))}
+      </div>
+
       <div className="sidebar-container">
         <Sidebar
           setRenderContacts={handleClick1}
