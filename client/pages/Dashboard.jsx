@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
 import TripImWatching from '../components/TripImWatching';
@@ -24,11 +24,47 @@ function Dashboard({ userInfo }) {
     setActiveComponent(componentName);
   };
 
-  return(
-    <div className='dashboard-container'>
-      <div className='sidebar-container'>
-        <Sidebar 
-          handleClick={handleClick}
+  //SSE - render trips
+  const [trips, setTrips] = useState([]);
+  useEffect(() => {
+    const source = new EventSource(`http://localhost:3000/stream/1234567890`, { //replace 123456789 with current user's phone_number
+      withCredentials: false,
+    }); //maybe need to add to webpack?
+
+    source.addEventListener('open', () => {
+      console.log('SSE opened!');
+    });
+
+    source.addEventListener('message', (e) => {
+      console.log(e.data);
+      const data = JSON.parse(e.data);
+      setTrips(data);
+    });
+
+    source.addEventListener('error', (e) => {
+      console.error('Error: ', e);
+    });
+
+    return () => {
+      source.close();
+    };
+  }, []);
+
+  return (
+    <div className="dashboard-container">
+      {/* SSE - Render trips */}
+      {/* <div>
+        {trips.map((trip) => (
+          <div>Trip Id: {trip.id} | Trip Start Time: {trip.start_timestamp} ||</div>
+        ))}
+      </div> */}
+
+      <div className="sidebar-container">
+        <Sidebar
+          setRenderContacts={handleClick1}
+          setRenderTrips={handleClick2}
+          setRenderTripsImWatching={handleClick3}
+          setChatPage={handleClick4}
         />
       </div>
       <div className='functions-container'>
@@ -44,7 +80,7 @@ function Dashboard({ userInfo }) {
         />}
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Dashboard;
