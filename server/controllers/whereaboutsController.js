@@ -1,6 +1,7 @@
 const db = require('../models/whereaboutsModel');
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
+const axios = require('axios');
 
 const whereaboutsController = {};
 
@@ -166,5 +167,19 @@ whereaboutsController.deleteContact = async (req, res, next) => {
         });
     }
 };
+
+//get Location
+whereaboutsController.getLocation = async (req, res, next) => {
+  try {
+    res.locals.location = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`);
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Error getting location data',
+      status: 500,
+      message: { error: 'Error getting location data' },
+    });
+  }
+}
 
 module.exports = whereaboutsController;

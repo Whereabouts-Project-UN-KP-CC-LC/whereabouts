@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
 import MyTripStart from '../components/MyTripStart';
@@ -13,7 +13,6 @@ const socket = io.connect('http://localhost:8080/', {
 });
 
 function Dashboard(props) {
-
   // hooks for conditionally rendering these components on click
   const [renderContacts, setRenderContacts] = useState(false);
   const [renderTrips, setRenderTrips] = useState(false);
@@ -25,24 +24,57 @@ function Dashboard(props) {
   const handleClick3 = () => setRenderTripsImWatching(true);
   const handleClick4 = () => setChatPage(true);
 
-  return(
-    <div className='dashboard-container'>
-      <div className='sidebar-container'>
-        <Sidebar 
+  //SSE - render trips
+  const [trips, setTrips] = useState([]);
+  useEffect(() => {
+    const source = new EventSource(`http://localhost:3000/stream/1234567890`, { //replace 123456789 with current user's phone_number
+      withCredentials: false,
+    }); //maybe need to add to webpack?
+
+    source.addEventListener('open', () => {
+      console.log('SSE opened!');
+    });
+
+    source.addEventListener('message', (e) => {
+      console.log(e.data);
+      const data = JSON.parse(e.data);
+      setTrips(data);
+    });
+
+    source.addEventListener('error', (e) => {
+      console.error('Error: ', e);
+    });
+
+    return () => {
+      source.close();
+    };
+  }, []);
+
+  return (
+    <div className="dashboard-container">
+      {/* SSE - Render trips */}
+      {/* <div>
+        {trips.map((trip) => (
+          <div>Trip Id: {trip.id} | Trip Start Time: {trip.start_timestamp} ||</div>
+        ))}
+      </div> */}
+
+      <div className="sidebar-container">
+        <Sidebar
           setRenderContacts={handleClick1}
           setRenderTrips={handleClick2}
           setRenderTripsImWatching={handleClick3}
           setChatPage={handleClick4}
         />
       </div>
-      <div className='functions-container'>
-        {renderContacts && <Contacts /> }
+      <div className="functions-container">
+        {renderContacts && <Contacts />}
         {renderTrips && <MyTripStart />}
         {renderTripsImWatching && <TripImWatching />}
-        {renderChatPage &&  <ChatPage path= '/chat' socket={socket} />}
+        {renderChatPage && <ChatPage path="/chat" socket={socket} />}
       </div>
     </div>
-  )
+  );
 }
 
 export default Dashboard;
