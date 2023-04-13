@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .main-container {
@@ -77,7 +79,7 @@
   margin-right: 10px;
   border-style: solid;
   border-radius: 5px;
-  grid-template-columns: 1fr 4fr 4fr;
+  grid-template-columns: 1fr 8fr;
   border-color: #59656f;
 }
 
@@ -149,6 +151,7 @@
 }
 
 .add-contact-container {
+  
   border-style: solid;
   border-color: #59656f;
   border-radius: 10px;
@@ -157,7 +160,33 @@
   background-color: whitesmoke;
 }
 
+.add-contact-form {
+  margin: 3px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  
+} 
+
+.add-contact-form p,
+.add-contact-form input,
+.add-contact-form button {
+  margin: 3px;
+}
+
+.add-contact-input {
+  width: 300px;
+}
+
+.add-contact-btn {
+  width: 150px;
+}
+
 .valid-contacts-container {
+  display: flex;
+  align-items: center;
   border-style: solid;
   width: 800px;
   height: 500px;
@@ -167,8 +196,8 @@
 }
 
 .titles-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  margin: 15px;
   height: 100px;
   align-items: center;
   justify-content: center;
@@ -189,7 +218,7 @@
 }
 
 .contacts-display {
-  margin: 10px;
+  margin: 15px;
   padding: 10px;
   border-style: solid;
   border-color: #59656f;
@@ -198,38 +227,50 @@
   overflow: auto;
 }
 
+.start-trip-button {
+  margin-top: 10px;
+  margin: 10px;
+  padding: 10px;
+  padding: 15px 30px;
+  width: 500px;
+  height: 100px;
+  text-align: center;
+  /* text-transform: uppercase; */
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  display: block;
+  border: 0px;
+  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: x-large;
+  box-shadow: 0px 0px 14px -7px #f09819;
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  align-items: center;
+}
+
+.start-trip-button:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.start-trip-button:active {
+  transform: scale(0.95);
+}
+
 /****** End of Contacts styling ******/
 
-/****** Start of OneContact styling ******/
 
-.oneContact-container {
-  display: flex;
-  justify-content: space-evenly;
-  height: 30px;
-}
 
-/****** End of OneContact styling ******/
-
-/****** Start of MyTripStart styling ******/
-
-.myTripStart-container {
-  border-style: solid;
-  border-color: #59656f;
-}
-
-.select-contact-list {
-  border-style: solid;
-  border-color: #59656f;
-}
-
-.select-contact-list-display {
-  border-style: solid;
-  border-color: #59656f;
-}
-
-/****** End of MyTripStart styling ******/
-
-/****** Start of  HERE styling ******/
+/****** Start of Trip Watching Container styling ******/
 
 .trip-watching-container {
   display: flex;
@@ -237,11 +278,8 @@
   align-items: center;
 }
 
-/****** End of ADD COMPONENT HERE styling ******/
+/****** End of Trip Watching Container styling ******/
 
-/****** Start of ADD COMPONENT HERE styling ******/
-
-/****** End of ADD COMPONENT HERE styling ******/
 
 /****** Start of ChatPage + subcomponent styling ******/
 
@@ -398,3 +436,8 @@
 }
 
 /****** End of ChatPage + subcomponent styling ******/
+
+
+/****** Start of ADD COMPONENT HERE styling ******/
+
+/****** End of ADD COMPONENT HERE styling ******/

@@ -134,7 +134,6 @@ whereaboutsController.getContacts = async (req, res, next) => {
 
 //get single user by phone number
 whereaboutsController.getUserByPhoneNumber = async (req, res, next) => {
-
   try {
       res.locals.user = await db.query(
           `SELECT * FROM users WHERE phone_number=$1`,
