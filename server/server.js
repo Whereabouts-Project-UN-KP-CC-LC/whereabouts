@@ -55,13 +55,21 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 app.use('/api', apiRouter);
 
 // Implement SSE to regularly stream trips data back to FE
-const dbQuery = async () => {
-  const { rows } = await db.query('SELECT * FROM trips ORDER BY id');
+const dbQuery = async (phoneNumber) => {
+  // const { rows } = await db.query(`SELECT * FROM users WHERE phone_number = '${phoneNumber}'`);
+  const { rows } = await db.query(`
+    SELECT t.start_timestamp, t.start_lat, t.start_lng, t.sos_timestamp, t.sos_lat, t.sos_lng, t.end_timestamp,j.*
+    FROM trips t
+    INNER JOIN trips_users_join j ON t.id = j.trips_id
+    WHERE j.user_phone_number = '${phoneNumber}'
+    ORDER BY t.start_timestamp DESC
+  `);
   // console.log(rows);
   return rows;
 };
 
-app.get('/stream', (req, res) => {
+app.get('/stream/:phone_number', (req, res) => {
+  const phoneNumber = req.params.phone_number;
   if (req.headers.accept === 'text/event-stream') {
     console.log('accept/content type is event-stream');
     res.writeHead(200, {
@@ -71,7 +79,7 @@ app.get('/stream', (req, res) => {
       // 'Access-Control-Allow-Origin': '*',
     });
     setInterval(async () => {
-      const rows = await dbQuery();
+      const rows = await dbQuery(phoneNumber);
       res.write(`data: ${JSON.stringify(rows)}\n\n`);
     }, 1000);
   } else {

@@ -27,7 +27,7 @@ function Dashboard(props) {
   //SSE - render trips
   const [trips, setTrips] = useState([]);
   useEffect(() => {
-    const source = new EventSource(`http://localhost:3000/stream`, {
+    const source = new EventSource(`http://localhost:3000/stream/1234567890`, { //replace 123456789 with current user's phone_number
       withCredentials: false,
     }); //maybe need to add to webpack?
 
@@ -53,11 +53,11 @@ function Dashboard(props) {
   return (
     <div className="dashboard-container">
       {/* SSE - Render trips */}
-      <div>
+      {/* <div>
         {trips.map((trip) => (
           <div>Trip Id: {trip.id} | Trip Start Time: {trip.start_timestamp} ||</div>
         ))}
-      </div>
+      </div> */}
 
       <div className="sidebar-container">
         <Sidebar
