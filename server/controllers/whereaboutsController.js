@@ -253,4 +253,24 @@ whereaboutsController.endTrip = async (req, res, next) => {
   }
 };
 
+whereaboutsController.addContact = async (req, res, next) => {
+  try {
+    //store traveler-contact relationship
+    await db.query(
+      `INSERT
+      INTO contacts_join
+      (traveler_phone_number, contact_phone_number)
+      VALUES
+      (${req.body.traveler_phone_number}, ${req.body.contact_phone_number})`
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.addContact error',
+      status: 500,
+      message: { error: 'Error storing contacts details' },
+    });
+  }
+}
+
 module.exports = whereaboutsController;
