@@ -65,7 +65,7 @@ function Registration({ userInfo, setUserInfo }) {
             console.log('userInfo being sent to BE =>', userInfo);
             
             let response = await axios.post('/api/register', userInfo); 
-            response = JSON.parse(response);
+            // response = JSON.parse(response);
             
             if(response.status === 200) {
                 setSubStatus(true);
