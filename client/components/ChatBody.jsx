@@ -6,7 +6,7 @@ export default function ChatBody({ messages }) {
 
   const handleExitChat = () => {
     // triggered when a user in chat clicks Exit Chat button
-    navigate('/trips'); // back to user's trips page?
+    navigate('/dashboard'); // back to user's trips page?
     window.location.reload();
   };
 
@@ -19,9 +19,11 @@ export default function ChatBody({ messages }) {
       </header>
 
       <div className="message__container">
-        {messages.map((message, i) => (
+        {messages.map((msg, i) => (
           <div className="message__chats" key={i}>
-            <p>{message}</p>
+            <p>{msg.name}</p>
+            <p>{msg.date_time}</p>
+            <p>{msg.text}</p>
           </div>
         ))}
         {/*Shown when a user is typing*/}

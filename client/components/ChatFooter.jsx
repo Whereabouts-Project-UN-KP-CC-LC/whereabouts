@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-export default function ChatFooter({ socket }) {
-  const [message, setMessage] = useState('');
+export default function ChatFooter({ socket, userInfo }) {
+  const [message, setMessage] = useState({});
 
   const handleSendMsg = (e) => {
     e.preventDefault();
@@ -9,7 +9,11 @@ export default function ChatFooter({ socket }) {
     if (message) {
       socket.emit('new msg', message); // 'new msg' = event name
       // clear input
-      setMessage('');
+      setMessage({
+        name: '',
+        date_time: '',
+        text: '',
+      });
     }
     // see server.js, socket.on('new msg')
   };
@@ -20,8 +24,17 @@ export default function ChatFooter({ socket }) {
         <input
           type="text"
           className="message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          value={message.text}
+          onChange={(e) =>
+            setMessage({
+              name: userInfo.name,
+              date_time:
+                new Date().toDateString() +
+                ' ' +
+                new Date().toLocaleTimeString('en-US'),
+              text: e.target.value,
+            })
+          }
         />
         <button className="sendBtn">Send</button>
       </form>

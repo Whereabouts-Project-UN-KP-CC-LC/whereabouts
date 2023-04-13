@@ -5,14 +5,14 @@ import MyTripStart from '../components/MyTripStart';
 import TripImWatching from '../components/TripImWatching';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ChatPage from '../components/ChatPage';
-
-// creates a new Manager for the given host URL (https://socket.io/docs/v4/client-api/#manager)
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:8080/', {
-  // path: '/chat',
-});
 
 function Dashboard(props) {
+  // creates a new Manager for the given host URL (https://socket.io/docs/v4/client-api/#manager)
+  const socket = io.connect('http://localhost:8080/', {
+    // path: '/chat',
+  });
+
   // hooks for conditionally rendering these components on click
   const [renderContacts, setRenderContacts] = useState(false);
   const [renderTrips, setRenderTrips] = useState(false);
@@ -24,19 +24,20 @@ function Dashboard(props) {
   const handleClick3 = () => setRenderTripsImWatching(true);
   const handleClick4 = () => setChatPage(true);
 
-  //SSE - render trips
+  // SSE - render trips
   const [trips, setTrips] = useState([]);
   useEffect(() => {
-    const source = new EventSource(`http://localhost:3000/stream/1234567890`, { //replace 123456789 with current user's phone_number
+    const source = new EventSource(`http://localhost:3000/stream/1234567890`, {
+      //replace 123456789 with current user's phone_number
       withCredentials: false,
-    }); //maybe need to add to webpack?
+    }); // maybe need to add to webpack? Not necessary
 
     source.addEventListener('open', () => {
       console.log('SSE opened!');
     });
 
     source.addEventListener('message', (e) => {
-      console.log(e.data);
+      // console.log(e.data);
       const data = JSON.parse(e.data);
       setTrips(data);
     });
@@ -71,7 +72,9 @@ function Dashboard(props) {
         {renderContacts && <Contacts />}
         {renderTrips && <MyTripStart />}
         {renderTripsImWatching && <TripImWatching />}
-        {renderChatPage && <ChatPage path="/chat" socket={socket} />}
+        {renderChatPage && (
+          <ChatPage path="/chat" socket={socket} userInfo={props.userInfo} />
+        )}
       </div>
     </div>
   );

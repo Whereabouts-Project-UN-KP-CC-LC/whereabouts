@@ -24,9 +24,16 @@ const io = new Server(httpServer, {
   // path: '/chat',
 });
 
+// const oldChats = [];
+// const allChatUsers = [];
+
 // on connection event (i.e. on connecting to socket server instance), listening for incoming sockets + connects with React app
 io.on('connection', (socket) => {
   //console.log(`${socket.id} user connected`);
+  // track all active chat users
+  // const { id } = socket;
+  // allChatUsers.push({ id });
+  //
   socket.on('new msg', (msg) => {
     // server emits client's msg to everyone, inc sender (all users / sockets); recall, io is the socket server instance we created
     io.emit('disperse msg', msg);
@@ -71,7 +78,7 @@ const dbQuery = async (phoneNumber) => {
 app.get('/stream/:phone_number', (req, res) => {
   const phoneNumber = req.params.phone_number;
   if (req.headers.accept === 'text/event-stream') {
-    console.log('accept/content type is event-stream');
+    // console.log('accept/content type is event-stream');
     res.writeHead(200, {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',

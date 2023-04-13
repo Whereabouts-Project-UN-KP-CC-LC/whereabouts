@@ -3,7 +3,7 @@ import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
 
-export default function ChatPage({ socket }) {
+export default function ChatPage({ socket, userInfo }) {
   const [messages, setMessages] = useState([]); // have messages state here and NOT on ChatBody b/c socket was not passed down to ChatBody
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function ChatPage({ socket }) {
       <div className="chat__main">
         <ChatBody messages={messages} />{' '}
         {/* passing down messages to ChatBody to display */}
-        <ChatFooter socket={socket} />
+        <ChatFooter socket={socket} userInfo={userInfo} />
       </div>
     </div>
   );
