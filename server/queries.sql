@@ -2,7 +2,7 @@ SELECT t.start_timestamp, t.start_lat, t.start_lng, t.sos_timestamp, t.sos_lat, 
 FROM trips t
 INNER JOIN trips_users_join j ON t.id = j.trips_id
 WHERE j.user_phone_number = '1234567890'
-ORDER BY t.id;
+ORDER BY t.start_timestamp DESC;
 
 SELECT * FROM trips ORDER BY id;
 
@@ -28,4 +28,11 @@ WHERE id = 4;
 
 DELETE
 FROM trips
-WHERE id IN (5, 6, 7);
+WHERE id IN (8);
+
+INSERT
+INTO trips
+(start_timestamp, start_lat, start_lng)
+VALUES
+('2023-04-13', 1, 2)
+RETURNING id;
