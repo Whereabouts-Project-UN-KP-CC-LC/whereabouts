@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
@@ -17,10 +18,22 @@ export default function ChatPage({ userInfo }) {
     lastMsgRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]); // on update of messages, move scroll bar to bottom
 
+  const [name, setName] = useState(userInfo.name);
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState([]); // have messages state here and NOT on ChatBody b/c socket was not passed down to ChatBody
 
   useEffect(() => {
+    // if user registered, don't need to fetch their name from DB
+    // if user logged in, will need to fetch their name from DB (it's an empty string on userInfo)
+    if (!userInfo.name) {
+      const user_name = axios
+        .get(`api/users/${userInfo.phone_number}`)
+        .then((res) => res[0].name)
+        .catch((err) => {
+          console.log(err);
+        });
+      setName(user_name);
+    }
     // listens for connecting client
     socket.on('connect', () => {
       console.log('client side connected!');
@@ -44,7 +57,7 @@ export default function ChatPage({ userInfo }) {
       setMessages([
         ...messages,
         {
-          name: userInfo.name,
+          name,
           date_time:
             new Date().toDateString() +
             ' ' +

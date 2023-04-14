@@ -29,7 +29,7 @@ export default function ChatBody({ messages, lastMsgRef }) {
                 fontSize: '10px',
               }}
             >
-              {msg.date_time} - Upasana sent:
+              {msg.date_time} - {msg.name} sent:
             </p>
             <p>{msg.text}</p>
           </div>
