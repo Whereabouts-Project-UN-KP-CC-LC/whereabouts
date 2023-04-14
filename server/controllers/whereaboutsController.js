@@ -32,7 +32,7 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
         status: 500,
         message: { error: 'No user exists for input phone number' },
       });
-    }
+    };
 
     // if user exists in users table, compare user-input password with stored hashed password
     const passwordIsMatch = await bcrypt.compare(
@@ -41,7 +41,6 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
     );
 
     if (!passwordIsMatch) {
-      
       return next({
         log: 'Express error handler caught whereaboutsController.checkUserExists error: Input password is incorrect',
         status: 400, // original 500
@@ -49,6 +48,9 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
       });
     }
     // no need to persist data, only success message needed on FE
+    // now passing name and phone number for use in chat
+    res.locals.name = existingUser.rows[0].name;
+    res.locals.phone_number = existingUser.rows[0].phone_number;
     return next();
   } catch (error) {
     return next({
@@ -103,6 +105,9 @@ whereaboutsController.insertNewUser = async (req, res, next) => {
     ]);
 
     // no need to persist data, only success message needed on FE
+    // now passing name and phone number for use in chat
+    res.locals.name = insertedUser.rows[0].name;
+    res.locals.phone_number = insertedUser.rows[0].phone_number;
     return next();
   } catch (error) {
     return next({

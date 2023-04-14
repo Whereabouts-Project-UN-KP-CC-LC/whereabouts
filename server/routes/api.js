@@ -5,13 +5,13 @@ const whereaboutsController = require('../controllers/whereaboutsController');
 // LOGIN component routes
 
 router.post('/login', whereaboutsController.checkUserExists, (req, res) => {
-  res.sendStatus(200);
+  res.status(200).json({name : res.locals.name, phone_number : res.locals.phone_number});
 });
 
 // REGISTER component routes
-router.post('/register', whereaboutsController.insertNewUser, (req, res) =>
-  res.sendStatus(200)
-);
+router.post('/register', whereaboutsController.insertNewUser, (req, res) => {
+  res.status(200).json({name : res.locals.name, phone_number : res.locals.phone_number});
+});
 
 //get all contacts of current user
 router.get('/users/contacts/', whereaboutsController.getContacts, (req, res) => {
