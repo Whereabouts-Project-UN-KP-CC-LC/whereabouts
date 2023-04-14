@@ -66,7 +66,7 @@ const dbQuery = async (phoneNumber) => {
     WHERE j.user_phone_number = '${phoneNumber}'
     AND j.user_is_traveler = FALSE
     AND jt.user_is_traveler = TRUE
-    ORDER BY j.trips_id DESC
+    ORDER BY t.end_timestamp DESC, t.sos_timestamp ASC, j.trips_id DESC
   `);
   // console.log(rows);
   // const trips = [];
