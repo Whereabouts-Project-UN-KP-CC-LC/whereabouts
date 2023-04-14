@@ -271,6 +271,26 @@ whereaboutsController.addContact = async (req, res, next) => {
       message: { error: 'Error storing contacts details' },
     });
   }
+};
+
+whereaboutsController.myTrip = async (req, res, next) => {
+  try {
+    res.locals.trip = await db.query(
+      `SELECT *
+      FROM trips t
+      INNER JOIN trips_users_join j ON t.id = j.trips_id
+      WHERE j.user_is_traveler = TRUE
+      AND j.user_phone_number = '${req.body.phone_number}'
+      ORDER BY t.id DESC`
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.myTrip error',
+      status: 500,
+      message: { error: 'Error retrieving user trip' },
+    });
+  }
 }
 
 module.exports = whereaboutsController;

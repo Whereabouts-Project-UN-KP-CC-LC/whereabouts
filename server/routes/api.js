@@ -41,6 +41,12 @@ router.post('/trips/start', whereaboutsController.startNewTrip, (req, res) => {
   res.sendStatus(204);
 });
 
+//get my current trip
+router.get('/trips/my', whereaboutsController.myTrip, (req, res) => {
+  const { rows } = res.locals.trip;
+  res.status(200).json(rows);
+});
+
 //send SOS alert
 router.post('/trips/sos', whereaboutsController.sendSos, (req, res) => {
   res.sendStatus(204);
