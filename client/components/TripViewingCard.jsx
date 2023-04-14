@@ -5,35 +5,42 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import MapContainer from '../components/MapContainer';
 
 
 // Pass props from contact list. Must have SOS state passed down from...
-export default function TripViewingCard() {
-    
+export default function TripViewingCard({trip}) {
+  
+  //Adds red border to trip with SOS enabled
+  const sx = { maxWidth: 700 };
+  if (trip.sos_timestamp) {
+    sx.border = 5;
+    sx.borderColor = 'red';
+  };
+
+  let status = 'started';
+  let color = 'success.main'
+  if (trip.sos_timestamp && trip.end_timestamp) { status = 'finished'; color = 'text.secondary'}
+  else if (trip.sos_timestamp) { status = 'sos'; color = 'error.main' }
 
   return (
-    <Card sx={{ maxWidth: 500 }}>
-      <CardMedia
-        sx={{ height: 175 }}
-        // google maps screenshot
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
+    <Card sx={sx}>
+      <div className="map-container">
+        <MapContainer trip={trip} />
+      </div>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {/* Here is were we'd insert contact's name and possibly travel destination */}
-          Contact Buddy is on a journey home.
+          {trip.traveler_name} is on a journey home.
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-            
+        <Typography variant="body2" color="{text}">
+          Status: {status}
         </Typography>
       </CardContent>
       <CardActions>
         {/* conditionally render these buttons when SOS is active on trip */}
-        {/* {sosIsActive && <Button size="small">Join Chat</Button>}
-        {sosIsActive && <Button size="small">Decline S O S</Button>} */}
-        <Button size='small'> Join Chat</Button>
-        <Button size='small'> Decline SOS</Button>
+        {trip.sos_timestamp && <Button size="large">Join Chat</Button>}
+        {trip.sos_timestamp && <Button size="large">Decline SOS</Button>}
 
       </CardActions>
     </Card>

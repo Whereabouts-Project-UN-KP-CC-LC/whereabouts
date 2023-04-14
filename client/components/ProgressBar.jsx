@@ -5,10 +5,11 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
 
-const steps = ['Starting my trip home', 'S O S ! ! !', 'I\'ve made it home safely.'];
+const steps = ['Starting my trip home', 'SOS ! ! !', 'I\'ve made it home safely.'];
 
-export default function ProgressBar() {
-  // update this conditional to correspond to what traveler's current status is. Assign to 'SOS' button if possible. 
+export default function ProgressBar({trip}) {
+  // update this conditional to correspond to what traveler's current status is. Assign to 'SOS' button if possible.
+  
   const isStepFailed = (step) => {
     return step === 1;
   };
