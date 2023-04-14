@@ -24,3 +24,12 @@ export default function MapContainer() {
     ></GoogleMapsProvider>
   )
 }
+
+export default function MapContainer() {
+  return (
+    <GoogleMapsProvider
+      googleMapsAPIKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+      options={mapOptions}
+    ></GoogleMapsProvider>
+  )
+}
