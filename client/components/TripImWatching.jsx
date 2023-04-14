@@ -4,7 +4,7 @@ import TripViewingCard from './TripViewingCard';
 
 
 
-function TripImWatching(props) {
+function TripImWatching() {
     
 
   return (

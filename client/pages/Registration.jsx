@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 function Registration({ userInfo, setUserInfo }) {
   const [passMatch, setPassMatch] = useState(true);
-  const [subStatus, setSubStatus] = useState(true);
-
-  // conditional alerts
+  const [subStatus, setSubStatus] = useState({
+    sent: false,
+    message: '',
+  });
+  // conditional alert
   const mismatchAlert = passMatch ? '' : 'Passwords do not match';
   //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
   const subFailedAlert = !subStatus.sent ? '' : subStatus.message;
@@ -24,7 +26,6 @@ function Registration({ userInfo, setUserInfo }) {
       };
     });
   };
-
   // confirms first password entry & second password entry match
   const confirmMatch = (event) => {
     if (event.target.value === userInfo.password) {
@@ -35,16 +36,13 @@ function Registration({ userInfo, setUserInfo }) {
       console.log('passwords do not match');
     }
   };
-
-  /* 
-      Sends user data to backend, redirects to contacts page if successful. 
-      If not, alerts user of failure. 
+  /*
+      Sends user data to backend, redirects to contacts page if successful.
+      If not, alerts user of failure.
     */
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('submitting user data');
-
-    // new before charlie's PR
     if (!passMatch) {
       setSubStatus((prevState) => {
         return {
@@ -53,19 +51,21 @@ function Registration({ userInfo, setUserInfo }) {
           message: 'Passwords do not match. Please correct before submitting',
         };
       });
-
       return;
     }
-
     try {
-      // need to confirm use of redirect & url
+      // post request with new user data to backend, redirect to dashboard upon completion
       console.log('userInfo being sent to BE =>', userInfo);
-
-      let response = await axios.post('/api/register', userInfo);
-      // response = JSON.parse(response);
-
+      const response = await axios.post('/api/register', userInfo);
+      console.log('response from POST req =>', response);
       if (response.status === 200) {
-        setSubStatus(true);
+        setSubStatus((prevState) => {
+          return {
+            ...prevState,
+            sent: true,
+            message: 'Your account has been created',
+          };
+        });
         console.log('User added to DB');
         setRedirect(true);
       } else {
@@ -73,79 +73,91 @@ function Registration({ userInfo, setUserInfo }) {
       }
     } catch (err) {
       // render user alert that submission failed
-      console.log(err.message);
-      setSubStatus(false);
+      console.log('this is the error =>', err.response.data.error);
+      setSubStatus((prevState) => {
+        return {
+          ...prevState,
+          sent: true,
+          message: err.response.data.error,
+        };
+      });
     }
   };
-
   return (
     <div className="registration-container">
-      <h3>Registration</h3>
       <br></br>
       {/* Invoking redirect hook in event of successful login */}
       {redirect && <Navigate to="/dashboard" replace={true} />}
       <form className="registration-form" onSubmit={handleSubmit}>
-        <div className="input-container">
-          <p>Full Name</p>
+        <div className="registration-input-container">
           <br></br>
-          <input
+          <h3>Sign Up</h3>
+          <br></br>
+          <TextField
+            label="full name"
             type="text"
             className="input-box"
             name="name"
             id="name"
+            size="small"
+            helperText="enter your first and last name"
             required={true}
             onChange={onChange}
           />
         </div>
         <br></br>
-        <div className="input-container">
-          <p>Phone Number</p>
-          <br></br>
-          <input
+        <div className="registration-input-container">
+          <TextField
+            label="phone number"
             type="text"
             className="input-box"
             name="phone_number"
             id="phone"
+            size="small"
             required={true}
             onChange={onChange}
           />
         </div>
         <br></br>
-        <div className="input-container">
-          <p>Password</p>
-          <br></br>
-          <input
-            type="text"
+        <div className="registration-input-container">
+          <TextField
+            label="password"
+            type="password"
             className="input-box"
             name="password"
             id="password"
+            size="small"
             required={true}
             onChange={onChange}
           />
         </div>
         <br></br>
-        <div className="input-container">
-          <p>Re-Enter Password</p>
-          <br></br>
-          <input
-            type="text"
+        <div className="registration-input-container">
+          <TextField
+            label="confirm password"
+            type="password"
             className="input-box"
             name="password"
             id="confirm-password"
+            size="small"
             required={true}
             onChange={confirmMatch}
           />
           <p>{mismatchAlert}</p>
         </div>
         <br></br>
-        <button type="submit" className="styleMe">
+        <Button type="submit" className="styleMe" variant="contained">
           Create Your Account
-        </button>
+        </Button>
+        <br></br>
+        <Button type="submit" className="styleMe" variant="text">
+          Already Have an Account? Sign In
+        </Button>
+        <br></br>
       </form>
       <br></br>
-      <p>{subFailedAlert}</p>
+      <p>{subStatus.message}</p>
     </div>
   );
 }
-
 export default Registration;

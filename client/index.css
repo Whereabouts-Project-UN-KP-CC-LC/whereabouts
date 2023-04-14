@@ -14,16 +14,46 @@
   background-color: #ef8e48;
 }
 
+/****** Start of Header styling ******/
+.header-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+header img {
+ height: 165px; 
+}
+
+/****** End of Header styling ******/
+
 /****** Start of Login styling ******/
 
 .login-container {
-  width: 300px;
+  width: 350px;
   height: 500px;
+  padding: 10px 0 0 0;
+  margin: 50px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
   background-color: whitesmoke;
+  border-color: #59656f;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 2%;
+}
+
+.login-container a {
+  text-decoration: none;
+  color:black
+}
+
+.login-container a:hover {
+  color: #ef8e48;
 }
 
 .form-container {
@@ -31,6 +61,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-color: #59656f;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: whitesmoke;
 }
 
 .input-container {
@@ -39,18 +73,12 @@
   flex-direction: column;
   padding: 20px;
   justify-content: flex-start;
-  border-color: #59656f;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  background-color: whitesmoke;
 }
 
 /****** End of Login styling ******/
 
-/****** Start of Registration styling ******/
-
 .registration-container {
-  width: 300px;
+  width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,17 +86,18 @@
   margin: 20px;
   border-radius: 2%;
 }
-
-.registration-container h3 {
-  padding: 10px;
-}
-
-.registration-form {
+.registration-input-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  border-radius: 2%;
+}
 /****** End of Registration styling ******/
 
 /****** Start of Dashboard styling ******/
@@ -116,29 +145,6 @@
 
 /****** End of Side styling ******/
 
-/****** Start of Registration styling ******/
-
-.registration-container {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: whitesmoke;
-  margin: 20px;
-  border-radius: 2%;
-}
-
-.registration-container h3 {
-  padding: 10px;
-}
-
-.registration-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/****** End of Registration styling ******/
 
 /****** Start of Contacts styling ******/
 
@@ -436,6 +442,29 @@
 }
 
 /****** End of ChatPage + subcomponent styling ******/
+
+
+/****** Start of Map styling ******/
+.places-container {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 300px;
+}
+
+.map-container {
+  width: 100%;
+  height: 100vh;
+}
+
+.combobox-input {
+  width: 100%;
+  padding: 0.5rem;
+}
+/****** End of Map styling ******/
+
 
 
 /****** Start of ADD COMPONENT HERE styling ******/
