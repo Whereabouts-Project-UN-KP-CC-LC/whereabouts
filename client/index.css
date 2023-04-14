@@ -444,27 +444,20 @@ header img {
 /****** End of ChatPage + subcomponent styling ******/
 
 
-/****** Start of Map styling ******/
-.places-container {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  width: 300px;
-}
+/****** Start of Map Container styling ******/
 
+/* specifically just for the renderind of the map within the map container component */
+.map {
+  width: 700px;
+  height: 300px;
+}
+/* map-container can be adjusted depending on what additonal input fields/info we need to render with Map */
 .map-container {
-  width: 100%;
-  height: 100vh;
+  width: 700px;
+  height: 375px;
 }
 
-.combobox-input {
-  width: 100%;
-  padding: 0.5rem;
-}
-/****** End of Map styling ******/
-
+/****** End of Map Container styling ******/
 
 
 /****** Start of ADD COMPONENT HERE styling ******/

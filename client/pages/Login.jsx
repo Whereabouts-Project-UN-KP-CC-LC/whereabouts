@@ -36,6 +36,7 @@ function Login({ userInfo, setUserInfo }) {
         if (response.status === 200) {
           console.log(`status is 200, invoking setRedirect`);
           setRedirect(true);
+          setUserInfo(userLogin);
         }
       })
       .catch((error) => {
