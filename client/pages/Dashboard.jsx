@@ -35,9 +35,10 @@ function Dashboard({ userInfo, setUserInfo }) {
 
   // toggle components in sidebar
   const handleClick = (componentName) => {
-
     setActiveComponent(componentName);
   };
+
+  
 
   return (
     <div className="dashboard-container">
@@ -56,8 +57,10 @@ function Dashboard({ userInfo, setUserInfo }) {
         {activeComponent === 'contacts' && <Contacts
           userInfo={userInfo} 
           contacts={contacts} 
-          setContacts={setContacts} 
+          setContacts={setContacts}
+          setActiveComponent={setActiveComponent} 
         /> }
+        {activeComponent === 'myTripCard' && <MyTripCard />}
         {activeComponent === 'tripsImWatching' && <TripImWatching userInfo={userInfo} />}
         {activeComponent === 'chatPage' &&  <ChatPage 
           path= '/chat' 

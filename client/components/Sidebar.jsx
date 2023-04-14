@@ -10,7 +10,13 @@ function Sidebar({ handleClick }) {
                 onClick={() => handleClick('contacts')} 
                 className='sidebar-item'
             >
-                Contacts & My Trip
+                Contacts
+            </div>
+            <div 
+                onClick={() => handleClick('myTripCard')} 
+                className='sidebar-item'
+            >
+                My Trip
             </div>
             <div 
                 onClick={() => handleClick('tripsImWatching')} 

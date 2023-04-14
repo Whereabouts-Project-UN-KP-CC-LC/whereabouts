@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MapContainer from '../components/MapContainer';
-import MapContainer from '../components/MapContainer';
+import CardActions from '@mui/material/CardActions';
 
 // Card media is not needed since it was a component for the stock image that came with MUI
 
@@ -24,12 +24,13 @@ export default function TripViewingCard({trip}) {
 
   return (
 
-      
+  
     <Card sx={{ width: 700, height: 500 }}>
        
       <div className="map-container">
-        <MapContainer trip={newTrip} />
+        <MapContainer trip={trip} />
       </div>
+      
       <Typography gutterBottom variant="h5" component="div">
           {/* Here is were we'd insert contact's name and possibly travel destination */}
           {trip.traveler_name} is on a journey home.
@@ -37,12 +38,11 @@ export default function TripViewingCard({trip}) {
         <Typography variant="body2" color="{text}">
           Status: {status}
         </Typography>
-      </CardContent>
+      
       <CardActions>
         {/* conditionally render these buttons when SOS is active on trip */}
         {trip.sos_timestamp && <Button size="large">Join Chat</Button>}
         {trip.sos_timestamp && <Button size="large">Decline SOS</Button>}
-
       </CardActions>
     </Card>
   );

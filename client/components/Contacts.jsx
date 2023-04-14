@@ -5,12 +5,12 @@ import { Routes, Route } from 'react-router-dom';
 import MyTripCard from './MyTripCard';
 
 
-function Contacts({ userInfo, contacts, setContacts }) {
+function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
 
   // hook to manage contacts checked from list
   const [checkedContacts, setCheckedContacts] = useState([]);
   // hook to redirect to MyTripStart
-  const [redirect, setRedirect] = useState(false);
+  // const [redirect, setRedirect] = useState(false);
 
   // Fetch GET request for contact and add to list:
   const handleSubmit = async (event) => {
@@ -61,7 +61,8 @@ function Contacts({ userInfo, contacts, setContacts }) {
         if (response.status === 204) {
           console.log(`status is 200, redirect to MyTripCard`)
           // Move back set Redirect into this bracket for proper rendering.
-          setRedirect(true);
+          // setRedirect(true);
+          setActiveComponent('myTripCard');
         }
         console.log('Successful response from back end ', response);
       })
@@ -85,11 +86,11 @@ function Contacts({ userInfo, contacts, setContacts }) {
       
       <br></br>
       {/* Invoking redirect hook in event of successful post request */}
-      {redirect && 
+      {/* {redirect && 
         <Routes>
           <Route path="/" element={<MyTripCard />} replace={true} />
         </Routes>
-      }
+      } */}
       <div className='add-contact-container'>
         <form onSubmit={handleSubmit} className='add-contact-form'>
           <p>Add contacts to your list:</p>
