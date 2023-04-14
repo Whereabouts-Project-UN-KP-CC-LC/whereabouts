@@ -33,18 +33,18 @@ function TripImWatching({userInfo}) {
   return (
     <>
       <div className='trip-watching-container'>
-        <h1>Creating one view port for 'trips i'm watching'</h1>
-        {/* SSE - Render trips */}
+        <br/>
+        <h1>Trips I'm Watching</h1>
         {trips.map((trip) => (
           <div key={trip.trips_id} className='view-card'>
             <br></br>
             <TripViewingCard
               trip={trip}
             />
-            <br></br>
+            {/* <br></br>
             <ProgressBar
               trip={trip}
-            />
+            /> */}
           </div>
         ))}
       </div>
