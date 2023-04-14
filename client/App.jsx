@@ -31,7 +31,6 @@ export default function App() {
               <Route path='/dashboard' element={<Dashboard userInfo={userInfo} setUserInfo={setUserInfo} />} />
             </Routes>
             
-            
           </div>
         </div>
       </Router>
