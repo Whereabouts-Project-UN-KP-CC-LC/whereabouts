@@ -4,7 +4,7 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper, Geocode } from "google-maps-
 // hard code API key. Keep safe
 const key = "AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms";
 
-function MapContainer (trip) {
+function MapContainer ({trip}) {
   // console.log('trip: ', trip);
   // console.log('keys for trip: ', JSON.stringify(trip.start_lat));
 
@@ -13,17 +13,16 @@ function MapContainer (trip) {
     width: '700px',
     height: '300px',
   };
-  
-  /* use for center coordinates for final:
-  trip.start_lat
-  trip.start_lng
-  */
 
   const center = {
-    'lat': -33.369892,
-    'lng': -70.5145822,
+    'lat': trip.start_lat,
+    'lng': trip.start_lng,
   };
 
+  // hook to store coordinates & address:
+  // const [address, setAddress] = useState('');
+  // const [location, setLocation] = useState({ lat: null, lng: null });
+  
   /* ** Note: ANYTHING rendered inside of the same div as Map container will be covered. Need to add components AROUND the container storing the Map component */
   return (
    <>
@@ -39,7 +38,9 @@ function MapContainer (trip) {
       </Map>
       
     </div>
+    
   
+    
    </>
     
   );
