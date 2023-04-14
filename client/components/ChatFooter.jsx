@@ -4,10 +4,12 @@ export default function ChatFooter({ socket, userInfo }) {
   const [message, setMessage] = useState({});
 
   const handleSendMsg = (e) => {
+    // the following prevents form from being submitted to a file
     e.preventDefault();
-    // send message to server (unless empty string)
-    if (message) {
-      socket.emit('new msg', message); // 'new msg' = event name
+    // send message to server (unless message is an empty string)
+    if (message.text) {
+      // emitting a message to the server
+      socket.emit('chatMsg', message); // 'chatMsg' = event name, message is an object containing user's name, date_time, and typed text
       // clear input
       setMessage({
         name: '',
