@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ContactsList from './ContactsList';
+import { Route } from 'react-router-dom';
+
 
 function Contacts({ userInfo, contacts, setContacts }) {
 
   // hook to manage contacts checked from list
   const [checkedContacts, setCheckedContacts] = useState([]);
+  // hook to redirect to MyTripStart
+  const [redirect, setRedirect] = useState(false);
 
   // Fetch GET request for contact and add to list:
   const handleSubmit = async (event) => {
@@ -22,6 +26,8 @@ function Contacts({ userInfo, contacts, setContacts }) {
 
       // add user to array of contacts
       setContacts([...contacts, contactData]);
+
+
       
     } catch(err) {
       console.log(`Fetch request for user with phone_number failed.`, err);
@@ -52,6 +58,10 @@ function Contacts({ userInfo, contacts, setContacts }) {
     // create a post request to the route: /api/trips/start
     axios.post('/api/trips/start', tripData)
       .then((response) => {
+        if (response.status === 200) {
+          console.log(`status is 200, redirect to MyTripCard`)
+          setRedirect(true);
+        }
         console.log('Successful response from back end ', response);
       })
       .catch((error) => {
@@ -73,6 +83,8 @@ function Contacts({ userInfo, contacts, setContacts }) {
     <div className='contacts-container'>
       
       <br></br>
+      {/* Invoking redirect hook in event of successful post request */}
+      {redirect && <Route Component={TripImWatching} replace={true} />}
       <div className='add-contact-container'>
         <form onSubmit={handleSubmit} className='add-contact-form'>
           <p>Add contacts to your list:</p>
