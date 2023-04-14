@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
 import ChatPage from '../components/ChatPage';
@@ -15,7 +14,16 @@ const socket = io.connect('http://localhost:8080/', {
   // path: '/chat',
 });
 
-function Dashboard(props) {
+function Dashboard({ userInfo }) {
+
+  // hook for contacts per user
+  const [contacts, setContacts] = useState([]);
+
+  // hook for conditionally rendering components
+  const [activeComponent, setActiveComponent] = useState(null);
+
+  // toggle components in sidebar
+  const handleClick = (componentName) => {
 
   console.log(props)
 
@@ -29,41 +37,59 @@ function Dashboard(props) {
     sos_lat: '',
     sos_lng: '',
   })
+    setActiveComponent(componentName);
+  };
 
-  // hooks for conditionally rendering these components on click
-  const [renderContacts, setRenderContacts] = useState(false);
-  const [renderTrips, setRenderTrips] = useState(false);
-  const [renderTripsImWatching, setRenderTripsImWatching] = useState(false);
-  const [renderChatPage, setChatPage] = useState(false);
+  //SSE - render trips
+  const [trips, setTrips] = useState([]);
+  useEffect(() => {
+    const source = new EventSource(`http://localhost:3000/stream/1234567890`, { //replace 123456789 with current user's phone_number
+      withCredentials: false,
+    }); //maybe need to add to webpack?
 
-  const handleClick1 = () => setRenderContacts(true);
-  const handleClick2 = () => setRenderTrips(true);
-  const handleClick3 = () => setRenderTripsImWatching(true);
-  const handleClick4 = () => setChatPage(true);
+    source.addEventListener('open', () => {
+      console.log('SSE opened!');
+    });
 
-  // get request to update userTrip with data from db
-  // we really only need this to occur once, at the beginning of each login. Currently, I think this get req will be sent every time 
+    source.addEventListener('message', (e) => {
+      // console.log(e.data);
+      const data = JSON.parse(e.data);
+      setTrips(data);
+    });
 
+    source.addEventListener('error', (e) => {
+      console.error('Error: ', e);
+    });
 
-  return(
-    <div>
-      <div className='dashboard-container'>
-        <div className='sidebar-container'>
-          <Sidebar 
-            setRenderContacts={handleClick1}
-            setRenderTrips={handleClick2}
-            setRenderTripsImWatching={handleClick3}
-            setChatPage={handleClick4}
-          />
-        </div>
-        <div className='functions-container'>
-          {renderContacts && <Contacts /> }
-          {/* updated ln 58 to render MyTrip component, which in turn, conditionally renders either MyTripStart or MyTrip 
-          depending on whether there is an active user trip */}
-          {renderTrips && <MyTrip userInfo={props.userInfo} setUserInfo={props.setUserInfo} userTrip={userTrip} setUserTrip={setUserTrip} />}
-          {renderTripsImWatching && <TripImWatching />}
-          {renderChatPage &&  <ChatPage path= '/chat' socket={socket} />}
-        </div>
+    return () => {
+      source.close();
+    };
+  }, []);
+
+  return (
+    <div className="dashboard-container">
+      {/* SSE - Render trips */}
+      {/* <div>
+        {trips.map((trip) => (
+          <div>Trip Id: {trip.id} | Trip Start Time: {trip.start_timestamp} ||</div>
+        ))}
+      </div> */}
+      <div className='sidebar-container'>
+        <Sidebar 
+          handleClick={handleClick}
+        />
+      </div>
+      <div className='functions-container'>
+        {activeComponent === 'contacts' && <Contacts
+          userInfo={userInfo} 
+          contacts={contacts} 
+          setContacts={setContacts} 
+        /> }
+        {activeComponent === 'tripsImWatching' && <TripImWatching />}
+        {activeComponent === 'chatPage' &&  <ChatPage 
+          path= '/chat' 
+          socket={socket} 
+        />}
       </div>
     </div>
   )

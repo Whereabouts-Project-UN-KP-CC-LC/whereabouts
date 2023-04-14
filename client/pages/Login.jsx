@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate, redirect, Link, Routes, Route } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
@@ -25,7 +25,7 @@ function Login({ userInfo, setUserInfo }) {
       password: userInfo.password
     }
 
-    console.log(`userLogin: ${JSON.stringify(userLogin)}`);
+    //console.log(`userLogin: ${JSON.stringify(userLogin)}`);
 
     // Send post request to BE. Must verify user. Looking for 200 status in order to proceed
 
@@ -40,7 +40,7 @@ function Login({ userInfo, setUserInfo }) {
       })
       .catch((error) => {
         if (error) {
-          alert(`Please check login information and try again.`);
+          alert(`Please check login information and try again`);
         }
       })
   };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import { redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 
 function Registration({ userInfo, setUserInfo }) {
@@ -11,7 +11,14 @@ function Registration({ userInfo, setUserInfo }) {
     });
     // conditional alert
     const mismatchAlert = passMatch ? '' : 'Passwords do not match';
-    // const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
+    //const subFailedAlert = subStatus ? '' : 'Submission failed. Please try again.';
+    const subFailedAlert = (!subStatus.sent) ? '' : subStatus.message;
+
+    // hook to redirect after successful login
+    const [redirect, setRedirect] = useState(false);
+
+ 
+
     // updates state as user inputs form info
     const onChange = (event) => {
         setUserInfo( (prevState) => {
@@ -62,7 +69,7 @@ function Registration({ userInfo, setUserInfo }) {
                 }
                 });
                 console.log('User added to DB');
-                redirect('/dashboard')
+                setRedirect(true);
             } else {
                 throw new Error();
             }
@@ -81,6 +88,8 @@ function Registration({ userInfo, setUserInfo }) {
     return (
         <div className='registration-container'>
             <br></br>
+            {/* Invoking redirect hook in event of successful login */}
+            {redirect && <Navigate to="/dashboard" replace={true} />}
             <form className='registration-form' onSubmit={handleSubmit}>
                 <div className='registration-input-container'>
                     <br></br>

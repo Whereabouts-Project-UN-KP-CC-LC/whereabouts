@@ -1,92 +1,109 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import OneContact from './OneContact';
-import { Navigate } from 'react-router-dom';
+import ContactsList from './ContactsList';
 
-function Contacts(props) {
+function Contacts({ userInfo, contacts, setContacts }) {
 
-  // hook to manage input to verify if contact exists in db
-  const [addContact, setAddContact] = useState('');
-  // hook to add additional contact cards to display
-  const [renderContactCount, setRenderContactCount] = useState([]);
-  //hook to capture data to add a contact
-  // const [dataForContact, setDataForContact] = useState(null);
+  // hook to manage contacts checked from list
+  const [checkedContacts, setCheckedContacts] = useState([]);
 
+  // Fetch GET request for contact and add to list:
+  const handleSubmit = async (event) => {
 
-  const onChange = (event) => {
-    setAddContact((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }))
+    event.preventDefault();
+    //console.log('submit: ', event.target[0].value )
+
+    //fetch request to get contact info
+    try {
+      const response = await axios.get('/api/users/' + event.target[0].value, event.target[0].value);
+      
+      const contactData = response.data[0];
+      // console.log('contactData: ', contactData);
+
+      // add user to array of contacts
+      setContacts([...contacts, contactData]);
+      
+    } catch(err) {
+      console.log(`Fetch request for user with phone_number failed.`, err);
+    }
   };
 
-  
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // fetch request to db to verify user
-    // console.log(`checking to see what addContact is without key: ${JSON.stringify(addContact)}`);
-    // console.log(`checking to see what addContact is: ${JSON.stringify(addContact["phone_number"])}`);
-
-    // let response = await axios.get(`/api/users/${addContact["phone_number"]}`, addContact);
-     
-    // response = JSON.stringify(response);
-    // console.log(`response.data: ${response.data}`);
-    // console.log(`response.status: ${response.status}`);
-
-      
-      // .catch(err => {
-      //   console.log(`Error inside GET request for user by phone.`), err;
-      // })
-    
-
-    
-    // if (response.status === 200) {
-    //   console.log(`Get user with phone_number successful`)
-    //   setDataForContact(response.data);
-    // } else {
-    //   throw new Error('Problem getting contact with phone_number');
-    // }
-  
-    // successful GET request will add user to state, accessible from OneContact component
-    
-
+  // function to delete contact from list, pass to contacts list
+  const deleteContact = (index) => {
+    const newContacts = [...contacts];
+    newContacts.splice(index, 1);
+    setContacts(newContacts);
   }
 
-  
+  // function to extract phone numbers from checkedContacts array
+  const extractPhoneNumbers = (array) => {
+    return array.map((obj) => obj.phone_number);
+  }; 
+
+  // declare variable to contain proper info to send backend
+  const tripData = {
+    'traveler': userInfo.phone_number,
+    'watchers': extractPhoneNumbers(checkedContacts)
+  };
+
+
+  // function to send post request to back end with user information to start trip
+  const handleStartTrip = () => {
+    // create a post request to the route: /api/trips/start
+    axios.post('/api/trips/start', tripData)
+      .then((response) => {
+        console.log('Successful response from back end ', response);
+      })
+      .catch((error) => {
+        if (error) {
+          alert(`Please check contacts information and try again`);
+        }
+      })
+  };
+
+
+  // // checking state of contacts data:
+  useEffect(() => {
+    console.log('Currnt checkedContacts:', checkedContacts);
+    console.log('Current User phone: ', userInfo.phone_number);
+    console.log('Current trip data: ', tripData);
+  }, [checkedContacts, userInfo.phone_number, tripData]);
 
   return (
     <div className='contacts-container'>
-      <p>Hello from start of Contacts page</p>
+      
       <br></br>
       <div className='add-contact-container'>
         <form onSubmit={handleSubmit} className='add-contact-form'>
-          <p>Add a contact to your trip:</p>
+          <p>Add contacts to your list:</p>
           <input
             type='text'
-            className='input-box'
-            id='add-contact'
-            name='phone_number'
-            onChange={onChange}
+            className='add-contact-input'
+            id='contact-phone-number'
           />
-          <button type='submit'className='submit-btn'>Add Contact</button>
+          <button type='submit'className='add-contact-btn'>Add Contact</button>
         </form>
       </div>
       <br></br>
-      <br></br>
       <div className='valid-contacts-container'>
         <div className='titles-row'>
-          <p className='contact-title'>Name of Contact</p>
-          <p className='contact-title'>Phone Number of Contact</p>
-          <p className='contact-title'>Delete Contact?</p>
-          
+          <button 
+            className="start-trip-button" 
+            role="button"
+            onClick={handleStartTrip}
+            >
+            Start Your Trip!
+          </button>
         </div>
       
         <div className='contacts-display'>
-          <h3>Inside of contacts display</h3>
-          {/* <OneContact /> */}
-          { [...Array(renderContactCount)].map((_, i) => <OneContact key={i} />) }
+          <h3>Select a few contacts to share your trip with:</h3>
+          <ContactsList 
+            contacts={contacts}
+            deleteContact={deleteContact}
+            checkedContacts={checkedContacts}
+            setCheckedContacts={setCheckedContacts}
+          />
         </div>
 
       </div>

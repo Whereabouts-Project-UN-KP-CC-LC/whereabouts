@@ -1,6 +1,7 @@
 const db = require('../models/whereaboutsModel');
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
+const axios = require('axios');
 
 const whereaboutsController = {};
 
@@ -133,7 +134,6 @@ whereaboutsController.getContacts = async (req, res, next) => {
 
 //get single user by phone number
 whereaboutsController.getUserByPhoneNumber = async (req, res, next) => {
-
   try {
       res.locals.user = await db.query(
           `SELECT * FROM users WHERE phone_number=$1`,
@@ -166,5 +166,111 @@ whereaboutsController.deleteContact = async (req, res, next) => {
         });
     }
 };
+
+//gets current location, stores new trip with current location and stores traveler/watcher relation after user clicks 'start new trip'
+whereaboutsController.startNewTrip = async (req, res, next) => {
+  try {
+    //get user's current location
+    const {data} = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`); //FIXME --> use .env to store the key
+    const lat = data.location.lat;
+    const lng = data.location.lng;
+    //store trip in trips table
+    const {rows} = await db.query(
+      `INSERT
+      INTO trips
+      (start_timestamp, start_lat, start_lng)
+      VALUES
+      (NOW(), ${lat}, ${lng})
+      RETURNING id`
+    );
+    const tripId = rows[0].id;
+    //store traveler in join table
+    await db.query(
+      `INSERT
+      INTO trips_users_join
+      (trips_id, user_is_traveler, user_phone_number)
+      VALUES
+      (${tripId}, TRUE, ${req.body.traveler})`
+    );
+    req.body.watchers.forEach(async watcher => {
+      await db.query(
+        `INSERT
+        INTO trips_users_join
+        (trips_id, user_is_traveler, user_phone_number)
+        VALUES
+        (${tripId}, FALSE, ${watcher})`
+      );
+    })
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.startNewTrip error',
+      status: 500,
+      message: { error: 'Error starting a new trip' },
+    });
+  }
+};
+
+//updates trip with sos timestamp, sos lat and sos lng
+whereaboutsController.sendSos = async (req, res, next) => {
+  try {
+    //get user's current location
+    const {data} = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`); //FIXME --> use .env to store the key
+    const lat = data.location.lat;
+    const lng = data.location.lng;
+    //update trip sos details
+    await db.query(
+      `UPDATE trips
+      SET sos_timestamp = NOW(), sos_lat = ${lat}, sos_lng = ${lng}
+      WHERE id = ${req.body.tripId}`
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.sendSos error',
+      status: 500,
+      message: { error: 'Error storing sos details' },
+    });
+  }
+};
+
+//updates trip with end timestamp
+whereaboutsController.endTrip = async (req, res, next) => {
+  try {
+    //update trip end details
+    await db.query(
+      `UPDATE trips
+      SET end_timestamp = NOW()
+      WHERE id = ${req.body.tripId}`
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.sendSos error',
+      status: 500,
+      message: { error: 'Error storing sos details' },
+    });
+  }
+};
+
+whereaboutsController.addContact = async (req, res, next) => {
+  try {
+    //store traveler-contact relationship
+    await db.query(
+      `INSERT
+      INTO contacts_join
+      (traveler_phone_number, contact_phone_number)
+      VALUES
+      (${req.body.traveler_phone_number}, ${req.body.contact_phone_number})`
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.addContact error',
+      status: 500,
+      message: { error: 'Error storing contacts details' },
+    });
+  }
+}
 
 module.exports = whereaboutsController;
