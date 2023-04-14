@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
-import TripImWatching from '../components/TripImWatching';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ChatPage from '../components/ChatPage';
+import TripImWatching from '../components/TripImWatching';
+import MyTripCard from '../components/MyTripCard';
 
 // creates a new Manager for the given host URL (https://socket.io/docs/v4/client-api/#manager)
 import io from 'socket.io-client';
+
 const socket = io.connect('http://localhost:8080/', {
   // path: '/chat',
 });
 
-function Dashboard({ userInfo }) {
+function Dashboard({ userInfo, setUserInfo }) {
 
   // hook for contacts per user
   const [contacts, setContacts] = useState([]);
@@ -19,8 +20,20 @@ function Dashboard({ userInfo }) {
   // hook for conditionally rendering components
   const [activeComponent, setActiveComponent] = useState(null);
 
+  // hook for tracking userTrip data
+  const [userTrip, setUserTrip] = useState({
+    active: true,
+    start_timestamp: '',
+    start_lat: '',
+    start_lng: '',
+    sos_timestamp: '',
+    sos_lat: '',
+    sos_lng: '',
+  })
+
   // toggle components in sidebar
   const handleClick = (componentName) => {
+
     setActiveComponent(componentName);
   };
 
