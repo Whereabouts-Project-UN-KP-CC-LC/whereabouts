@@ -3,8 +3,6 @@ import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
 import ChatPage from '../components/ChatPage';
 import TripImWatching from '../components/TripImWatching';
-import MyTrip from '../components/MyTrip';
-import MyTripStart from '../components/MyTripStart';
 import MyTripCard from '../components/MyTripCard';
 
 // creates a new Manager for the given host URL (https://socket.io/docs/v4/client-api/#manager)
@@ -14,7 +12,7 @@ const socket = io.connect('http://localhost:8080/', {
   // path: '/chat',
 });
 
-function Dashboard({ userInfo }) {
+function Dashboard({ userInfo, setUserInfo }) {
 
   // hook for contacts per user
   const [contacts, setContacts] = useState([]);
@@ -22,12 +20,7 @@ function Dashboard({ userInfo }) {
   // hook for conditionally rendering components
   const [activeComponent, setActiveComponent] = useState(null);
 
-  // toggle components in sidebar
-  const handleClick = (componentName) => {
-
-  console.log(props)
-
-  // hook for tracking userTrip data 
+  // hook for tracking userTrip data
   const [userTrip, setUserTrip] = useState({
     active: true,
     start_timestamp: '',
@@ -37,6 +30,10 @@ function Dashboard({ userInfo }) {
     sos_lat: '',
     sos_lng: '',
   })
+
+  // toggle components in sidebar
+  const handleClick = (componentName) => {
+
     setActiveComponent(componentName);
   };
 

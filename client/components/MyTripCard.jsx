@@ -8,7 +8,10 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import MapContainer from './MapContainer';
 
+// When rendering this component, use => <MyTripCard userInfo={userInfo} setUserInfo={setUserInfo} userTrip={userTrip} setUserTrip={setUserTrip} />
+
 const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip }) => {
+    
 
     // obtain position, submit to server, render SOS map if needed
     const handleClick = async (name) => {
@@ -46,7 +49,7 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip }) => {
     <MapContainer lat={userTrip.start_lat} lng={userTrip.start_lng} />
       
       <CardMedia
-        sx={{ height: 175 }}
+        sx={{ height: 150 }}
         src='src only accepts a string'
         title="interactive-map"
       />

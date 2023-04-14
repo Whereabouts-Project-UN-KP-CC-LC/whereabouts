@@ -77,13 +77,13 @@ function Login({ userInfo, setUserInfo }) {
             name='password'
             label='password'
             size='small'
-            required='true'
+            required={true}
             value={userInfo.password}
             onChange={onChange}
           />
         </div>
         <br></br>
-        <Button className='submit-btn' variant='contained'>Submit Login</Button>
+        <Button type='submit' className='submit-btn' variant='contained'>Submit Login</Button>
         <br></br>
       </form>
       
