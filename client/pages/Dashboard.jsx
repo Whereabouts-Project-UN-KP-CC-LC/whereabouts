@@ -3,14 +3,16 @@ import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
 import ChatPage from '../components/ChatPage';
 import TripImWatching from '../components/TripImWatching';
+import MapContainer from '../components/MapContainer';
 import MyTripCard from '../components/MyTripCard';
+import TripViewingCard from '../components/TripViewingCard';
 
 // creates a new Manager for the given host URL (https://socket.io/docs/v4/client-api/#manager)
 import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:8080/', {
-  // path: '/chat',
-});
+// const socket = io.connect('http://localhost:8080/', {
+//   // path: '/chat',
+// });
 
 function Dashboard({ userInfo, setUserInfo }) {
 
@@ -37,32 +39,6 @@ function Dashboard({ userInfo, setUserInfo }) {
     setActiveComponent(componentName);
   };
 
-  //SSE - render trips
-  const [trips, setTrips] = useState([]);
-  useEffect(() => {
-    const source = new EventSource(`http://localhost:3000/stream/1234567890`, { //replace 123456789 with current user's phone_number
-      withCredentials: false,
-    }); //maybe need to add to webpack?
-
-    source.addEventListener('open', () => {
-      console.log('SSE opened!');
-    });
-
-    source.addEventListener('message', (e) => {
-      // console.log(e.data);
-      const data = JSON.parse(e.data);
-      setTrips(data);
-    });
-
-    source.addEventListener('error', (e) => {
-      console.error('Error: ', e);
-    });
-
-    return () => {
-      source.close();
-    };
-  }, []);
-
   return (
     <div className="dashboard-container">
       {/* SSE - Render trips */}
@@ -82,12 +58,14 @@ function Dashboard({ userInfo, setUserInfo }) {
           contacts={contacts} 
           setContacts={setContacts} 
         /> }
-        {activeComponent === 'tripsImWatching' && <TripImWatching />}
+        {activeComponent === 'tripsImWatching' && <TripImWatching userInfo={userInfo} />}
         {activeComponent === 'chatPage' &&  <ChatPage 
           path= '/chat' 
           socket={socket} 
         />}
+    
       </div>
+      
     </div>
   )
 }

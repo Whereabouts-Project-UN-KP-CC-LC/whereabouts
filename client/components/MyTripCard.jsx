@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+// import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import MapContainer from './MapContainer';
 
 // When rendering this component, use => <MyTripCard userInfo={userInfo} setUserInfo={setUserInfo} userTrip={userTrip} setUserTrip={setUserTrip} />
+
+// Card media is not needed since it was a component for the stock image that came with MUI
 
 const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip }) => {
     
@@ -44,16 +46,19 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip }) => {
     
 
   return (
-
+    
     <Card sx={{ maxWidth: 700 }}>
-    <MapContainer lat={userTrip.start_lat} lng={userTrip.start_lng} />
-      
-      <CardMedia
+    {/* lat={userTrip.start_lat} lng={userTrip.start_lng} */}
+      <div className="map-container">
+        <MapContainer />
+      </div>
+      {/* <CardMedia
         sx={{ height: 150 }}
         src='src only accepts a string'
         title="interactive-map"
-      />
+      /> */}
       <CardContent>
+        
         <Typography gutterBottom variant="h5" component="div">
           Your Current Trip
         </Typography>
