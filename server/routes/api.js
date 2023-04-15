@@ -5,13 +5,13 @@ const whereaboutsController = require('../controllers/whereaboutsController');
 // LOGIN component routes
 
 router.post('/login', whereaboutsController.checkUserExists, (req, res) => {
-  res.sendStatus(200);
+  res.status(200).json({name : res.locals.name, phone_number : res.locals.phone_number});
 });
 
 // REGISTER component routes
-router.post('/register', whereaboutsController.insertNewUser, (req, res) =>
-  res.sendStatus(200)
-);
+router.post('/register', whereaboutsController.insertNewUser, (req, res) => {
+  res.status(200).json({name : res.locals.name, phone_number : res.locals.phone_number});
+});
 
 //get all contacts of current user
 router.get('/users/contacts/', whereaboutsController.getContacts, (req, res) => {
@@ -39,6 +39,12 @@ router.delete('/users/contacts/traveler/:travelerPhone/contact/:contactPhone', w
 //start new trip
 router.post('/trips/start', whereaboutsController.startNewTrip, (req, res) => {
   res.sendStatus(204);
+});
+
+//get my current trip
+router.get('/trips/my', whereaboutsController.myTrip, (req, res) => {
+  const { rows } = res.locals.trip;
+  res.status(200).json(rows);
 });
 
 //send SOS alert
