@@ -465,12 +465,26 @@ header img {
 /* map-container can be adjusted depending on what additonal input fields/info we need to render with Map */
 .map-container {
   width: 700px;
-  height: 375px;
+  height: 300px;
 }
 
 /****** End of Map Container styling ******/
 
 
-/****** Start of ADD COMPONENT HERE styling ******/
+/****** Start of SOS in trips I'm Watching styling ******/
+.sos {
+  animation: blink-text 1.9s linear infinite;
+}
 
+@keyframes blink-text {
+  0% {
+   opacity: 0;
+  }
+  50% {
+   opacity: 1;
+  }
+  100% {
+   opacity: 0;
+  }
+}
 /****** End of ADD COMPONENT HERE styling ******/
