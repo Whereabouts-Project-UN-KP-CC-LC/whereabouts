@@ -15,7 +15,7 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
     if (!props.every((prop) => Object.hasOwn(req.body, prop))) {
       return next({
         log: 'Express error handler caught whereaboutsController.checkUserExists error: Missing phone number or password',
-        status: 500,
+        status: 400,
         message: { error: 'Missing phone number or password' },
       });
     }
@@ -29,7 +29,7 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
     if (!existingUser.rows[0]) {
       return next({
         log: 'Express error handler caught whereaboutsController.checkUserExists error: No user exists for input phone number',
-        status: 500,
+        status: 400,
         message: { error: 'No user exists for input phone number' },
       });
     };
@@ -43,7 +43,7 @@ whereaboutsController.checkUserExists = async (req, res, next) => {
     if (!passwordIsMatch) {
       return next({
         log: 'Express error handler caught whereaboutsController.checkUserExists error: Input password is incorrect',
-        status: 400, // original 500
+        status: 400,
         message: { error: 'Input password is incorrect' },
       });
     }
@@ -72,7 +72,7 @@ whereaboutsController.insertNewUser = async (req, res, next) => {
     if (!props.every((prop) => Object.hasOwn(req.body, prop))) {
       return next({
         log: 'Express error handler caught whereaboutsController.insertNewUser error: Missing name, phone number, or password',
-        status: 500,
+        status: 400,
         message: { error: 'Missing name, phone number, or password' },
       });
     }
@@ -117,70 +117,76 @@ whereaboutsController.insertNewUser = async (req, res, next) => {
       // message: { error: error.stack } // for more detailed debugging info
     });
   }
-}
+};
+
 //get contacts of current user
 whereaboutsController.getContacts = async (req, res, next) => {
-    try {
-        res.locals.contacts = await db.query(
-            `select u.phone_number, u.name from users u
+  try {
+    res.locals.contacts = await db.query(
+      `select u.phone_number, u.name from users u
             inner join contacts_join cj on u.phone_number = cj.contact_phone_number
             where cj.traveler_phone_number = $1`,
-            [req.params['phone_number']]
-        );
-        return next();
-    } catch (error) {
-        return next({
-            log: 'Express error handler caught whereaboutsController.getContacts error',
-            status: 500,
-            message: { error: 'Retrieving contacts of current user failed' },
-        });
-    }
+      [req.params['phone_number']]
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.getContacts error',
+      status: 500,
+      message: { error: 'Retrieving contacts of current user failed' },
+    });
+  }
 };
 
 //get single user by phone number
 whereaboutsController.getUserByPhoneNumber = async (req, res, next) => {
   try {
-      res.locals.user = await db.query(
-          `SELECT * FROM users WHERE phone_number=$1`,
-          [req.params['phone_number']]
-      );
-      return next();
+    res.locals.user = await db.query(
+      `SELECT * FROM users WHERE phone_number=$1`,
+      [req.params['phone_number']]
+    );
+    return next();
   } catch (error) {
-      return next({
-          log: 'Express error handler caught whereaboutsController.getUserByPhoneNumber error',
-          status: 500,
-          message: { error: 'Retrieving single user failed' },
-      });
+    return next({
+      log: 'Express error handler caught whereaboutsController.getUserByPhoneNumber error',
+      status: 500,
+      message: { error: 'Retrieving single user failed' },
+    });
   }
 };
 
 //delete contact
 whereaboutsController.deleteContact = async (req, res, next) => {
-    try {
-        await db.query(
-            `DELETE FROM contacts_join
+  try {
+    await db.query(
+      `DELETE FROM contacts_join
             WHERE traveler_phone_number = $1 AND contact_phone_number = $2`,
-            [req.params.travelerPhone, req.params.contactPhone]
-        );
-        return next();
-    } catch (error) {
-        return next({
-            log: 'Express error handler caught whereaboutsController.deleteContact error',
-            status: 500,
-            message: { error: 'Failed to delete contact' },
-        });
-    }
+      [req.params.travelerPhone, req.params.contactPhone]
+    );
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Express error handler caught whereaboutsController.deleteContact error',
+      status: 500,
+      message: { error: 'Failed to delete contact' },
+    });
+  }
 };
 
 //gets current location, stores new trip with current location and stores traveler/watcher relation after user clicks 'start new trip'
 whereaboutsController.startNewTrip = async (req, res, next) => {
   try {
+    res.locals.location = await axios.post(
+      `https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`
+    );
     //get user's current location
-    const {data} = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`); //FIXME --> use .env to store the key
+    const { data } = await axios.post(
+      `https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`
+    ); //FIXME --> use .env to store the key
     const lat = data.location.lat;
     const lng = data.location.lng;
     //store trip in trips table
-    const {rows} = await db.query(
+    const { rows } = await db.query(
       `INSERT
       INTO trips
       (start_timestamp, start_lat, start_lng)
@@ -197,7 +203,7 @@ whereaboutsController.startNewTrip = async (req, res, next) => {
       VALUES
       (${tripId}, TRUE, ${req.body.traveler})`
     );
-    req.body.watchers.forEach(async watcher => {
+    req.body.watchers.forEach(async (watcher) => {
       await db.query(
         `INSERT
         INTO trips_users_join
@@ -205,7 +211,7 @@ whereaboutsController.startNewTrip = async (req, res, next) => {
         VALUES
         (${tripId}, FALSE, ${watcher})`
       );
-    })
+    });
     return next();
   } catch (error) {
     return next({

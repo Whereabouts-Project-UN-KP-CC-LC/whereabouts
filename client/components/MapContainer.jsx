@@ -14,6 +14,7 @@ function MapContainer ({trip}) {
     height: '300px',
   };
 
+  
   const center = {
     'lat': trip.start_lat,
     'lng': trip.start_lng,
@@ -38,8 +39,6 @@ function MapContainer ({trip}) {
       </Map>
       
     </div>
-    
-  
     
    </>
     
