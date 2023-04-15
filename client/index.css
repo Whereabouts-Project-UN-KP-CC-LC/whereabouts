@@ -474,6 +474,7 @@ header img {
 /****** Start of SOS in trips I'm Watching styling ******/
 .sos {
   animation: blink-text 1.9s linear infinite;
+  font-size: 40px;
 }
 
 @keyframes blink-text {

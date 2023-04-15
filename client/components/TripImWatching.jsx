@@ -41,10 +41,6 @@ function TripImWatching({userInfo}) {
             <TripViewingCard
               trip={trip}
             />
-            {/* <br></br>
-            <ProgressBar
-              trip={trip}
-            /> */}
           </div>
         ))}
       </div>
