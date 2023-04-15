@@ -6,11 +6,11 @@ import TripImWatching from '../components/TripImWatching';
 import MyTripCard from '../components/MyTripCard';
 
 // creates a new Manager for the given host URL (https://socket.io/docs/v4/client-api/#manager)
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:8080/', {
-  // path: '/chat',
-});
+// const socket = io.connect('http://localhost:8080/', {
+//   // path: '/chat',
+// });
 
 function Dashboard({ userInfo, setUserInfo }) {
 
