@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -13,12 +13,11 @@ import MapContainer from './MapContainer';
 // Card media is not needed since it was a component for the stock image that came with MUI
 
 const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip }) => {
-    
   const trip = {
-    'start_lat': 35.6585805,
-    'start_lng': 139.7428526,
-    'tripId': '',
-  }
+    start_lat: 35.6585805,
+    start_lng: 139.7428526,
+    tripId: '',
+  };
 
   // obtain position, submit to server, render SOS map if needed
   // const handleClick = async (name) => {
@@ -47,9 +46,8 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip }) => {
 
   // // REDIRECT TO CHAT
 
-
   return (
-    <div className='my-trip-container'>
+    <div className="my-trip-container">
       <Card sx={{ maxWidth: 700 }}>
         {/* lat={userTrip.start_lat} lng={userTrip.start_lng} */}
         <div className="map-container">
@@ -61,34 +59,40 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip }) => {
           title="interactive-map"
         /> */}
         <CardContent>
-          
           <Typography gutterBottom variant="h5" component="div">
             Your Current Trip
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Secondary text here
           </Typography>
-
         </CardContent>
         <CardActions>
-          <Button 
-              size='large' 
-              variant='contained' 
-              color='primary' 
-              name='end-trip' 
-              onClick={(e) => {handleClick(e.target.name)}} 
-          >End this Trip</Button>
-          <Button 
-              size='large' 
-              variant='contained' 
-              color='error' 
-              name='sos' 
-              onClick={(e) => {handleClick(e.target.name)}} 
-          >ALERT CONTACTS FOR HELP</Button>
+          <Button
+            size="large"
+            variant="contained"
+            color="primary"
+            name="end-trip"
+            onClick={(e) => {
+              handleClick(e.target.name);
+            }}
+          >
+            End this Trip
+          </Button>
+          <Button
+            size="large"
+            variant="contained"
+            color="error"
+            name="sos"
+            onClick={(e) => {
+              handleClick(e.target.name);
+            }}
+          >
+            ALERT CONTACTS FOR HELP
+          </Button>
         </CardActions>
       </Card>
     </div>
-  )
+  );
 };
 
 export default MyTripCard;
