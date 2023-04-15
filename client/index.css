@@ -24,7 +24,7 @@
 }
 
 header img {
- height: 165px; 
+  height: 165px;
 }
 
 /****** End of Header styling ******/
@@ -49,7 +49,7 @@ header img {
 
 .login-container a {
   text-decoration: none;
-  color:black
+  color: black;
 }
 
 .login-container a:hover {
@@ -95,7 +95,7 @@ header img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 2%;
 }
 /****** End of Registration styling ******/
@@ -145,7 +145,6 @@ header img {
 
 /****** End of Side styling ******/
 
-
 /****** Start of Contacts styling ******/
 
 .contacts-container {
@@ -157,7 +156,6 @@ header img {
 }
 
 .add-contact-container {
-  
   border-style: solid;
   border-color: #59656f;
   border-radius: 10px;
@@ -173,8 +171,7 @@ header img {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  
-} 
+}
 
 .add-contact-form p,
 .add-contact-form input,
@@ -253,7 +250,12 @@ header img {
   font-weight: 700;
   font-size: x-large;
   box-shadow: 0px 0px 14px -7px #f09819;
-  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+  background-image: linear-gradient(
+    45deg,
+    #ff512f 0%,
+    #f09819 51%,
+    #ff512f 100%
+  );
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
@@ -274,8 +276,6 @@ header img {
 
 /****** End of Contacts styling ******/
 
-
-
 /****** Start of Trip Watching Container styling ******/
 
 .trip-watching-container {
@@ -285,7 +285,6 @@ header img {
 }
 
 /****** End of Trip Watching Container styling ******/
-
 
 /****** Start of ChatPage + subcomponent styling ******/
 
@@ -369,7 +368,7 @@ header img {
   font-weight: bold;
 }
 .message__container {
-  width: 100%;
+  width: 100vh;
   height: 80vh;
   background-color: #fff;
   padding: 20px;
@@ -400,9 +399,10 @@ header img {
   padding: 15px;
 }
 .sendBtn {
-  width: 150px;
+  width: 40%;
   background-color: #00a676;
   padding: 10px;
+  margin: 0 10px;
   border: none;
   outline: none;
   cursor: pointer;
@@ -443,7 +443,6 @@ header img {
 
 /****** End of ChatPage + subcomponent styling ******/
 
-
 /****** Start of Map styling ******/
 .places-container {
   position: absolute;
@@ -464,8 +463,6 @@ header img {
   padding: 0.5rem;
 }
 /****** End of Map styling ******/
-
-
 
 /****** Start of ADD COMPONENT HERE styling ******/
 

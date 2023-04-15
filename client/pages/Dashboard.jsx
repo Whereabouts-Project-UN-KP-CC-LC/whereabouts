@@ -31,7 +31,7 @@ function Dashboard({ userInfo, setUserInfo }) {
   // SSE - render trips
   const [trips, setTrips] = useState([]);
   useEffect(() => {
-    const source = new EventSource(`http://localhost:3000/stream/2222`, {
+    const source = new EventSource(`http://localhost:3000/stream/1234567890`, {
       //replace 2222 with current user's phone_number
       withCredentials: false,
     }); // maybe need to add to webpack? Not necessary

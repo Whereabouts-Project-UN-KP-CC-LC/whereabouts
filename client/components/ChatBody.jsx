@@ -14,6 +14,7 @@ export default function ChatBody({ messages, lastMsgRef }) {
   return (
     <>
       <header className="chat__mainHeader">
+        <h2 style={{ color: '#ef8e48' }}>SOS Chat</h2>
         <button className="leaveChat__btn" onClick={handleExitChat}>
           End Chat / Trip
         </button>

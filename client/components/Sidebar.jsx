@@ -13,7 +13,9 @@ function Sidebar({ handleClick }) {
       >
         Trips I'm Watching
       </div>
-
+      <Link to="/chat" className="sidebar-item">
+        Chat
+      </Link>
       <Link to="/" className="sidebar-item">
         Logout
       </Link>

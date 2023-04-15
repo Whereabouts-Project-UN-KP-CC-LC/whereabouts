@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
   socket.on('chatMsg', (msg) => {
     // io.emit sends a message to ALL users on chat
     io.emit('disperseMsg', msg);
-    // go to ChatPage.jsx, socket.on('disperse msg')
+    // go to ChatPage.jsx, socket.on('disperseMsg')
   });
   // run when a user disconnects from the chat
   socket.on('disconnect', () => {

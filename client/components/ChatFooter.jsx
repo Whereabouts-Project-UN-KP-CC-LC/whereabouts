@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import socket from '../index.js';
 
-export default function ChatFooter({ socket, userInfo }) {
+export default function ChatFooter({ userInfo }) {
   const [message, setMessage] = useState({});
 
   const handleSendMsg = (e) => {
@@ -17,7 +18,7 @@ export default function ChatFooter({ socket, userInfo }) {
         text: '',
       });
     }
-    // see server.js, socket.on('new msg')
+    // see server.js, socket.on('chatMsg')
   };
 
   return (
