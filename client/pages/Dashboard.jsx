@@ -3,7 +3,9 @@ import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
 import ChatPage from '../components/ChatPage';
 import TripImWatching from '../components/TripImWatching';
+import MapContainer from '../components/MapContainer';
 import MyTripCard from '../components/MyTripCard';
+import TripViewingCard from '../components/TripViewingCard';
 
 function Dashboard({ userInfo, setUserInfo }) {
   // hook for contacts per user
@@ -28,35 +30,14 @@ function Dashboard({ userInfo, setUserInfo }) {
     setActiveComponent(componentName);
   };
 
-  // SSE - render trips
-  const [trips, setTrips] = useState([]);
-  useEffect(() => {
-    const source = new EventSource(`http://localhost:3000/stream/1234567890`, {
-      //replace 2222 with current user's phone_number
-      withCredentials: false,
-    }); // maybe need to add to webpack? Not necessary
-
-    source.addEventListener('open', () => {
-      console.log('SSE opened!');
-    });
-
-    source.addEventListener('message', (e) => {
-      // console.log(e.data);
-      const data = JSON.parse(e.data);
-      setTrips(data);
-    });
-
-    source.addEventListener('error', (e) => {
-      console.error('Error: ', e);
-    });
-
-    return () => {
-      source.close();
-    };
-  }, []);
-
   return (
     <div className="dashboard-container">
+      {/* SSE - Render trips */}
+      {/* <div>
+        {trips.map((trip) => (
+          <div>Trip Id: {trip.id} | Trip Start Time: {trip.start_timestamp} ||</div>
+        ))}
+      </div> */}
       <div className="sidebar-container">
         <Sidebar handleClick={handleClick} />
       </div>
@@ -66,9 +47,16 @@ function Dashboard({ userInfo, setUserInfo }) {
             userInfo={userInfo}
             contacts={contacts}
             setContacts={setContacts}
+            setActiveComponent={setActiveComponent}
           />
         )}
-        {activeComponent === 'tripsImWatching' && <TripImWatching />}
+        {activeComponent === 'myTripCard' && <MyTripCard />}
+        {activeComponent === 'tripsImWatching' && (
+          <TripImWatching userInfo={userInfo} />
+        )}
+        {activeComponent === 'chatPage' && (
+          <ChatPage path="/chat" socket={socket} />
+        )}
       </div>
     </div>
   );
