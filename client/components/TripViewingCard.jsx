@@ -3,6 +3,7 @@ import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MapContainer from '../components/MapContainer';
+import CardActions from '@mui/material/CardActions';
 import { red } from '@mui/material/colors';
 
 // Card media is not needed since it was a component for the stock image that came with MUI
@@ -41,18 +42,18 @@ export default function TripViewingCard({trip}) {
       <div className="map-container">
         <MapContainer trip={trip} />
       </div>
-      <CardContent>
-        <Typography variant="h5" color={messages[status].color}>
-          {messages[status].status}
-        </Typography>
-        <Typography gutterBottom variant="h4" component="div">
-          {/* Here is were we'd insert contact's name and possibly travel destination */}
-          <b style={{textDecoration: 'underline'}}>{trip.traveler_name}</b> {messages[status].title}
-        </Typography>
-        <Typography variant="body2" color="{text}">
-          Status: {status}
-        </Typography>
       
+      <Typography variant="h5" color={messages[status].color}>
+        {messages[status].status}
+      </Typography>
+      <Typography gutterBottom variant="h4" component="div">
+        {/* Here is were we'd insert contact's name and possibly travel destination */}
+        <b style={{textDecoration: 'underline'}}>{trip.traveler_name}</b> {messages[status].title}
+      </Typography>
+      <Typography variant="body2" color="{text}">
+        Status: {status}
+      </Typography>
+     
       <CardActions>
         {/* conditionally render these buttons when SOS is active on trip */}
         {trip.sos_timestamp && <Button size="large">Join Chat</Button>}
