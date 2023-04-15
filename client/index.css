@@ -280,6 +280,7 @@ header img {
 
 .trip-watching-container {
   display: flex;
+  margin: 30px;
   flex-direction: column;
   align-items: center;
 }
@@ -442,6 +443,16 @@ header img {
 }
 
 /****** End of ChatPage + subcomponent styling ******/
+
+/****** Start of My Trip Component styling ******/
+
+.my-trip-container {
+  display: flex;
+  justify-content: center;
+  justify-content: center;
+  margin: 30px;
+}
+/****** End of My Trip Component styling ******/
 
 
 /****** Start of Map Container styling ******/

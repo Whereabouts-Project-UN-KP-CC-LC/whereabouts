@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ContactsList from './ContactsList';
+import { Routes, Route } from 'react-router-dom';
+import MyTripCard from './MyTripCard';
 
-function Contacts({ userInfo, contacts, setContacts }) {
+
+function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
 
   // hook to manage contacts checked from list
   const [checkedContacts, setCheckedContacts] = useState([]);
+  // hook to redirect to MyTripStart
+  // const [redirect, setRedirect] = useState(false);
 
   // Fetch GET request for contact and add to list:
   const handleSubmit = async (event) => {
@@ -50,8 +55,15 @@ function Contacts({ userInfo, contacts, setContacts }) {
   // function to send post request to back end with user information to start trip
   const handleStartTrip = () => {
     // create a post request to the route: /api/trips/start
+    console.log(`inside handleStartTrip`);
     axios.post('/api/trips/start', tripData)
       .then((response) => {
+        if (response.status === 204) {
+          console.log(`status is 200, redirect to MyTripCard`)
+          // Move back set Redirect into this bracket for proper rendering.
+          // setRedirect(true);
+          setActiveComponent('myTripCard');
+        }
         console.log('Successful response from back end ', response);
       })
       .catch((error) => {
@@ -73,6 +85,12 @@ function Contacts({ userInfo, contacts, setContacts }) {
     <div className='contacts-container'>
       
       <br></br>
+      {/* Invoking redirect hook in event of successful post request */}
+      {/* {redirect && 
+        <Routes>
+          <Route path="/" element={<MyTripCard />} replace={true} />
+        </Routes>
+      } */}
       <div className='add-contact-container'>
         <form onSubmit={handleSubmit} className='add-contact-form'>
           <p>Add contacts to your list:</p>

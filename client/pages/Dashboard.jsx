@@ -3,14 +3,16 @@ import Sidebar from '../components/Sidebar';
 import Contacts from '../components/Contacts';
 import ChatPage from '../components/ChatPage';
 import TripImWatching from '../components/TripImWatching';
+import MapContainer from '../components/MapContainer';
 import MyTripCard from '../components/MyTripCard';
+import TripViewingCard from '../components/TripViewingCard';
 
 // creates a new Manager for the given host URL (https://socket.io/docs/v4/client-api/#manager)
 import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:8080/', {
-  // path: '/chat',
-});
+// const socket = io.connect('http://localhost:8080/', {
+//   // path: '/chat',
+// });
 
 function Dashboard({ userInfo, setUserInfo }) {
 
@@ -33,9 +35,10 @@ function Dashboard({ userInfo, setUserInfo }) {
 
   // toggle components in sidebar
   const handleClick = (componentName) => {
-
     setActiveComponent(componentName);
   };
+
+  
 
   return (
     <div className="dashboard-container">
@@ -54,16 +57,18 @@ function Dashboard({ userInfo, setUserInfo }) {
         {activeComponent === 'contacts' && <Contacts
           userInfo={userInfo} 
           contacts={contacts} 
-          setContacts={setContacts} 
+          setContacts={setContacts}
+          setActiveComponent={setActiveComponent} 
         /> }
-        {activeComponent === 'tripsImWatching' && <TripImWatching
-          userInfo={userInfo} 
-        />}
+        {activeComponent === 'myTripCard' && <MyTripCard />}
+        {activeComponent === 'tripsImWatching' && <TripImWatching userInfo={userInfo} />}
         {activeComponent === 'chatPage' &&  <ChatPage 
           path= '/chat' 
           socket={socket} 
         />}
+    
       </div>
+      
     </div>
   )
 }

@@ -32,11 +32,16 @@ function Login({ userInfo, setUserInfo }) {
     axios.post('/api/login/', userLogin)
       .then((response) => { 
         // checking response from server
-        //console.log(`this is response: ${JSON.stringify(response)}`);
+        console.log(`this is response: ${JSON.stringify(response)}`);
         if (response.status === 200) {
-          console.log(`status is 200, invoking setRedirect`);
+          // console.log(`response: ${response.json()}`);
           setRedirect(true);
-          setUserInfo(userLogin);
+          setUserInfo(() => {
+            return {
+              name: response.data.name,
+              phone_number: response.data.phone_number
+            }
+          });
         }
       })
       .catch((error) => {
