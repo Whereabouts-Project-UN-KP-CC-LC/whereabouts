@@ -57,7 +57,7 @@ router.post('/trips/start', whereaboutsController.startNewTrip, (req, res) => {
 });
 
 //get my current trip
-router.get('/trips/my', whereaboutsController.myTrip, (req, res) => {
+router.get('/trips/my/:phone_number', whereaboutsController.myTrip, (req, res) => {
   const { rows } = res.locals.trip;
   res.status(200).json(rows);
 });

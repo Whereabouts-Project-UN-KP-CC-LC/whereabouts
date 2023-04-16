@@ -110,6 +110,7 @@ header img {
   border-radius: 5px;
   grid-template-columns: 1fr 8fr;
   border-color: #59656f;
+  background-image: linear-gradient(to bottom, #FFFFFC, #EF8E48)
 }
 
 /****** End of Dashboard styling ******/
@@ -125,7 +126,7 @@ header img {
   padding: 10px;
   justify-content: center;
   border-color: #3d405b;
-  background-color: #db2955;
+  background-color: #59656f;
 }
 
 .sidebar {
@@ -135,6 +136,7 @@ header img {
   color: #fffffc;
   font-weight: bold;
   font-size: 25px;
+  background-color: #59656f;
 }
 
 .sidebar-item {
@@ -195,7 +197,7 @@ header img {
   height: 500px;
   border-color: #59656f;
   display: grid;
-  background-color: #00a676;
+  background-image: linear-gradient(to bottom, #00a676 60%, #FFFFFC);
 }
 
 .titles-row {

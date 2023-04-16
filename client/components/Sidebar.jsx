@@ -5,7 +5,7 @@ function Sidebar({ handleClick }) {
   return (
     <div className="sidebar">
       <div onClick={() => handleClick('contacts')} className="sidebar-item">
-        Contacts
+        Contacts / Start Trip
       </div>
       <div onClick={() => handleClick('myTripCard')} className="sidebar-item">
         My Trip
