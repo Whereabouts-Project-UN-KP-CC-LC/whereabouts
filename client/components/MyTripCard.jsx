@@ -12,8 +12,9 @@ import MapContainer from './MapContainer';
 
 // Card media is not needed since it was a component for the stock image that came with MUI
 
-const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveComponent }) => {
 
+const MyTripCard = ({ userInfo, setUserInfo, setActiveComponent, userTrip, setUserTrip }) => {
+  
   // let userData;
   // console.log(`Inside my trip card PASS #1`);
   // Get request to render user trip
@@ -41,17 +42,19 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveCom
   // console.log(userData.start_lng)
 
   // demo version 40.6970173,-74.3100135
-  const trip = {
-    start_lat: 40.6970173,
-    start_lng: -74.3100135,
-    tripId: 99,
-  };
-
   // const trip = {
-  //   start_lat: userData.start_lat,
-  //   start_lng: userData.start_lng,
-  //   tripId: userData.id,
+  //   start_lat: userTrip.start_lat,
+  //   start_lng: userTrip.start_lng,
+  //   tripId: userTrip.id
   // };
+  // console.log("trip: " + trip);
+
+  console.log("user trip 20230417: " + userTrip);
+  const trip = {
+    start_lat: userTrip.start_lat,
+    start_lng: userTrip.start_lng,
+    tripId: userTrip.id,
+  };
 
   // obtain position, submit to server, render SOS map if needed
   const handleClick = async (name) => {
@@ -96,7 +99,9 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveCom
       <Card sx={{ maxWidth: 700 }}>
         {/* lat={userTrip.start_lat} lng={userTrip.start_lng} */}
         <div className="map-container">
-          <MapContainer trip={trip}/>
+          <MapContainer
+            trip={trip}
+          />
         </div>
         {/* <CardMedia
           sx={{ height: 150 }}

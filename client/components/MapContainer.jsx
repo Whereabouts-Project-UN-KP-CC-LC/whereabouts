@@ -5,8 +5,8 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper, Geocode } from "google-maps-
 const key = "AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms";
 
 function MapContainer ({trip}) {
-  // console.log('trip: ', trip);
-  // console.log('keys for trip: ', JSON.stringify(trip.start_lat));
+  console.log('trip: ', trip);
+  console.log('start_lat: ', trip.start_lat);
 
   // needs to be in sync with className="map-container" in css
   const containerStyle = {
@@ -18,7 +18,10 @@ function MapContainer ({trip}) {
   const center = {
     'lat': trip.start_lat,
     'lng': trip.start_lng,
+    // 'lat': trip.start_lat,
+    // 'lng': trip.start_lng,
   };
+  console.log('center: ', center);
 
   // hook to store coordinates & address:
   // const [address, setAddress] = useState('');
@@ -33,10 +36,12 @@ function MapContainer ({trip}) {
         sx={{ position: 'absolute', zIndex: -1 }}
         containerStyle={containerStyle}
         initialCenter={center}
+        // center={center}
         google={google} 
         zoom={12}>
         <Marker
           name={'Current location'}
+          // position={center}
         />
       </Map>
       

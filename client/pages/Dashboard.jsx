@@ -6,6 +6,7 @@ import TripImWatching from '../components/TripImWatching';
 import MapContainer from '../components/MapContainer';
 import MyTripCard from '../components/MyTripCard';
 import TripViewingCard from '../components/TripViewingCard';
+import axios from 'axios';
 
 function Dashboard({ userInfo, setUserInfo }) {
   // hook for contacts per user
@@ -15,16 +16,31 @@ function Dashboard({ userInfo, setUserInfo }) {
   const [activeComponent, setActiveComponent] = useState('tripsImWatching');
 
   // hook for tracking userTrip data
-  const [userTrip, setUserTrip] = useState({
-    active: true,
-    tripId: '',
-    start_timestamp: '',
-    start_lat: '',
-    start_lng: '',
-    sos_timestamp: '',
-    sos_lat: '',
-    sos_lng: '',
-  });
+  // const [userTrip, setUserTrip] = useState({
+  //   // active: true,
+  //   // tripId: '',
+  //   // start_timestamp: '',
+  //   // start_lat: '',
+  //   // start_lng: '',
+  //   // sos_timestamp: '',
+  //   // sos_lat: '',
+  //   // sos_lng: '',
+  // });
+  const [userTrip, setUserTrip] = useState({});
+  const fetchData = async (userInfo) => {
+    try {
+      const response = await axios.get(`/api/trips/my/${userInfo.phone_number}`);
+      return response.data[0];
+    } catch (err) {
+      console.log('error with fetching user trip data =>', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(userInfo).then((data) => {
+      setUserTrip(data);
+    });
+  }, []);
 
   // toggle components in sidebar
   const handleClick = (componentName) => {
