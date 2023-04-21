@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -12,46 +12,91 @@ import MapContainer from './MapContainer';
 
 // Card media is not needed since it was a component for the stock image that came with MUI
 
-const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip }) => {
+const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveComponent }) => {
+
+  // let userData;
+  // console.log(`Inside my trip card PASS #1`);
+  // Get request to render user trip
+  // useEffect(() => {
+  //   async function getData() {
+  //     const response = await axios.get(`/api/trips/my/${userInfo.phone_number}`);
+  //     console.log('this is the response', response);
+  //     userData = response.data[0];
+  //     console.log('this is the userData var', userData);
+  //   } 
+  
+  //   getData();
+
+
+  // }, [])
+  
+
+  // make user info accessible to rest of app
+  //  setUserTrip({
+  //     tripId: userData.id,
+  //     start_lat: userData.start_lat,
+  //     start_lng: userData.start_lng,
+  //   })
+  // console.log(userData.start_lat)
+  // console.log(userData.start_lng)
+
+  // demo version 40.6970173,-74.3100135
   const trip = {
-    start_lat: 35.6585805,
-    start_lng: 139.7428526,
-    tripId: '',
+    start_lat: 40.6970173,
+    start_lng: -74.3100135,
+    tripId: 99,
   };
 
+  // const trip = {
+  //   start_lat: userData.start_lat,
+  //   start_lng: userData.start_lng,
+  //   tripId: userData.id,
+  // };
+
   // obtain position, submit to server, render SOS map if needed
-  // const handleClick = async (name) => {
-  //     // CHECK DATABASE FOR PROPER COLUMN NAMES
-  // const time_stamp = Date.now();
+  const handleClick = async (name) => {
 
-  // // google API call to fetch position
-  // const response = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`);
-  // const position = response.data.location;
+    try {
+      // google API call to fetch position
+      const response = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`);
+      const { lat, lng } = response.data.location;
+      
+    } catch(err){
+      console.log('error with fetching position from google api =>', err)
+    }
 
-  // // update state with sos position, if sos was clicked
-  // if(name !== 'end-trip') {
-  //     setUserTrip( (prevState) => {
-  //         return {
-  //             ...prevState,
-  //             sos_lat: position.lat,
-  //             sos_lng: position.lng,
-  //         }
-  //     });
-  // }
 
-  // // NEED PROPER ENDPOINT FOR POST REQUEST
-  // // send trip id from props
-  // const body = (name === 'end-trip') ? {end_timestamp: time_stamp} : {sos_timestamp: time_stamp, sos_lat: lat, sos_lng: lng};
-  // axios.post('/sos', {...body, phone_number: userInfo.phone_number} )
+    // update state with sos position, if sos was clicked
+    if(name !== 'end-trip') {
+        setUserTrip( (prevState) => {
+            return {
+                ...prevState,
+                sos_lat: lat,
+                sos_lng: lng,
+            }
+        });
+    }
 
-  // // REDIRECT TO CHAT
+    // conditionally create body & endpoint url depending on whether we are ending trip or sending sos
+    const body = (name === 'end-trip') ? {tripId: trip.tripId} : {tripId: trip.tripId, lat: lat, lng: lng};
+    const url = (name === 'end-trip') ? '/api/trips/reached' : '/api/trips/sos';
+
+    // send post req to back end with end trip or sos data
+    try {
+      axios.post(url, body)
+
+    } catch(err) {
+      console.log(err);
+    }
+
+  }
 
   return (
     <div className="my-trip-container">
       <Card sx={{ maxWidth: 700 }}>
         {/* lat={userTrip.start_lat} lng={userTrip.start_lng} */}
         <div className="map-container">
-          <MapContainer trip={trip} />
+          <MapContainer trip={trip}/>
         </div>
         {/* <CardMedia
           sx={{ height: 150 }}

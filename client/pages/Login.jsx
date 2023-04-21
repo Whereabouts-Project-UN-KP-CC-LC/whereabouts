@@ -31,7 +31,7 @@ function Login({ userInfo, setUserInfo }) {
       .post('/api/login/', userLogin)
       .then((response) => {
         // checking response from server
-        console.log(`this is response: ${JSON.stringify(response)}`);
+        // console.log(`this is response: ${JSON.stringify(response)}`);
         if (response.status === 200) {
           // console.log(`response: ${response.json()}`);
           setRedirect(true);

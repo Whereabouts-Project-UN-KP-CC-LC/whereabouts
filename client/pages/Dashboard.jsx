@@ -12,11 +12,12 @@ function Dashboard({ userInfo, setUserInfo }) {
   const [contacts, setContacts] = useState([]);
 
   // hook for conditionally rendering components
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState('tripsImWatching');
 
   // hook for tracking userTrip data
   const [userTrip, setUserTrip] = useState({
     active: true,
+    tripId: '',
     start_timestamp: '',
     start_lat: '',
     start_lng: '',
@@ -50,7 +51,13 @@ function Dashboard({ userInfo, setUserInfo }) {
             setActiveComponent={setActiveComponent}
           />
         )}
-        {activeComponent === 'myTripCard' && <MyTripCard />}
+        {activeComponent === 'myTripCard' && <MyTripCard 
+            userInfo={userInfo} 
+            setUserInfo={setUserInfo} 
+            userTrip={userTrip} 
+            setUserTrip={setUserTrip} 
+            setActiveComponent={setActiveComponent}
+          />}
         {activeComponent === 'tripsImWatching' && (
           <TripImWatching userInfo={userInfo} />
         )}

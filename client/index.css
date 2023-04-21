@@ -110,6 +110,7 @@ header img {
   border-radius: 5px;
   grid-template-columns: 1fr 8fr;
   border-color: #59656f;
+  background-image: linear-gradient(to bottom, #FFFFFC, #EF8E48)
 }
 
 /****** End of Dashboard styling ******/
@@ -125,7 +126,7 @@ header img {
   padding: 10px;
   justify-content: center;
   border-color: #3d405b;
-  background-color: #db2955;
+  background-color: #59656f;
 }
 
 .sidebar {
@@ -135,6 +136,7 @@ header img {
   color: #fffffc;
   font-weight: bold;
   font-size: 25px;
+  background-color: #59656f;
 }
 
 .sidebar-item {
@@ -195,7 +197,7 @@ header img {
   height: 500px;
   border-color: #59656f;
   display: grid;
-  background-color: #00a676;
+  background-image: linear-gradient(to bottom, #00a676 60%, #FFFFFC);
 }
 
 .titles-row {
@@ -464,7 +466,7 @@ header img {
 /* map-container can be adjusted depending on what additonal input fields/info we need to render with Map */
 .map-container {
   width: 700px;
-  height: 375px;
+  height: 300px;
 }
 
 .combobox-input {
@@ -475,6 +477,21 @@ header img {
 /****** End of Map Container styling ******/
 
 
-/****** Start of ADD COMPONENT HERE styling ******/
+/****** Start of SOS in trips I'm Watching styling ******/
+.sos {
+  animation: blink-text 1.9s linear infinite;
+  font-size: 40px;
+}
 
+@keyframes blink-text {
+  0% {
+   opacity: 0;
+  }
+  50% {
+   opacity: 1;
+  }
+  100% {
+   opacity: 0;
+  }
+}
 /****** End of ADD COMPONENT HERE styling ******/

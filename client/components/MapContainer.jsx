@@ -34,8 +34,10 @@ function MapContainer ({trip}) {
         containerStyle={containerStyle}
         initialCenter={center}
         google={google} 
-        zoom={14}>
-        <Marker name={'Current location'} />
+        zoom={12}>
+        <Marker
+          name={'Current location'}
+        />
       </Map>
       
     </div>
