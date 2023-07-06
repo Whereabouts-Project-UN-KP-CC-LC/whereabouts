@@ -17,6 +17,9 @@ function Registration({ userInfo, setUserInfo }) {
   // hook to redirect after successful registration
   const [redirect, setRedirect] = useState(false);
 
+  // hook to clear input field:
+  const [inputValue, setInputValue] = useState('');
+
   // updates state as user inputs form info
   const onChange = (event) => {
     setUserInfo((prevState) => {
@@ -67,6 +70,7 @@ function Registration({ userInfo, setUserInfo }) {
           };
         });
         console.log('User added to DB');
+        setInputValue('');
         setRedirect(true);
       } else {
         throw new Error();
@@ -103,6 +107,7 @@ function Registration({ userInfo, setUserInfo }) {
             helperText="enter your first and last name"
             required={true}
             onChange={onChange}
+            value={inputValue}
           />
         </div>
         <br></br>
@@ -116,6 +121,7 @@ function Registration({ userInfo, setUserInfo }) {
             size="small"
             required={true}
             onChange={onChange}
+            value={inputValue}
           />
         </div>
         <br></br>
@@ -129,6 +135,7 @@ function Registration({ userInfo, setUserInfo }) {
             size="small"
             required={true}
             onChange={onChange}
+            value={inputValue}
           />
         </div>
         <br></br>
@@ -142,6 +149,7 @@ function Registration({ userInfo, setUserInfo }) {
             size="small"
             required={true}
             onChange={confirmMatch}
+            value={inputValue}
           />
           <p>{mismatchAlert}</p>
         </div>

@@ -10,6 +10,9 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
   // hook to redirect to MyTripStart
   // const [redirect, setRedirect] = useState(false);
 
+  // hook to clear contact input field
+  const [inputValue, setInputValue] = useState('');
+
   // Fetch GET request for contact and add to list:
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,9 +27,13 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
 
       const contactData = response.data[0];
       // console.log('contactData: ', contactData);
-
+      
       // add user to array of contacts
       setContacts([...contacts, contactData]);
+
+      // clear input field
+      setInputValue('');
+
     } catch (err) {
       console.log(`Fetch request for user with phone_number failed.`, err);
     }
@@ -95,6 +102,8 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
             type="text"
             className="add-contact-input"
             id="contact-phone-number"
+            onChange={(event) => setInputValue(event.target.value)}
+            value={inputValue}
           />
           <button type="submit" className="add-contact-btn">
             Add Contact

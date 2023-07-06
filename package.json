@@ -7,7 +7,8 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open --hot",
     "server": "nodemon server/server.js",
-    "dev": "concurrently \"npm run server\" \"npm run start\""
+    "dev": "concurrently \"npm run server\" \"npm run start\"",
+    "test": "mocha"
   },
   "author": "Wonderpuss-Photogenicus",
   "license": "ISC",
@@ -24,8 +25,8 @@
     "express": "^4.18.2",
     "google-maps-react": "^2.0.6",
     "pg": "^8.10.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-router-dom": "^6.10.0",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1"
@@ -39,6 +40,7 @@
     "concurrently": "^8.0.1",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.22",
     "style-loader": "^3.3.2",
     "webpack": "^5.76.3",
