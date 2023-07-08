@@ -58,7 +58,7 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveCom
 
     try {
       // google API call to fetch position
-      const response = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`);
+      const response = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`);
       const { lat, lng } = response.data.location;
       
     } catch(err){

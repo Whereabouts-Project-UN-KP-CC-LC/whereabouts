@@ -65,10 +65,6 @@ function Dashboard({ userInfo, setUserInfo }) {
           <ChatPage path="/chat" socket={socket} />
         )}
       </div>
-      <div className="testing-container">
-        <h1>Hello</h1>
-        <MapContainer />
-      </div>
     </div>
   );
 }
