@@ -48,6 +48,12 @@ function Login({ userInfo, setUserInfo }) {
           alert(`Please check login information and try again`);
         }
       });
+    // Clear the form fields
+    setUserInfo((prevState) => ({
+      ...prevState,
+      phone_number: '',
+      password: '',
+    }));
   };
 
   return (

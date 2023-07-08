@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ContactsList from './ContactsList';
-import { Routes, Route } from 'react-router-dom';
-import MyTripCard from './MyTripCard';
+
 
 function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
   // hook to manage contacts checked from list
   const [checkedContacts, setCheckedContacts] = useState([]);
-  // hook to redirect to MyTripStart
-  // const [redirect, setRedirect] = useState(false);
+  // hook to manage clearing input form on successful contact add
+  const [contactInput, setContactInput] = useState('');
 
   // Fetch GET request for contact and add to list:
   const handleSubmit = async (event) => {
@@ -27,6 +26,8 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
 
       // add user to array of contacts
       setContacts([...contacts, contactData]);
+      // clear input form
+      setContactInput('');
     } catch (err) {
       console.log(`Fetch request for user with phone_number failed.`, err);
     }
@@ -79,6 +80,7 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
     // console.log('Current trip data: ', tripData);
   }, [checkedContacts, userInfo.phone_number, tripData]);
 
+
   return (
     <div className="contacts-container">
       <br></br>
@@ -95,6 +97,8 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
             type="text"
             className="add-contact-input"
             id="contact-phone-number"
+            value={contactInput}
+            onChange={(event) => setContactInput(event.target.value)}
           />
           <button type="submit" className="add-contact-btn">
             Add Contact
