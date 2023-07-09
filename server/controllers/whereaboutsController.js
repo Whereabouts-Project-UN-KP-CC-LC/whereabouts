@@ -177,11 +177,11 @@ whereaboutsController.deleteContact = async (req, res, next) => {
 whereaboutsController.startNewTrip = async (req, res, next) => {
   try {
     res.locals.location = await axios.post(
-      `https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`
+      `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
     );
     //get user's current location
     const { data } = await axios.post(
-      `https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`
+      `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
     ); //FIXME --> use .env to store the key
     const lat = data.location.lat;
     const lng = data.location.lng;
@@ -226,7 +226,7 @@ whereaboutsController.startNewTrip = async (req, res, next) => {
 whereaboutsController.sendSos = async (req, res, next) => {
   try {
     //get user's current location
-    const {data} = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms`); //FIXME --> use .env to store the key
+    const {data} = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`); //FIXME --> use .env to store the key
     const lat = data.location.lat;
     const lng = data.location.lng;
     //update trip sos details

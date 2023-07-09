@@ -458,7 +458,7 @@ header img {
 
 /****** Start of Map Container styling ******/
 
-/* specifically just for the renderind of the map within the map container component */
+/* specifically just for the rendering of the map within the map container component */
 .map {
   width: 700px;
   height: 300px;
