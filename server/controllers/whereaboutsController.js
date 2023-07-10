@@ -2,8 +2,11 @@ const db = require('../models/whereaboutsModel');
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
 const axios = require('axios');
+require('dotenv').config();
 
 const whereaboutsController = {};
+// Access the API key from environment variable
+const apiKey = process.env.GOOLE_API_KEY;
 
 // LOGIN component middleware
 
@@ -177,11 +180,11 @@ whereaboutsController.deleteContact = async (req, res, next) => {
 whereaboutsController.startNewTrip = async (req, res, next) => {
   try {
     res.locals.location = await axios.post(
-      `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
+      `https://www.googleapis.com/geolocation/v1/geolocate?key=${apiKey}`
     );
     //get user's current location
     const { data } = await axios.post(
-      `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
+      `https://www.googleapis.com/geolocation/v1/geolocate?key=${apiKey}`
     ); //FIXME --> use .env to store the key
     const lat = data.location.lat;
     const lng = data.location.lng;
@@ -215,7 +218,7 @@ whereaboutsController.startNewTrip = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: 'Express error handler caught whereaboutsController.startNewTrip error',
+      log: `Express error handler caught whereaboutsController.startNewTrip error: ${error}`,
       status: 500,
       message: { error: 'Error starting a new trip' },
     });
@@ -226,7 +229,7 @@ whereaboutsController.startNewTrip = async (req, res, next) => {
 whereaboutsController.sendSos = async (req, res, next) => {
   try {
     //get user's current location
-    const {data} = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`); //FIXME --> use .env to store the key
+    const {data} = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${apiKey}`); //FIXME --> use .env to store the key
     const lat = data.location.lat;
     const lng = data.location.lng;
     //update trip sos details

@@ -34,13 +34,14 @@ function Login({ userInfo, setUserInfo }) {
         // console.log(`this is response: ${JSON.stringify(response)}`);
         if (response.status === 200) {
           // console.log(`response: ${response.json()}`);
-          setRedirect(true);
+          
           setUserInfo(() => {
             return {
               name: response.data.name,
               phone_number: response.data.phone_number,
             };
           });
+          setRedirect(true);
         }
       })
       .catch((error) => {
@@ -48,13 +49,8 @@ function Login({ userInfo, setUserInfo }) {
           alert(`Please check login information and try again`);
         }
       });
-    // Clear the form fields
-    setUserInfo((prevState) => ({
-      ...prevState,
-      phone_number: '',
-      password: '',
-    }));
   };
+
 
   return (
     <div className="login-container">

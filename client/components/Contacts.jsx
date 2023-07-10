@@ -73,7 +73,7 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
       });
   };
 
-  // // checking state of contacts data:
+  // checking state of contacts data:
   useEffect(() => {
     // console.log('Current checkedContacts:', checkedContacts);
     // console.log('Current User phone: ', userInfo.phone_number);
