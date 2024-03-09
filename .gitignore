@@ -1,3 +1,4 @@
 node_modules
 .env
 _daily_log.md
+.history
