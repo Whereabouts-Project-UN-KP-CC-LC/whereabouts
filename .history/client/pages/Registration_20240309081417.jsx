@@ -149,22 +149,21 @@ function Registration({ userInfo, setUserInfo }) {
         <Button type="submit" className="styleMe" variant="contained">
           Create Your Account
         </Button>
-        <br />
-        <br />
+        <br></br>
         {/* <Button type="submit" className="styleMe" variant="text">
           Already Have an Account? 
           <Link to="/login">Sign In!</Link>
         </Button> */}
-        <br />
-      </form>
-      <p style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <p style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           Already have an account?
-          <br />
+          <br/>
           <Button type="submit" className="submit-btn" variant="contained">
             <Link to="/login" style={{ color: 'white' }}> Sign in!</Link>
           </Button>
         </p>
-      <br />
+        <br></br>
+      </form>
+      <br></br>
       <p>{subStatus.message}</p>
     </div>
   );

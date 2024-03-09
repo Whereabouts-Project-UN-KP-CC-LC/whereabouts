@@ -94,14 +94,10 @@ function Login({ userInfo, setUserInfo }) {
         <br></br>
       </form>
 
-      <p style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        Don't have a login yet?
-        <br/>
-        <Button type="submit" className="submit-btn" variant="contained">
-          <Link to="/register" style={{ color: 'white' }}> Sign up here!</Link>
-        </Button>
-      </p>
-      
+      <p>Don't have a login yet?</p>
+      <Button>
+        <Link to="/register"> Sign up here!</Link>
+      </Button>
     </div>
   );
 }

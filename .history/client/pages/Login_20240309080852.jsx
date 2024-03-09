@@ -94,7 +94,7 @@ function Login({ userInfo, setUserInfo }) {
         <br></br>
       </form>
 
-      <p style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <p>
         Don't have a login yet?
         <br/>
         <Button type="submit" className="submit-btn" variant="contained">

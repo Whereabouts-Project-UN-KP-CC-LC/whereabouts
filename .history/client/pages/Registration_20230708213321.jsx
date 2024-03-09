@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 
 function Registration({ userInfo, setUserInfo }) {
@@ -149,22 +149,13 @@ function Registration({ userInfo, setUserInfo }) {
         <Button type="submit" className="styleMe" variant="contained">
           Create Your Account
         </Button>
-        <br />
-        <br />
-        {/* <Button type="submit" className="styleMe" variant="text">
-          Already Have an Account? 
-          <Link to="/login">Sign In!</Link>
-        </Button> */}
-        <br />
+        <br></br>
+        <Button type="submit" className="styleMe" variant="text">
+          Already Have an Account? Sign In
+        </Button>
+        <br></br>
       </form>
-      <p style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          Already have an account?
-          <br />
-          <Button type="submit" className="submit-btn" variant="contained">
-            <Link to="/login" style={{ color: 'white' }}> Sign in!</Link>
-          </Button>
-        </p>
-      <br />
+      <br></br>
       <p>{subStatus.message}</p>
     </div>
   );

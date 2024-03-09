@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-//import MapContainer from './MapContainer';
+import MapContainer from './MapContainer';
 
 // When rendering this component, use => <MyTripCard userInfo={userInfo} setUserInfo={setUserInfo} userTrip={userTrip} setUserTrip={setUserTrip} />
 
@@ -96,7 +96,7 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveCom
       <Card sx={{ maxWidth: 700 }}>
         {/* lat={userTrip.start_lat} lng={userTrip.start_lng} */}
         <div className="map-container">
-          {/* <MapContainer trip={trip}/> */}
+          <MapContainer trip={trip}/>
         </div>
         {/* <CardMedia
           sx={{ height: 150 }}

@@ -47,7 +47,7 @@ function MapContainer ({trip}) {
   );
 };
  
-// export default GoogleApiWrapper({
-//   apiKey: key
-// })(MapContainer)
+export default GoogleApiWrapper({
+  apiKey: key
+})(MapContainer)
 

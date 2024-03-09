@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-//import { Map, InfoWindow, Marker, GoogleApiWrapper, Geocode } from "google-maps-react";
+import { Map, InfoWindow, Marker, GoogleApiWrapper, Geocode } from "google-maps-react";
 
 // hard code API key. Keep safe
 const key = "AIzaSyBRzoiY1lCeVlXPEZELkqEdTehWIUcijms";
@@ -47,7 +47,7 @@ function MapContainer ({trip}) {
   );
 };
  
-// export default GoogleApiWrapper({
-//   apiKey: key
-// })(MapContainer)
+export default GoogleApiWrapper({
+  apiKey: key
+})(MapContainer)
 

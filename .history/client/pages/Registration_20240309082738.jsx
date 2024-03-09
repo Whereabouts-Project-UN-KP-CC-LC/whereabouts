@@ -88,7 +88,7 @@ function Registration({ userInfo, setUserInfo }) {
       <br></br>
       {/* Invoking redirect hook in event of successful login */}
       {redirect && <Navigate to="/dashboard" replace={true} />}
-      <form className="registration-form" onSubmit={handleSubmit}>
+      <form className="form-container" onSubmit={handleSubmit}>
         <div className="registration-input-container">
           <br></br>
           <h3>Sign Up</h3>
