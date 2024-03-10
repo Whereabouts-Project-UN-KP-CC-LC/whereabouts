@@ -5,6 +5,7 @@ const axios = require('axios');
 
 const whereaboutsController = {};
 
+
 // LOGIN component middleware
 
 whereaboutsController.checkUserExists = async (req, res, next) => {
@@ -203,7 +204,9 @@ whereaboutsController.startNewTrip = async (req, res, next) => {
       VALUES
       (${tripId}, TRUE, ${req.body.traveler})`
     );
-    req.body.watchers.forEach(async (watcher) => {
+    // BEFORE: req.body.watchers.forEach(async (watcher)
+    // forEach does not wait for promises to resolve, so updating this function to:
+    for (const watcher of req.body.watchers) {
       await db.query(
         `INSERT
         INTO trips_users_join
@@ -211,13 +214,14 @@ whereaboutsController.startNewTrip = async (req, res, next) => {
         VALUES
         (${tripId}, FALSE, ${watcher})`
       );
-    });
+    };
     return next();
   } catch (error) {
+    console.error("Detailed error line 217 Controller: ", error);
     return next({
       log: 'Express error handler caught whereaboutsController.startNewTrip error',
       status: 500,
-      message: { error: 'Error starting a new trip' },
+      message: { error: 'Error starting a new trip ' + error.message },
     });
   }
 };

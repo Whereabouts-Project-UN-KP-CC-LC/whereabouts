@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ContactsList from './ContactsList';
 import { Routes, Route } from 'react-router-dom';
@@ -9,6 +9,9 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
   const [checkedContacts, setCheckedContacts] = useState([]);
   // hook to redirect to MyTripStart
   // const [redirect, setRedirect] = useState(false);
+
+  // reference for empty input form
+  const inputRef = useRef(null);
 
   // Fetch GET request for contact and add to list:
   const handleSubmit = async (event) => {
@@ -27,6 +30,10 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
 
       // add user to array of contacts
       setContacts([...contacts, contactData]);
+
+      // Clear the input field after submission
+      inputRef.current.value = '';
+
     } catch (err) {
       console.log(`Fetch request for user with phone_number failed.`, err);
     }
@@ -95,6 +102,7 @@ function Contacts({ userInfo, contacts, setContacts, setActiveComponent }) {
             type="text"
             className="add-contact-input"
             id="contact-phone-number"
+            ref={inputRef}
           />
           <button type="submit" className="add-contact-btn">
             Add Contact

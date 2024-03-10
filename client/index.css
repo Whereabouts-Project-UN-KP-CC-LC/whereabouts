@@ -149,12 +149,18 @@ header img {
   font-weight: bold;
   font-size: 25px;
   background-color: #59656f;
+  
 }
 
 .sidebar-item {
   color: #fffffc;
   margin: 15px;
   cursor: pointer;
+
+  &:hover {
+    color: orange;
+    transition: color 0.5s ease;
+  }
 }
 
 /****** End of Side styling ******/
@@ -164,9 +170,11 @@ header img {
 .contacts-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   border-style: solid;
   border-color: black;
+  height: auto;
 }
 
 .add-contact-container {
@@ -209,7 +217,7 @@ header img {
   height: 500px;
   border-color: #59656f;
   display: grid;
-  background-image: linear-gradient(to bottom, #00a676 60%, #FFFFFC);
+  background-image: linear-gradient(to bottom, #a2a38b 10%, #FFFFFC);
 }
 
 .titles-row {

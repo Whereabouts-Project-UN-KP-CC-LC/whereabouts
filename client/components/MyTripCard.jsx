@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-//import MapContainer from './MapContainer';
+import MapContainer from './MapContainer';
 
 // When rendering this component, use => <MyTripCard userInfo={userInfo} setUserInfo={setUserInfo} userTrip={userTrip} setUserTrip={setUserTrip} />
 
@@ -42,8 +42,8 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveCom
 
   // demo version 40.6970173,-74.3100135
   const trip = {
-    start_lat: 40.6970173,
-    start_lng: -74.3100135,
+    start_lat: 33.8303,
+    start_lng: -116.5453,
     tripId: 99,
   };
 
@@ -96,7 +96,7 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveCom
       <Card sx={{ maxWidth: 700 }}>
         {/* lat={userTrip.start_lat} lng={userTrip.start_lng} */}
         <div className="map-container">
-          {/* <MapContainer trip={trip}/> */}
+          <MapContainer trip={trip}/>
         </div>
         {/* <CardMedia
           sx={{ height: 150 }}
@@ -108,7 +108,7 @@ const MyTripCard = ({ userInfo, setUserInfo, userTrip, setUserTrip, setActiveCom
             Your Current Trip
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Secondary text here
+            Enjoy the journey, stay safe!
           </Typography>
         </CardContent>
         <CardActions>

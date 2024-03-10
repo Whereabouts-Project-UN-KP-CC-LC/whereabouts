@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-//import MapContainer from '../components/MapContainer';
+import MapContainer from '../components/MapContainer';
 import CardActions from '@mui/material/CardActions';
 import { CardContent, Card } from '@mui/material';
 
@@ -39,9 +39,9 @@ export default function TripViewingCard({trip}) {
   return (
     <Card sx={{ maxWidth: 700 , backgroundColor: messages[status].bgColor}}>
       <div className="map-container">
-        {/* <MapContainer
+        <MapContainer
           trip={trip}
-        /> */}
+        />
       </div>
       <CardContent>
         <Typography variant="h5" color={messages[status].color}>
